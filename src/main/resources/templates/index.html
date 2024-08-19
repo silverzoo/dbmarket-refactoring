@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>index</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <img src="https://elice.io/images/elice_logo.svg" alt="elice_logo"/>
+    <h1 id="title" style="color:salmon">index 페이지</h1>
+    <p>안녕하세요 index 페이지입니다.</p>
+    <hr>
+
+    <h3>table : 테이블 태그</h3>
+    <table border="1">
+        <!--    테이블 첫번째 행   -->
+        <tr>
+            <th>열1</th>
+            <th>열2</th>
+            <th>열3</th>
+        </tr>
+        <!--    테이블 두번째 행   -->
+        <tr>
+            <td>데이터1</td>
+            <td>데이터1</td>
+            <td>데이터1</td>
+        </tr>
+        <!--    테이블 세번째 행   -->
+        <tr>
+            <td>데이터2</td>
+            <td>데이터2</td>
+            <td>데이터2</td>
+        </tr>
+        <!--    테이블 네번째 행   -->
+        <tr>
+            <td>데이터3</td>
+            <td>데이터3</td>
+            <td>데이터3</td>
+        </tr>
+    </table>
+    <hr>
+
+    <h3>form : 폼 태그</h3>
+    <form
+            action="/login"
+            method="POST"
+            name="signup"
+    >
+        <div>
+            <label for="email">아이디</label>
+            <input id="email" type="email" placeholder="아이디를 입력해주세요"/>
+        </div>
+        <div>
+            <label for="password">패스워드</label>
+            <input id="password" type="password" placeholder="비밀번호를 입력해주세요"/>
+        </div>
+        <div>
+            <label for="radio_button">라디오버튼</label>
+            <input id="radio_button" type="radio"/>
+        </div>
+        <div>
+            <label for="checkbox_button">체크박스</label>
+            <input id="checkbox_button" type="checkbox"/>
+        </div>
+        <div>
+            <label for="input_button">인풋버튼</label>
+            <input id="input_button" type="button" value="버튼을 클릭하세요"/>
+        </div>
+        <textarea
+                name="contents"
+                placeholder="내용을 입력해주세요"
+        ></textarea>
+    </form>
+    <hr>
+
+    <h3>a : 링크 태그</h3>
+    <div><a href="https://google.com" target="_blank">구글로 이동</a></div>
+    <div><a href="https://github.com/silverzoo" target="_blank">내 깃허브로 이동</a></div>
+    <div><a href="https://kdt-gitlab.elice.io/cloud_track/class_04/class_041/project" target="_blank">실습으로 이동</a></div>
+    <hr>
+
+    <h3>button : 버튼 태그</h3>
+    <button id="button1">
+        버튼
+    </button>
+    <button id="button2">
+        버튼
+    </button>
+    <hr>
+
+    <h3>img : 이미지 태그</h3>
+    <img
+            src="https://images.unsplash.com/photo-1494879540385-bc170b0878a7?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            style="width: 500px;"
+    />
+    <hr>
+
+    <h3>h : 제목 태그</h3>
+    <h1>h1 태그</h1>
+    <h2>h2 태그</h2>
+    <h3>h3 태그</h3>
+    <h4>h4 태그</h4>
+    <h5>h5 태그</h5>
+    <hr>
+
+    <h3>p : 본문 태그</h3>
+    <p>
+        Hypertext Markup Language (HTML) is the standard markup language for documents designed to be displayed in a web browser. It defines the content and structure of web content. It is often assisted by technologies such as Cascading Style Sheets (CSS) and scripting languages such as JavaScript.
+
+        Web browsers receive HTML documents from a web server or from local storage and render the documents into multimedia web pages. HTML describes the structure of a web page semantically and originally included cues for its appearance.
+
+        HTML elements are the building blocks of HTML pages. With HTML constructs, images and other objects such as interactive forms may be embedded into the rendered page. HTML provides a means to create structured documents by denoting structural semantics for text such as headings, paragraphs, lists, links, quotes, and other items. HTML elements are delineated by tags, written using angle brackets. Tags such as and directly introduce content into the page. Other tags such as surround and provide information about document text and may include sub-element tags. Browsers do not display the HTML tags but use them to interpret the content of the page.
+    </p>
+    <hr>
+
+    <h3>ul : 순서가 없는 리스트 태그</h3>
+    <ul>
+        <li class="list-item selected">li 태그1</li>
+        <li class="list-item">li 태그2</li>
+        <li class="list-item">li 태그3</li>
+    </ul>
+    <hr>
+
+    <h3>ol : 순서가 있는 리스트 태그</h3>
+    <ol class="selected">
+        <li><span>li 태그1</span></li>
+        <li>li 태그2</li>
+        <li>li 태그3</li>
+    </ol>
+    <hr>
+
+    <h3>div : Block 수준의 컨테이너요소 태그</h3>
+    <div>
+        <p>
+            Hypertext Markup Language (HTML) is the standard markup language for documents designed to be displayed in a web browser.
+        </p>
+        <ol>
+            <li>li 태그1</li>
+            <li>li 태그2</li>
+            <li>li 태그3</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h3>span : Inline 수준의 컨테이너요소 태그</h3>
+    <p>
+        Hypertext Markup <span>Language (HTML)</span> is the standard markup language for documents designed to be displayed in a web browser.
+    </p>
+    <hr>
+</body>
+</html>
