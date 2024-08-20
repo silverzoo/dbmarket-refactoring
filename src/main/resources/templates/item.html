@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>블로그 글 </title>
+</head>
+<body>
+<main class="container mx-auto px-4 pb-16">
+    <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+        <article class="p-8">
+            <input type="hidden" id="article-id" th:value="${item.item_id}">
+            <header class="mb-8 pb-8 border-b border-gray-200">
+                <h1 class="text-4xl font-bold mb-4 text-gray-800" th:text="${item.name}"></h1>
+                <div class="flex items-center text-gray-600">
+                    <i data-feather="calendar" class="mr-2"></i>
+                    <span th:text="${#temporals.format(item.upload_date, 'yyyy년 MM월 dd일 HH:mm')}"></span>
+                </div>
+            </header>
+            <section class="mb-12 prose lg:prose-lg max-w-none">
+                <p class="text-lg leading-relaxed text-gray-700" th:text="${item.description}"></p>
+            </section>
+            <div class="flex space-x-4">
+                <button type="button" id="modify-btn"
+                        th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|"
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
+                    <i data-feather="edit-2" class="mr-2"></i> 수정
+                </button>
+                <button type="button" id="delete-btn"
+                        class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
+                    <i data-feather="trash-2" class="mr-2"></i> 삭제
+                </button>
+            </div>
+        </article>
+    </div>
+</main>
+</body>
+</html>
