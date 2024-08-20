@@ -1,0 +1,24 @@
+<header th:fragment="header">
+    <nav class="bg-white shadow-md py-4 fixed w-full top-0 z-20">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-600"><a href="/articles">DBmarket</a></h1>
+            <img src="https://elice.io/images/elice_logo.svg" alt="elice_logo" class="h-8">
+        </div>
+    </nav>
+
+    <div class="relative bg-gradient-to-r from-blue-400 to-purple-500 text-white py-32 mt-16 mb-8">
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <img src="/images/laptop_webcam.png" alt="laptop_webcam" class="w-full h-full object-cover object-center opacity-30">
+        </div>
+        <div class="relative z-10 text-center">
+            <h1 class="text-5xl font-bold mb-4 shadow-text">DBmarket</h1>
+            <h4 class="text-xl text-blue-100 shadow-text">DBmarket에 오신 것을 환영합니다.</h4>
+        </div>
+    </div>
+</header>
+
+<style>
+    .shadow-text {
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+</style>
