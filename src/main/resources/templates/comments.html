@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+</head>
+<body>
+    <h1>댓글</h1>
+    <ul>
+        <li th:each="comment : ${comments}">
+            <p th:text="${comment.username}"></p>
+            <p th:text="${comment.content}"></p></li>
+    </ul>
+</body>
+</html>
