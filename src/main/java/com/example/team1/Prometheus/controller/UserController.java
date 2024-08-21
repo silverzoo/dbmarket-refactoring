@@ -1,12 +1,9 @@
 package com.example.team1.Prometheus.controller;
 
 
-import com.example.team1.Prometheus.entity.User;
-import com.example.team1.Prometheus.entity.UserForm;
-import com.example.team1.Prometheus.repository.UserRepository;
+import com.example.team1.Prometheus.entity.UserDto;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/users/join")
-    public String CreateUser(UserForm form, String username, String password) {
+    public String CreateUser(UserDto form, String username, String password) {
         return userService.createUser(form);
         // 아이디 중복시 : "users/join_retry" 로 이동
         // 회원가입 성공시 : "/index" 로 이동
