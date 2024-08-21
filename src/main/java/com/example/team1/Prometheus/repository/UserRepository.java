@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<User, Long> {
     // 로그인 로직
     User findByUserNameAndPassword(String username, String password);
+    User findByUserName(String userName);
 }

@@ -18,14 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserService userService;
-
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     // 첫 홈 화면 -> 로그인 이후에는 Index가 홈 화면
     @GetMapping("/home")
@@ -45,9 +38,10 @@ public class UserController {
     }
 
     @PostMapping("/users/join")
-    public String CreateUser(UserForm form) {
-        userService.createUser(form);
-        return "index";
+    public String CreateUser(UserForm form, String username, String password) {
+        return userService.createUser(form);
+        // 아이디 중복시 : "users/join_retry" 로 이동
+        // 회원가입 성공시 : "/index" 로 이동
     }
 
     @GetMapping("/users/login")
@@ -55,9 +49,10 @@ public class UserController {
         return "users/login";
     }
 
-
     @PostMapping("/users/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest httpServletRequest) {
         return userService.login(username, password, httpServletRequest);
+        // 로그인 실패시 : "users/login_retry" 로 이동
+        // 로그인 성공시 : "/index" 로 이동
     }
 }

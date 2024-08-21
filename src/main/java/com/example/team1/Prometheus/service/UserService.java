@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HandshakeCompletedEvent;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -16,10 +17,21 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     // 회원가입 DB 저장 로직
-    public User createUser(UserForm form) {
+    public String createUser(UserForm form) {
         User user = form.toEntity();
-        return userRepository.save(user);
+        // 아이디 중복검사 로직
+        User name = userRepository.findByUserName(form.getUsername());
+        if (name == null) {
+            userRepository.save(user);
+            return "index";
+        } else {
+            return "/users/join_retry";
+        }
     }
 
     // 로그인 확인 로직
