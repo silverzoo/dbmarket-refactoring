@@ -8,9 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 //### 상품등록 페이지(registerForm)
 //
@@ -35,21 +33,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 // 4. service
 // 5. repository
 // 6. Mapper SQL 호출하기 위한 인터페이스
-@AllArgsConstructor
+
+//TODO 상품등록 요청이 있을경우 REST컨트롤러 변경
 @Controller
+@RequestMapping("/registeritem")
 public class RegisterItemController {
-    private final RegisterItemService registerItemService;
+//    private final RegisterItemService registerItemService;
 //    private final RegisterMapper mapper;
 
-    @GetMapping("/registeritem")
-    public String register(Model model) {
+    @GetMapping
+    public String register() {
         return "registeritemform";
     }
-
-    @PostMapping
-    public ResponseEntity postItem(@RequestBody ItemPostDto itemPostDto){
-        ItemPost itemPost = itemPostDto.postDtoToItemPost();
-        return new ResponseEntity(itemPost, HttpStatus.CREATED);
-    }
-
+//    @PostMapping("/itemlist")
+//    public ResponseEntity postItem(@RequestBody ItemPostDto itemPostDto){
+//        ItemPost itemPost = itemPostDto.toEntity();
+//        return new ResponseEntity(itemPost, HttpStatus.CREATED);
+//    }
+//    @PostMapping("/itemlist")
+//    public String postItem(@RequestBody ItemPost itemPost){
+//        System.out.println(itemPost.toString());
+//        return "";
+//    }
 }
