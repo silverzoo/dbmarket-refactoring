@@ -11,11 +11,12 @@ import java.util.List;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    @Autowired
+
     public CommentService(CommentRepository commentRepository){
         this.commentRepository = commentRepository;
     }
 
+    //해당 아이디의 유저 모든 comment 리스트로 리턴
     public List<Comment> getAllCommentById(Long id){
         return commentRepository.findAllByUser_UserId(id);
     }

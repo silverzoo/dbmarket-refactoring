@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록</title>
+
+</head>
+<body>
+    <ul>
+        <li th:each="item : ${items}">
+            상품 이름 - <p th:text="${item.name}"></p>,
+            가격 - <p th:text="${item.price}"></p>
+        </li>
+    </ul>
+</body>
+</html>
