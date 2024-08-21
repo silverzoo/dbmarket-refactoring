@@ -4,6 +4,7 @@ package com.example.team1.Prometheus.controller;
 import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.entity.UserForm;
 import com.example.team1.Prometheus.repository.UserRepository;
+import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
-
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserService userService;
 
     // 첫 홈 화면 -> 로그인 이후에는 Index가 홈 화면
     @GetMapping("/home")
@@ -40,13 +37,11 @@ public class UserController {
         return "users/join";
     }
 
-    // 회원 가입 로직 - 추후 Service 이동 예정
     @PostMapping("/users/join")
-    public String CreateUser(UserForm form) {
-        // 사용자를 DB에 저장
-        User user = form.toEntity();
-        User saved = userRepository.save(user);
-        return "index";
+    public String CreateUser(UserForm form, String username, String password) {
+        return userService.createUser(form);
+        // 아이디 중복시 : "users/join_retry" 로 이동
+        // 회원가입 성공시 : "/index" 로 이동
     }
 
     @GetMapping("/users/login")
@@ -54,15 +49,28 @@ public class UserController {
         return "users/login";
     }
 
-    // 로그인 로직 - 추후 Service 이동 예정
     @PostMapping("/users/login")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model, HttpServletRequest httpServletRequest) {
-        User user = userRepository.findByUserNameAndPassword(username, password);
-        if(user == null) {
-            return "/users/login_retry";
-        }
-        HttpSession httpSession = httpServletRequest.getSession();
-        httpSession.setAttribute("user", user);
-        return "index";
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest httpServletRequest) {
+        return userService.login(username, password, httpServletRequest);
+        // 로그인 실패시 : "users/login_retry" 로 이동
+        // 로그인 성공시 : "/index" 로 이동
     }
+
+    // WIP
+    // 판매자 프로필 페이지
+    @GetMapping("/users/{username}")
+    public String profile(@PathVariable String username,  Model model) {
+        // 1. 회원 정보 매개변수 전송
+        model.addAttribute("username", username);
+
+        // 2. 회원 판매 상품 리스트
+        //   Item item = itemRepository.findAllById(id);
+
+        // 3. 회원 코멘트로 이동하는 버튼
+
+
+        return "users/profile";
+    }
+
+
 }

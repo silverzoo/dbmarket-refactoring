@@ -1,10 +1,7 @@
 package com.example.team1.Prometheus.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,8 +9,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 //@EntityListeners(AuditingEntityListener.class)
+@Table(name="item")
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemDetail {
@@ -31,11 +30,12 @@ public class ItemDetail {
 
     //엔티티 생성될 때 발행시간 저장하는 컬럼 추가
     @CreatedDate
-    @Column(name = "upload_date")
-    private LocalDateTime uploadAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     //엔티티 수정될 때 수정시간 저장하는 컬럼 추가
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }
