@@ -6,12 +6,12 @@ CREATE TABLE `item` (
   `name` VARCHAR(255) NOT NULL,
   `price` INTEGER NOT NULL,
   `description` VARCHAR(255) NOT NULL,
-  `upload_date` timestamp DEFAULT (now())
+  `created_at` timestamp DEFAULT (now())
 );
 
 CREATE TABLE `users` (
   `user_id` Integer PRIMARY KEY AUTO_INCREMENT,
-  `user_name` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
 );
 
