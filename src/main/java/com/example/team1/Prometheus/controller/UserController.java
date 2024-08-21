@@ -44,12 +44,8 @@ public class UserController {
         return "users/join";
     }
 
-    // 회원 가입 로직 - 추후 Service 이동 예정
     @PostMapping("/users/join")
     public String CreateUser(UserForm form) {
-        // 사용자를 DB에 저장
-//        User user = form.toEntity();
-//        User saved = userRepository.save(user);
         userService.createUser(form);
         return "index";
     }
@@ -59,17 +55,9 @@ public class UserController {
         return "users/login";
     }
 
-    // 로그인 로직 - 추후 Service 이동 예정
-    @PostMapping("/users/login")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model, HttpServletRequest httpServletRequest) {
-        User user = userRepository.findByUserNameAndPassword(username, password);
-        // 등록된 아이디가 아닌 경우
-        if(user == null) {
-            return "/users/login_retry";
-        }
 
-        HttpSession httpSession = httpServletRequest.getSession();
-        httpSession.setAttribute("user", user);
-        return "index";
+    @PostMapping("/users/login")
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest httpServletRequest) {
+        return userService.login(username, password, httpServletRequest);
     }
 }
