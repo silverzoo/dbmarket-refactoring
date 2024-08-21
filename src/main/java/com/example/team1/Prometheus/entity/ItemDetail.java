@@ -25,6 +25,9 @@ public class ItemDetail {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "price", nullable = false)
+    private int price;
+
     @Column(name = "description")
     private String description;
 

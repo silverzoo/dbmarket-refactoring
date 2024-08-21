@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class ItemListViewResponse {
     private final String name;
-    private final double price;
+    private final int price;
 
     public ItemListViewResponse(ItemDetail itemDetail){
         this.name = itemDetail.getName();
