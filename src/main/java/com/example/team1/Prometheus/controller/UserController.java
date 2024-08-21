@@ -55,4 +55,22 @@ public class UserController {
         // 로그인 실패시 : "users/login_retry" 로 이동
         // 로그인 성공시 : "/index" 로 이동
     }
+
+    // WIP
+    // 판매자 프로필 페이지
+    @GetMapping("/users/{username}")
+    public String profile(@PathVariable String username,  Model model) {
+        // 1. 회원 정보 매개변수 전송
+        model.addAttribute("username", username);
+
+        // 2. 회원 판매 상품 리스트
+        //   Item item = itemRepository.findAllById(id);
+
+        // 3. 회원 코멘트로 이동하는 버튼
+
+
+        return "users/profile";
+    }
+
+
 }

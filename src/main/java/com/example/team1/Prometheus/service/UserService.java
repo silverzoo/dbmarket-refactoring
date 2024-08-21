@@ -34,12 +34,15 @@ public class UserService {
         }
     }
 
-    // 로그인 확인 로직
+    // 로그인 로직
     public String login(String username, String password, HttpServletRequest httpServletRequest) {
+        // 입력한 username-password 를 모두 충족하지 못하면 null
         User user = userRepository.findByUserNameAndPassword(username, password);
+        // 로그인 검증 로직
         if (user == null) {
             return "/users/login_retry";
         }
+        // 로그인세션 부여
         HttpSession httpSession = httpServletRequest.getSession();
         httpSession.setAttribute("user", user);
         return "index";
