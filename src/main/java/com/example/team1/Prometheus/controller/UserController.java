@@ -4,6 +4,7 @@ package com.example.team1.Prometheus.controller;
 import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.entity.UserForm;
 import com.example.team1.Prometheus.repository.UserRepository;
+import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -44,8 +48,9 @@ public class UserController {
     @PostMapping("/users/join")
     public String CreateUser(UserForm form) {
         // 사용자를 DB에 저장
-        User user = form.toEntity();
-        User saved = userRepository.save(user);
+//        User user = form.toEntity();
+//        User saved = userRepository.save(user);
+        userService.createUser(form);
         return "index";
     }
 
@@ -58,9 +63,11 @@ public class UserController {
     @PostMapping("/users/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model, HttpServletRequest httpServletRequest) {
         User user = userRepository.findByUserNameAndPassword(username, password);
+        // 등록된 아이디가 아닌 경우
         if(user == null) {
             return "/users/login_retry";
         }
+
         HttpSession httpSession = httpServletRequest.getSession();
         httpSession.setAttribute("user", user);
         return "index";
