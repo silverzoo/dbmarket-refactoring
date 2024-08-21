@@ -7,15 +7,101 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+<style>
+    .flex-container {
+        /* display: flex;
+        flex-direction: column; */
+    }
+
+    .wrapper {
+        text-align: left;
+        flex-grow: 1;
+        
+        .image-box {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            display:inline-flex;
+            margin: 20px auto;
+        }
+
+        .upload-btn {
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            display: inline-block;
+            cursor: pointer;
+
+            input[type=file] {
+            display: none;
+            }
+        }
+    }
+</style>
+
 <body>
 <div>
-    <form action="#">
-        상품명 : <input type="text">
-        가격 : <input type="password">
-        <input type="submit">
-    </form>
 
+    <div class="flex-container">
+        <h1>제품 등록</h1>
+<!--        action에 post 보낼 링크 설정 -->
+        <form action="/itemlist", method="post">
+            상품명 : <input type="text" id="name"><br>
+            가격 : <input type="number" id="password"><br>
+        
+        <br>
+        <h3>지역 이름</h3>
+        <select name="category" id="category">
+            <option value="서울특별시">서울특별시</option>
+            <option value="인천광역시">인천광역시</option>
+            <option value="경기도">경기도</option>
+        </select>
+
+        <!-- 비동기방식 -->
+        <div class="wrapper">
+                <h3>상품 이미지</h3>
+                <img src="https://i0.wp.com/adventure.co.kr/wp-content/uploads/2020/09/no-image.jpg" class="image-box" /><br>
+                <label for="image" class="upload-btn">
+                    <input id="image" type="file" accept="image/*" />
+                    <span>Upload Image</span>
+                </label>
+        </div><br>
+        <!-- 동기방식 에러 -->
+        <!-- <div class="wrapper">
+            <h2>URL API</h2>
+            <img src="https://i0.wp.com/adventure.co.kr/wp-content/uploads/2020/09/no-image.jpg" class="image-box" />
+            <label for="file2" class="upload-btn">
+                <input id="file2" type="file" accept="image/*" />
+                <span>Upload Image</span>
+            </label>
+        </div> -->
+            <h3>상품 설명</h3>
+            <textarea name="description" id="description" cols="30" rows="5"></textarea><br>
+            <button type="submit">제출</button>
+        </form>
+        
+    </div>
 </div>
 
 </body>
 </html>
+
+
+<script>
+    const fileDOM = document.querySelector('#image');
+    const previews = document.querySelectorAll('.image-box');
+
+    fileDOM.addEventListener('change', () => {
+        const reader = new FileReader();
+        reader.onload = ({ target }) => {
+            previews[0].src = target.result;
+        };
+        reader.readAsDataURL(fileDOM.files[0]);
+    });
+
+    // const fileDOM2 = document.querySelector('#file2');
+
+    // fileDOM2.addEventListener('change', () => {
+    //     const imageSrc = URL.createObjectURL(fileDOM2.files[0]);
+    //     previews[1].src = imageSrc;
+    // });
+</script>
