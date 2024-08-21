@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//유저의 후기 조회
 @Controller
 @RequestMapping("/comments")
 public class CommentController {
@@ -20,12 +21,10 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-
     @GetMapping("/{userId}")
     public String getAllCommentById(@PathVariable Long userId, Model model){
         List<Comment> comments = commentService.getAllCommentById(userId);
         model.addAttribute("comments",comments);
-        model.addAttribute("userId", userId);
         return "comments";
     }
 }

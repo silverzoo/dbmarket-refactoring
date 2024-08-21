@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::main})}">
 <head>
     <meta charset="UTF-8">
     <title>Comments</title>
 </head>
 <body>
+<div th:fragment="content">
     <h1>댓글</h1>
     <ul>
-        <li th:each="comment : ${comments}">
+        <li>
             <p th:text="${comment.username}"></p>
-            <p th:text="${comment.content}"></p></li>
+        </li>
+        <li th:each="comment : ${comments}">
+            <p th:text="${comment.content}"></p>
+        </li>
     </ul>
+</div>
 </body>
 </html>
