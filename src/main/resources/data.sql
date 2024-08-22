@@ -9,3 +9,4 @@ INSERT INTO item(name, description, price, created_at, updated_at) VALUES
                                                                  ('스프링 부트 애플리케이션 모니터링하기', '스프링 부트의 Actuator를 사용하여 애플리케이션의 상태와 메트릭스를 모니터링하는 방법을 소개합니다. 실시간으로 애플리케이션의 상태를 추적하는 데 유용한 정보를 제공합니다.', 10000, NOW(), NOW()),
                                                                  ('스프링 부트와 클라우드: 클라우드 네이티브 애플리케이션 개발', '스프링 부트를 사용하여 클라우드 네이티브 애플리케이션을 개발하는 방법을 설명합니다. 클라우드 환경에 애플리케이션을 배포하고 관리하는 다양한 전략을 다룹니다.', 10000, NOW(), NOW()),
                                                                  ('스프링 부트의 테스트 전략', '스프링 부트 애플리케이션의 품질을 보장하기 위한 다양한 테스트 전략을 소개합니다. 단위 테스트, 통합 테스트, Mocking 기법 등을 활용하여 테스트를 효과적으로 수행하는 방법을 설명합니다.', 10000, NOW(), NOW());
+INSERT INTO itemtemp(name, price,category,imagePath, description, created_at) VALUES ('asdf',1234,'asdf','asdf','asdf',NOW());
