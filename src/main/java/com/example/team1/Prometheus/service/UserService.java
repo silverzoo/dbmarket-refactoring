@@ -25,7 +25,8 @@ public class UserService {
         User name = userRepository.findByUserName(form.getUsername());
         if (name == null) {
             userRepository.save(user);
-            return "index";
+            //return "index";
+            return "redirect:/items";
         } else {
             return "/users/join_retry";
         }
@@ -42,6 +43,9 @@ public class UserService {
         // 로그인세션 부여
         HttpSession httpSession = httpServletRequest.getSession();
         httpSession.setAttribute("user", user);
-        return "index";
+        //return "index";
+
+        return "redirect:/items";
+
     }
 }
