@@ -16,7 +16,6 @@ public class ItemDetailViewController {
     private final ItemDetailService itemDetailService;
 
     // NOTE : 상세 페이지로 이동
-    // Q : 뷰 반환컨트롤러 메서드에서도 req,res DTO객체들을 활용해서 로직을 짜야하는 것인지?
     @GetMapping("/{id}")
     public String getItem(@PathVariable("id") Long id, Model model) {
         ItemDetailResponse itemDetail = itemDetailService.findById(id);
@@ -33,9 +32,12 @@ public class ItemDetailViewController {
     }
 
      // NOTE : 수정 후 상세페이지로 리다이렉트
+     // Q : 뷰 컨트롤러에서도 API 컨트롤러에서도 updateItem 메서드가 호출되는데 한쪽에서만 해당 메서드가 처리되는 것이 맞는지?
     @PostMapping("/{id}")
     public String updateItem(@PathVariable("id") Long id, @ModelAttribute ItemDetailRequest request) {
         itemDetailService.updateItem(id, request);
         return "redirect:/items/" + id; // 수정 후 상세 페이지로 리다이렉트
     }
+
+
 }
