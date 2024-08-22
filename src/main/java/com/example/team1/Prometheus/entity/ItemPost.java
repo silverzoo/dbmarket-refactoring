@@ -4,11 +4,9 @@ package com.example.team1.Prometheus.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-
-import java.awt.*;
 import java.time.LocalDateTime;
+
+
 @Table(name="itemtemp")
 @Entity
 @AllArgsConstructor

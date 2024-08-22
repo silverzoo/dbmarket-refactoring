@@ -2,7 +2,6 @@ package com.example.team1.Prometheus.entity;
 
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
