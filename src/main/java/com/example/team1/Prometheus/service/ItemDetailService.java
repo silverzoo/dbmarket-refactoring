@@ -1,6 +1,7 @@
 package com.example.team1.Prometheus.service;
 
 import com.example.team1.Prometheus.entity.Item;
+import com.example.team1.Prometheus.entity.ItemDeleteResponse;
 import com.example.team1.Prometheus.entity.ItemDetailRequest;
 import com.example.team1.Prometheus.entity.ItemDetailResponse;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
@@ -20,7 +21,7 @@ public class ItemDetailService {
 
 
     @Transactional
-    public ItemDetailResponse updateItem(Long id, ItemDetailRequest request) {
+    public ItemDetailResponse updateItem(long id, ItemDetailRequest request) {
 
         // 1. 엔티티를 데이터베이스에서 조회
         Item item = itemDetailRepository.findById(id)
@@ -35,5 +36,9 @@ public class ItemDetailService {
 
         // 4. 업데이트된 엔티티를 응답 DTO로 반환
         return new ItemDetailResponse(item);
+    }
+
+    public void deleteItem(long id) {
+        itemDetailRepository.deleteById(id);
     }
 }
