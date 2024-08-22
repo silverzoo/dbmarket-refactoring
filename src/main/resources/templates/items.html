@@ -7,11 +7,25 @@
 
 </head>
 <body>
+<main class="container mx-auto px-4 max-w-5xl">
+    <button type="button" id="create-btn"
+            th:onclick="|location.href='@{/new-article}'|"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
+        <i data-feather="plus" class="mr-2"></i> 글 등록
+    </button>
+
+    <h1>중고거래 인기매물</h1>
     <ul>
         <li th:each="item : ${items}">
-            상품 이름 - <p th:text="${item.name}"></p>,
-            가격 - <p th:text="${item.price}"></p>
+            <p>상품 이름 - <span th:text="${item.name}"></span></p>
+            <p>가격 - <span th:text="${item.price}"></span></p>
+            <button type="button" id="profile-btn"
+                    th:onclick="|location.href='@{/items/id}'|"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
+                <i data-feather="plus" class="mr-2"></i> 상세보기
+            </button>
         </li>
     </ul>
+</main>
 </body>
 </html>
