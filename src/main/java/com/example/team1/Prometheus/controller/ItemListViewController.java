@@ -16,7 +16,7 @@ import java.util.List;
 public class ItemListViewController {
     private final ItemListService itemListService;
 
-    @GetMapping("/itmes")
+    @GetMapping("/items")
     public String getAllItems(Model model){
         List<ItemListViewResponse> items = itemListService.getAllItems();
         model.addAttribute("items",items);
