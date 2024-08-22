@@ -1,6 +1,5 @@
 package com.example.team1.Prometheus.controller;
 
-import com.example.team1.Prometheus.entity.ItemDetail;
 import com.example.team1.Prometheus.entity.ItemDetailRequest;
 import com.example.team1.Prometheus.entity.ItemDetailResponse;
 import com.example.team1.Prometheus.service.ItemDetailService;

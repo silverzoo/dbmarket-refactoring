@@ -1,6 +1,6 @@
 package com.example.team1.Prometheus.controller;
 
-import com.example.team1.Prometheus.entity.ItemDetail;
+import com.example.team1.Prometheus.entity.Item;
 import com.example.team1.Prometheus.entity.ItemDetailRequest;
 import com.example.team1.Prometheus.entity.ItemDetailResponse;
 import com.example.team1.Prometheus.service.ItemDetailService;
@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
