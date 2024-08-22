@@ -32,37 +32,19 @@ public class RegisterItemController {
     }
 
     @PostMapping
-    public String saveFileV1(HttpServletRequest request) throws ServletException, IOException {
+    public String saveFileV1(HttpServletRequest request){
 
         log.info("request={}", request);
 
-        //servelet이 제공하는 part로 multipart를 확인
-        Collection<Part> parts = request.getParts();
-
-        // 작업을 service로 분리
-        log.info("parts={}", parts);
-        for (Part part : parts) {
-            log.info("==== PART ====");
-            log.info("name={}", part.getName());
-            Collection<String> headerNames = part.getHeaderNames();
-            for (String headerName : headerNames) {
-                log.info("header {}: {}", headerName,
-                        part.getHeader(headerName));
-            }
-            //편의 메서드
-            //content-disposition; filename
-            log.info("submittedFileName={}", part.getSubmittedFileName());
-            log.info("size={}", part.getSize()); //part body size
-
-            //파일에 저장하기
-            if (StringUtils.hasText(part.getSubmittedFileName())) {
-                // 저장경로 설정해서 활용
-//                String fullPath = fileDir + part.getSubmittedFileName();
-                String fullPath = part.getSubmittedFileName();
-                log.info("파일 저장 fullPath={}", fullPath);
-                part.write(fullPath);
-            }
+        //DB저장작업
+        try {
+            registerItemService.uploadItemToDb(request);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+        //TODO 1 redirection 작업
         return "registeritemform";
     }
 }
