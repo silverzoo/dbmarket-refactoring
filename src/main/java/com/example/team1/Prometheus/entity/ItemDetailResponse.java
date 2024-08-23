@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 public class ItemDetailResponse {
     private Long itemId;
+    private Long userId;
     private String name;
     private String description;
     private LocalDateTime createdAt;
@@ -24,6 +25,7 @@ public class ItemDetailResponse {
 
     public ItemDetailResponse(Item item) {
         this.itemId = item.getItemId();
+        this.userId = item.getUserId();
         this.name = item.getName();
         this.description = item.getDescription();
         this.createdAt = item.getCreatedAt();
