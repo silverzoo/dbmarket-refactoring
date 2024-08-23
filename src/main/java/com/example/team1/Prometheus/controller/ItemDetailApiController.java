@@ -1,6 +1,6 @@
 package com.example.team1.Prometheus.controller;
 
-import com.example.team1.Prometheus.entity.ItemDetail;
+import com.example.team1.Prometheus.entity.ItemDeleteResponse;
 import com.example.team1.Prometheus.entity.ItemDetailRequest;
 import com.example.team1.Prometheus.entity.ItemDetailResponse;
 import com.example.team1.Prometheus.service.ItemDetailService;
@@ -32,5 +32,12 @@ public class ItemDetailApiController {
     }
 
 
-    // TODO : deleteItem()
+    // NOTE : 상세페이지의 데이터 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ItemDeleteResponse> deleteItem(@PathVariable("id") long id) {
+        itemDetailService.deleteItem(id);
+
+        return ResponseEntity.ok()
+                .build();
+    }
 }
