@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.sql.Timestamp;
 
-@Table(name="Comment")
+@Table(name="comment")
 @Entity
 @Getter
 @Setter
