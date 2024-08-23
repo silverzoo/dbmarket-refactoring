@@ -42,6 +42,14 @@
                         </button>
                     </form>
                 </div>
+                <div>
+                    <button type="button" id="modify-btn">
+                        <a th:href="@{/users/{userid}(userid=${userid})}"
+                           class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
+                            <i data-feather="edit-2" class="mr-2"></i> 판매자 정보
+                        </a>
+                    </button>
+                </div>
             </div>
         </article>
     </div>

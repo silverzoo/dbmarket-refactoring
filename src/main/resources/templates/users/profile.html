@@ -10,14 +10,14 @@
         [[${username}]] 님
         회원번호 (테스트용) = [[${userid}]]
     </ul>
-
+    <ul>
     판매중인 상품
+    </ul>
 
-
-    <button type="button" id="create-btn"
-            th:onclick="|location.href='@{/comments}'|"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
-        <i data-feather="plus" class="mr-2"></i> 거래 후기
+    <button type="button" id="profile-btn">
+        <a th:href="@{/comments/{userid}(userid=${userid})}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
+            <i data-feather="plus" class="mr-2"></i> 상세보기
+        </a>
     </button>
 
 
