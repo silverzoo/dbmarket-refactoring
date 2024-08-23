@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Item {
 
     @Id
@@ -40,12 +42,10 @@ public class Item {
     @Column(name = "description")
     private String description;
 
-    //엔티티 생성될 때 발행시간 저장하는 컬럼 추가
     @CreatedDate
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    //엔티티 수정될 때 수정시간 저장하는 컬럼 추가
     @LastModifiedDate
     @Column(name = "updated_at", nullable = true)
     private LocalDateTime updatedAt;
