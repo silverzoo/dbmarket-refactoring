@@ -11,3 +11,4 @@ INSERT INTO item(name, description, price, created_at, updated_at) VALUES
                                                                        ('강아지 고양이 밥그릇','고양이 임시보호할때 사용하고 안 써서 저렴하게 올립니다.',3000,NOW(), NOW()),
                                                                        ('파세코에어컨','이사갈 집에 시스템에어컨이 설치가 되어있는 집이라 27일 오전에 가져가실 분만 연락 기다립니다.',70000,NOW(), NOW()),
                                                                        ('스벅 아아 2잔 5000원', '빠른 입금하실 수 있는 분!',5000,NOW(), NOW());
+INSERT INTO itemtemp(name, price,category,imagePath, description, created_at) VALUES ('asdf',1234,'asdf','asdf','asdf',NOW());
