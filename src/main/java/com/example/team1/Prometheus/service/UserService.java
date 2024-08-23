@@ -19,13 +19,16 @@ public class UserService {
     }
 
     // 회원가입 DB 저장 로직
-    public String createUser(UserDto form) {
+    public String createUser(UserDto form, HttpServletRequest httpServletRequest) {
         User user = form.toEntity();
         // 아이디 중복검사 로직
         User name = userRepository.findByUserName(form.getUsername());
         if (name == null) {
             userRepository.save(user);
             //return "index";
+
+            HttpSession httpSession = httpServletRequest.getSession();
+            httpSession.setAttribute("user", user);
             return "redirect:/items";
         } else {
             return "/users/join_retry";
@@ -43,9 +46,17 @@ public class UserService {
         // 로그인세션 부여
         HttpSession httpSession = httpServletRequest.getSession();
         httpSession.setAttribute("user", user);
+
         //return "index";
 
         return "redirect:/items";
+    }
 
+    public Long getSession(HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
+        return user.getUserId();
     }
 }
+
+

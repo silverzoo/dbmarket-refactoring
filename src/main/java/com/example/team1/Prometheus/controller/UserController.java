@@ -4,6 +4,7 @@ package com.example.team1.Prometheus.controller;
 import com.example.team1.Prometheus.entity.UserDto;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +17,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     // 첫 홈 화면 -> 로그인 이후에는 Index가 홈 화면
     @GetMapping("/home")
-    public String welcomeHome(Model model) {
-        return "home";
+    public String welcomeHome(Model model, HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+
+        System.out.println(session.getAttribute("user"));
+
+        if (session.getAttribute("user") != null) {
+            return "redirect:/items";
+        }
+        else {
+            return "/home";
+        }
     }
 
     // Index (TestController 기능 이동)
@@ -36,7 +48,7 @@ public class UserController {
 
     @PostMapping("/users/join")
     public String CreateUser(UserDto form, String username, String password) {
-        return userService.createUser(form);
+        return userService.createUser(form, httpServletRequest);
         // 아이디 중복시 : "users/join_retry" 로 이동
         // 회원가입 성공시 : "/index" 로 이동
     }
