@@ -1,10 +1,17 @@
-# Prometheus
-🔥 먼저 생각하는 사람 🔥
+# 🥕DBmarket 노션 페이지
+https://www.notion.so/elice-track/1-DBmarket-bce722bc7f6949bd94a19d2bdd8afdc9?pvs=4
+
+## wireframe
+https://kdt-gitlab.elice.io/cloud_track/class_04/web_project1/team01/Prometheus/-/blob/dev/src/main/resources/static/project_wireframe.jpg
+
+## erd
+https://kdt-gitlab.elice.io/cloud_track/class_04/web_project1/team01/Prometheus/-/blob/dev/src/main/resources/static/elice_first_project_erd.png
 
 ## 프로젝트 개발 가이드
 https://www.notion.so/elice-track/1-1793655b451e4669864e5e891c7e675c?pvs=25
 
 ## 개발 마일스톤
+https://kdt-gitlab.elice.io/cloud_track/class_04/web_project1/team01/Prometheus/-/milestones
 
 ## 오피스 아워
 **팀별 오피스아워 배정 시간**

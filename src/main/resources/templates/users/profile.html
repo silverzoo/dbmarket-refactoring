@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>블로그 글 목록</title>
+</head>
+<body>
+<main class="container mx-auto px-4 max-w-5xl">
+    <ul>
+        [[${username}]] 님
+        회원번호 (테스트용) = [[${userid}]]
+    </ul>
+    <ul>
+    판매중인 상품
+    </ul>
+
+    <button type="button" id="profile-btn">
+        <a th:href="@{/comments/{userid}(userid=${userid})}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
+            <i data-feather="plus" class="mr-2"></i> 상세보기
+        </a>
+    </button>
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+    </div>
+</main>
+</body>
+</html>

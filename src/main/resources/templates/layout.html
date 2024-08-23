@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(title, content)"
+      class="bg-gradient-to-br from-gray-50 to-blue-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">타이틀 이름</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/itemDetail.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="text-gray-800 leading-relaxed">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="${content}"></div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <!--  NOTE : Feather Icons 라이브러리 로드 -> data-feather 속성을 가진 <i> 태그들을 실제 SVG 아이콘으로 변환  -->
+    <script>feather.replace()</script>
+</body>
+</html>
