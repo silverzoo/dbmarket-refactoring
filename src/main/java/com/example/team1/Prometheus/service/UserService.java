@@ -57,6 +57,12 @@ public class UserService {
         User user = (User) session.getAttribute("user");
         return user.getUserId();
     }
+
+    public User getSessionUser(HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+        return (User) session.getAttribute("user");
+    }
+
 }
 
 
