@@ -8,9 +8,9 @@ public class ItemListViewResponse {
     private final String name;
     private final int price;
 
-    public ItemListViewResponse(ItemDetail itemDetail){
-        this.name = itemDetail.getName();
-        this.price = itemDetail.getPrice();
+    public ItemListViewResponse(Item item){
+        this.name = item.getName();
+        this.price = item.getPrice();
     }
 
 
