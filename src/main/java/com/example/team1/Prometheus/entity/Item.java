@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Table(name="item")
 @Entity
 @Getter
+// TODO 세터 확인
 @Setter
 @ToString
 @NoArgsConstructor
@@ -21,11 +22,20 @@ public class Item {
     @Column(name = "item_id", updatable = false)
     private Long itemId;
 
+    @Column(name = "user_id" , nullable = false)
+    private Long userId;
+
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "price", nullable = false)
     private int price;
+
+    @Column(name = "category", nullable = false)
+    private String category;
+
+    @Column(name = "image_path", nullable = false)
+    private String imagePath;
 
     @Column(name = "description")
     private String description;
@@ -37,7 +47,7 @@ public class Item {
 
     //엔티티 수정될 때 수정시간 저장하는 컬럼 추가
     @LastModifiedDate
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = true)
     private LocalDateTime updatedAt;
 
 }
