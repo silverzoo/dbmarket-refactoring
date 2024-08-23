@@ -2,6 +2,11 @@
     <nav class="bg-white shadow-md py-4 fixed w-full top-0 z-20">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600"><a href="/home">DBmarket</a></h1>
+            <button type="button" id="profile-btn">
+                <a th:href="@{/users/{userid}(userid=${myuserid})}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
+                    <i data-feather="plus" class="mr-2"></i> 마이페이지
+                </a>
+            </button>
             <img src="https://elice.io/images/elice_logo.svg" alt="elice_logo" class="h-8">
         </div>
     </nav>
@@ -12,7 +17,10 @@
         </div>
         <div class="relative z-10 text-center">
             <h1 class="text-5xl font-bold mb-4 shadow-text">DBmarket</h1>
-            <h4 class="text-xl text-blue-100 shadow-text" th:text="${userName}"> DBmarket에 오신 것을 환영합니다.</h4>
+            <div>
+            <h4 class="text-xl text-blue-100 shadow-text" th:text="${username}"> </h4>
+            </div>
+            <h4>DBmarket에 오신 것을 환영합니다.</h4>
 
         </div>
     </div>

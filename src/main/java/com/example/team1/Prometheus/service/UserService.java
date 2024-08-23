@@ -1,7 +1,9 @@
 package com.example.team1.Prometheus.service;
 
+import com.example.team1.Prometheus.entity.Item;
 import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.entity.UserDto;
+import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import com.example.team1.Prometheus.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -13,6 +15,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ItemDetailRepository itemDetailRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -52,6 +57,10 @@ public class UserService {
         return "redirect:/items";
     }
 
+    public String findUserName(Long userId) {
+        return userRepository.findByUserId(userId).getUserName();
+    }
+
     public Long getSession(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
@@ -62,6 +71,7 @@ public class UserService {
         HttpSession session = httpServletRequest.getSession();
         return (User) session.getAttribute("user");
     }
+
 
 }
 
