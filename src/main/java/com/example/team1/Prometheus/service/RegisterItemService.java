@@ -24,6 +24,8 @@ import java.util.UUID;
 public class RegisterItemService {
     private ItemPostRepository itemPostRepository;
     private ItemPostDto itemPostDto;
+    //TODO 아이템 업로드할때 쓰는 HttpServletRequest 에도 session이 있는가?
+    private UserService userService;
 
     public void uploadItemToDb(HttpServletRequest request) throws ServletException, IOException {
         // 작업을 service로 분리
@@ -40,7 +42,7 @@ public class RegisterItemService {
             log.info("name={}", part.getName());
             InputStream inputStream = part.getInputStream();
             String body = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
-            log.info("body={}", body);
+//            log.info("body={}", body);
             //TODO 2 DB저장하기
             //TODO 3 리팩토링
             switch (part.getName()) {
@@ -77,6 +79,7 @@ public class RegisterItemService {
                     break;
             }
         }
+        itemPostDto.setUserId(userService.getSession(request));
         itemPostRepository.save(itemPostDto.toEntity());
     }
 }

@@ -45,6 +45,6 @@ public class RegisterItemController {
             throw new RuntimeException(e);
         }
         //TODO 1 redirection 작업
-        return "registeritemform";
+        return "redirect:/items";
     }
 }
