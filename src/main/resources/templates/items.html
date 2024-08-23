@@ -19,10 +19,10 @@
         <li th:each="item : ${items}">
             <p>상품 이름 - <span th:text="${item.name}"></span></p>
             <p>가격 - <span th:text="${item.price}"></span></p>
-            <button type="button" id="profile-btn"
-                    th:onclick="|location.href='@{/items/id}'|"
-                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
+            <button type="button" id="profile-btn">
+                <a th:href="@{/items/{id}(id=${item.itemId})}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
                 <i data-feather="plus" class="mr-2"></i> 상세보기
+                </a>
             </button>
         </li>
     </ul>

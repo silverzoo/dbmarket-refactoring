@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.sql.Timestamp;
 
+@Table(name="Comment")
 @Entity
 @Getter
 @Setter
@@ -17,11 +18,11 @@ public class Comment {
     private Long commentId;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     User user;
 
-    private String username;
+    private String reviewerName;
     private String content;
-    private Timestamp created_at;
+    private Timestamp createdAt;
 }
 
