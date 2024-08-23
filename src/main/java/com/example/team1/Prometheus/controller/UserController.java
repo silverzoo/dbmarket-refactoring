@@ -1,6 +1,7 @@
 package com.example.team1.Prometheus.controller;
 
 
+import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.entity.UserDto;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,8 +25,6 @@ public class UserController {
     @GetMapping("/home")
     public String welcomeHome(Model model, HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
-
-        System.out.println(session.getAttribute("user"));
 
         if (session.getAttribute("user") != null) {
             return "redirect:/items";
@@ -67,10 +66,14 @@ public class UserController {
 
     // WIP
     // 판매자 프로필 페이지
-    @GetMapping("/users/{username}")
-    public String profile(@PathVariable String username,  Model model) {
+    @GetMapping("/users/{userid}")
+    public String profile(Model model) {
         // 1. 회원 정보 매개변수 전송
-        model.addAttribute("username", username);
+        User user = userService.getSessionUser(httpServletRequest);
+        String userName = user.getUserName();
+        Long userId = user.getUserId();
+        model.addAttribute("userid", userId);
+        model.addAttribute("username", userName);
 
         // 2. 회원 판매 상품 리스트
         //   Item item = itemRepository.findAllById(id);

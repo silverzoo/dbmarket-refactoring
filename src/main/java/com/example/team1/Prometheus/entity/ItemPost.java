@@ -27,7 +27,7 @@ public class ItemPost{
     @Column(name = "category", nullable = false)
     private String category;
 
-    @Column(name = "imagepath", nullable = false)
+    @Column(name = "image_path", nullable = false)
     private String imagePath;
 
     @Column(name = "description")
