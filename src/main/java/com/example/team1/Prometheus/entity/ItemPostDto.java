@@ -14,11 +14,12 @@ import java.time.LocalDateTime;
 public class ItemPostDto{
     private String name;
     private int price;
+    private Long userId;
     private String category;
     private String imagePath;
     private String description;
 
-    public ItemPost toEntity(){
-        return new ItemPost(null,name,price,category,imagePath,description,LocalDateTime.now());
+    public Item toEntity(){
+        return new Item(null,userId,name,price,category,imagePath,description,LocalDateTime.now(),null);
     }
 }
