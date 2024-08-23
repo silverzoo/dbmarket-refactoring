@@ -11,6 +11,18 @@ INSERT INTO item(name, description, price, created_at, updated_at) VALUES
                                                                        ('강아지 고양이 밥그릇','고양이 임시보호할때 사용하고 안 써서 저렴하게 올립니다.',3000,NOW(), NOW()),
                                                                        ('파세코에어컨','이사갈 집에 시스템에어컨이 설치가 되어있는 집이라 27일 오전에 가져가실 분만 연락 기다립니다.',70000,NOW(), NOW()),
                                                                        ('스벅 아아 2잔 5000원', '빠른 입금하실 수 있는 분!',5000,NOW(), NOW());
-INSERT INTO itemtemp(name, price,category,imagePath, description, created_at) VALUES ('asdf',1234,'asdf','asdf','asdf',NOW());
 
+INSERT INTO itemtemp(name, price, category, image_path, description, created_at) VALUES ('asdf',1234,'asdf','asdf','asdf',NOW());
 
+INSERT INTO user(user_name, password) VALUES
+                                          ('김민수','1111'),
+                                          ('이지은','2222'),
+                                          ('김지수','3333'),
+                                          ('이지훈','4444');
+
+INSERT INTO comment(user_id, reviewer_name, content, created_at) VALUES
+                                                                   (1,'이지훈','따뜻한 마음 감사해요.',NOW()),
+                                                                   (1,'이지은','감사합니다^^',NOW()),
+                                                                   (2,'김민수','쿨거래 감사합니다',NOW()),
+                                                                   (2,'김지수','다음에 또 재구매 할게요',NOW()),
+                                                                   (3,'이지은','판매자님이 정말 친절해요',NOW());
