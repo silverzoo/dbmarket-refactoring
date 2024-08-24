@@ -73,6 +73,10 @@ public class UserController {
         model.addAttribute("userid", userid);
         model.addAttribute("username", userName);
 
+        User user = userService.getSessionUser(httpServletRequest);
+        model.addAttribute("myusername", user.getUserName());
+        model.addAttribute("myuserid", user.getUserId());
+
         List<ItemListViewResponse> items = userService.getItemsByUserId(userid);
         model.addAttribute("items", items);
 
