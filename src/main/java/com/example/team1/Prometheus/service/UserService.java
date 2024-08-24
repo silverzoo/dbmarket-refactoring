@@ -6,6 +6,7 @@ import com.example.team1.Prometheus.entity.UserDto;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import com.example.team1.Prometheus.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class UserService {
             userRepository.save(user);
             //return "index";
 
-            HttpSession httpSession = httpServletRequest.getSession();
+            HttpSession httpSession = httpServletRequest.getSession(true);
             httpSession.setAttribute("user", user);
             return "redirect:/items";
         } else {
@@ -49,12 +50,23 @@ public class UserService {
             return "/users/login_retry";
         }
         // 로그인세션 부여
-        HttpSession httpSession = httpServletRequest.getSession();
+        HttpSession httpSession = httpServletRequest.getSession(true);
         httpSession.setAttribute("user", user);
 
         //return "index";
 
         return "redirect:/items";
+    }
+
+    public String logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        if(httpServletRequest.getSession().getAttribute("user") == null) {
+        return "/home";
+        }
+        else {
+            HttpSession session = httpServletRequest.getSession(false);
+            session.invalidate();
+            return "/home";
+        }
     }
 
     public String findUserName(Long userId) {
