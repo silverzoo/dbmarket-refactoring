@@ -18,8 +18,13 @@
                 <h1 class="text-4xl font-bold mb-4 text-gray-800" th:text="${item.name}"></h1>
                 <div class="flex items-center text-gray-600">
                     <i data-feather="calendar" class="mr-2"></i>
-                    <span th:text="${#temporals.format(item.createdAt, 'yyyy년 MM월 dd일 HH:mm')}"></span>
-                    <span th:text="${#temporals.format(item.updatedAt, 'yyyy년 MM월 dd일 HH:mm')}"></span>
+                    <span>등록일: </span>
+                    <span th:text="${#temporals.format(item.createdAt, 'yyyy년 MM월 dd일 HH:mm:ss')}"></span>
+                </div>
+                <div class="flex items-center text-gray-600">
+                    <i data-feather="calendar" class="mr-2"></i>
+                    <span>수정일: </span>
+                    <span th:text="${#temporals.format(item.updatedAt, 'yyyy년 MM월 dd일 HH:mm:ss')}"></span>
                 </div>
             </header>
             <section class="mb-12 prose lg:prose-lg max-w-none">
@@ -28,7 +33,7 @@
             <div class="flex space-x-4">
                 <div>
                     <button type="button" id="modify-btn">
-                        <a th:href="@{/items/{id}/edit(id=${item.itemId})}"
+                        <a th:href="@{/items/edit/{id}(id=${item.itemId})}"
                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
                             <i data-feather="edit-2" class="mr-2"></i> 수정
                         </a>
@@ -43,10 +48,10 @@
                     </form>
                 </div>
                 <div>
-                    <button type="button" id="modify-btn">
-                        <a th:href="@{/users/{userid}(userid=${userid})}"
+                    <button type="button" id="user-btn">
+                        <a th:href="@{/users/{id}(id=${item.userId})}"
                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
-                            <i data-feather="edit-2" class="mr-2"></i> 판매자 정보
+                            <i data-feather="user" class="mr-2"></i> 판매자 정보
                         </a>
                     </button>
                 </div>
