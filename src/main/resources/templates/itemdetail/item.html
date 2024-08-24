@@ -49,7 +49,7 @@
                 </div>
                 <div>
                     <button type="button" id="modify-btn">
-                        <a th:href="@{/users/{userid}(userid=${userid})}"
+                        <a th:href="@{/users/{userid}(userid=${item.userId})}"
                            class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
                             <i data-feather="user" class="mr-2"></i> 판매자 정보
                         </a>

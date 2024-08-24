@@ -5,6 +5,7 @@ import com.example.team1.Prometheus.entity.ItemDetailRequest;
 import com.example.team1.Prometheus.entity.ItemDetailResponse;
 import com.example.team1.Prometheus.service.ItemDetailService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/items")
+@Slf4j
 public class ItemDetailViewController {
     private final ItemDetailService itemDetailService;
 
@@ -20,6 +22,7 @@ public class ItemDetailViewController {
     public String getItem(@PathVariable("id") Long id, Model model) {
         ItemDetailResponse itemDetail = itemDetailService.findById(id);
         model.addAttribute("item", itemDetail);
+       log.info("\n\n 유저아이디 정보 확인: " + itemDetail.getUserId() + "\n\n");
         return "itemdetail/item";
     }
 
