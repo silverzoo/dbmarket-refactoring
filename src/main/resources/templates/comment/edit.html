@@ -11,6 +11,7 @@
         <article>
             <form id="edit-form" method="post" th:action="@{/comments/{commentId}(commentId=${comment.commentId})}">
                 <input type="hidden" name="commentId" th:value="${comment.commentId}"/>
+                <input type="hidden" name="userId" th:value="${comment.userId}"/>
                 <header class="mb-6">
                     <p>댓글 수정하기</p>
                 </header>
