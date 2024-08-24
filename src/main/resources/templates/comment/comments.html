@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+</head>
+<body>
+<main class="container mx-auto px-4 max-w-5xl">
+    <div>
+        <h1>댓글</h1>
+        <ul th:each="comment : ${comments}">
+            <li>
+                <p th:text="${comment.reviewerName}"></p>
+                <p th:text="${comment.content}"></p>
+                <!-- 수정 버튼 -->
+                <!-- th href는 자동으로 get요청 실행-->
+                <a th:href="@{/comments/edit/{commentId}(commentId=${comment.commentId})}" class="btn btn-primary">수정</a>
+
+                <!-- 삭제 버튼 -->
+                <form th:action="@{/comments/{commentId}(commentId=${comment.commentId})}"
+                      method="post"
+                      style="display:inline;">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit" class="btn btn-danger">삭제</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</main>
+</body>
+</html>

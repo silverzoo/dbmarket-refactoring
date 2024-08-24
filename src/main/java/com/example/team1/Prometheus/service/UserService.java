@@ -8,11 +8,18 @@ import com.example.team1.Prometheus.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+
 @Service
 public class UserService {
+    //테스트
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
 
     @Autowired
     private UserRepository userRepository;
@@ -81,7 +88,10 @@ public class UserService {
 
     public User getSessionUser(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
-        return (User) session.getAttribute("user");
+        //테스트
+        User user = (User) session.getAttribute("user");
+        logger.info("Session user found: {}", user.getUserName());
+        return user;
     }
 
 
