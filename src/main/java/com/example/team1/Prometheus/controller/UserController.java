@@ -79,9 +79,6 @@ public class UserController {
 
         List<ItemListViewResponse> items = userService.getItemsByUserId(userid);
         model.addAttribute("items", items);
-
-        //TODO 회원 판매 상품 리스트 구현 해야함
-            //Item item = itemRepository.findAllById(id); ??
             return "users/profile";
 
     }
