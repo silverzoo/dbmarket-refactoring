@@ -1,5 +1,6 @@
 package com.example.team1.Prometheus.controller;
 
+import com.example.team1.Prometheus.entity.CommentDeleteResponse;
 import com.example.team1.Prometheus.entity.CommentRequest;
 import com.example.team1.Prometheus.entity.CommentResponse;
 import com.example.team1.Prometheus.entity.User;
@@ -18,7 +19,6 @@ import java.util.List;
 @RequestMapping("/api/comments")
 public class CommentApiController {
     private final CommentService commentService;
-    private UserService userService;
     @Autowired
     private HttpServletRequest httpServletRequest;
 
@@ -31,28 +31,21 @@ public class CommentApiController {
 
 
     //해당 commentId의 댓글 수정
-    //세션에서 유저 네임= 댓글 객체 리뷰어 네임과 일치하면 해당 댓글을 삭제할 수 있게
-    //모든 댓글에 수정/삭제 버튼은 다 댓글 떠야겠는데..
-    //근데 저 두번째 규칙이 일치해야 수정페이지 -> 삭제 페이지로
     @PutMapping("/{commentId}")
     public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") Long commentId, @RequestBody CommentRequest commentRequest) {
 
-        User user = userService.getSessionUser(httpServletRequest);
-        String userName = user.getUserName();
-
-        CommentResponse response = commentService.updateComment(commentId, commentRequest, userName);
+        CommentResponse response = commentService.updateComment(commentId, commentRequest);
         return ResponseEntity.ok().body(response);
     }
 
-    @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable("commentId") Long commentId) {
-        User user = userService.getSessionUser(httpServletRequest);
-        String userName = user.getUserName();
-
-        commentService.deleteComment(commentId, userName);
+    /*
+    //해당 commentId 댓글 삭제
+    @DeleteMapping("/{Id}")
+    public ResponseEntity<CommentDeleteResponse> deleteComment(Long commentId) {
+        commentService.deleteComment(comment.userId);
         return ResponseEntity.ok().build();
     }
-
+*/
 
 
 }
