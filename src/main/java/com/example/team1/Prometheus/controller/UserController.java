@@ -69,15 +69,19 @@ public class UserController {
 
     // 회원 상세 페이지
     @GetMapping("/users/{userid}")
-    public String profile(@PathVariable Long userid, Model model) {
+    public String profile(@PathVariable Long userid, Model model, HttpServletRequest httpServletRequest) {
         String userName = userService.findUserName(userid);
         model.addAttribute("userid", userid);
         model.addAttribute("username", userName);
 
-        //TODO 회원 판매 상품 리스트 구현 해야함
-        //Item item = itemRepository.findAllById(id); ??
-        return "users/profile";
+
+
+            //TODO 회원 판매 상품 리스트 구현 해야함
+            //Item item = itemRepository.findAllById(id); ??
+            return "users/profile";
+
     }
+
 
 
 }
