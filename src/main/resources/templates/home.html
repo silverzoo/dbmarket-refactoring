@@ -7,29 +7,26 @@
     <title>블로그 글 목록</title>
 </head>
 <body>
-<main class="container mx-auto px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center">
-
-
+<main class="container mx-auto px-4 max-w-3xl bg-white  shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center">
+    <div class="mx-10">
         <button type="button" id="login-btn"
                 th:onclick="|location.href='@{/users/login}'|"
-                class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg margin:10px">
+
+                class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
 
             <i data-feather="plus" class="mr-2"></i> 로그인
         </button>
 
-        <br>
-
-        <br> <br>
+    </div>
 
 
-
+    <div class="mx-10">
         <button type="button" id="create-btn"
             th:onclick="|location.href='@{/users/join}'|"
-                class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg margin:10px">
+                class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
             <i data-feather="user-plus" class="mr-2"></i> 회원가입
         </button>
-
-
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
