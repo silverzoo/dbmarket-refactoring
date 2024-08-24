@@ -5,25 +5,31 @@
     <title>블로그 글 목록</title>
 </head>
 <body>
-<main class="container mx-auto px-4 max-w-5xl">
-    <ul>
+<main class="container mx-auto px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center">
+    <div>
+        <p>
         [[${username}]] 님
-        회원번호 (테스트용) = [[${userid}]]
-    </ul>
-
-    판매중인 상품
-
-
-    <button type="button" id="create-btn"
-            th:onclick="|location.href='@{/comments}'|"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
-        <i data-feather="plus" class="mr-2"></i> 거래 후기
-    </button>
+        <br>
+        회원번호 : [[${userid}]] (테스트)
+        <br>
+        판매중인 상품 리스트
+        <br>
+        </p>
+    </div>
 
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
     </div>
+
 </main>
+<main class="container mx-auto px-4 max-w-3xl overflow-hidden p-8 flex justify-left items-left">
+<button type="button" id="profile-btn">
+    <a th:href="@{/comments/{userid}(userid=${userid})}"
+       class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+        <i data-feather="plus" class="mr-2"></i> 판매자 리뷰 보러가기
+    </a>
+</button>
+</main>>
 </body>
 </html>

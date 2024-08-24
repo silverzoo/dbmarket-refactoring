@@ -11,8 +11,10 @@
 --                                                                       ('강아지 고양이 밥그릇','고양이 임시보호할때 사용하고 안 써서 저렴하게 올립니다.',3000,NOW(), NOW()),
 --                                                                       ('파세코에어컨','이사갈 집에 시스템에어컨이 설치가 되어있는 집이라 27일 오전에 가져가실 분만 연락 기다립니다.',70000,NOW(), NOW()),
 --                                                                       ('스벅 아아 2잔 5000원', '빠른 입금하실 수 있는 분!',5000,NOW(), NOW());
-INSERT INTO item(user_id, name, price, category, image_path,description,created_at, updated_at) VALUES
-(1238124,'아이폰15',123445,'핸드폰','/img/iphone.jpg','친구 아이폰 15라 싸게 팔아요. 상태 SS입니다.',NOW(), NOW());
+INSERT INTO item(user_id, name, price, category, image_path,description,created_at) VALUES
+(1,'아이폰15',123445,'핸드폰','/img/아이폰 이미지.jpg','친구 아이폰 15라 싸게 팔아요. 상태 SS입니다.',NOW()),
+(2,'아이폰15',123445,'핸드폰','/img/아이폰 이미지.jpg','친구 아이폰 15라 싸게 팔아요. 상태 SS입니다.',NOW());
+
 
 
 INSERT INTO user(user_name, password) VALUES

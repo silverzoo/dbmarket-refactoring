@@ -24,7 +24,7 @@ public class ItemDetailViewController {
     }
 
     // NOTE : 수정 페이지로 이동
-    @GetMapping("{id}/edit")
+    @GetMapping("/edit/{id}")
     public String updateItem(@PathVariable("id") Long id, Model model) {
         ItemDetailResponse itemDetail = itemDetailService.findById(id);
         model.addAttribute("item", itemDetail);
