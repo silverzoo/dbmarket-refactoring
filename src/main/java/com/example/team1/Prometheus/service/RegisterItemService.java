@@ -27,7 +27,7 @@ public class RegisterItemService {
     //루트 경로 불러오기
     private final String rootPath = System.getProperty("user.dir");
     // 프로젝트 루트 경로에 있는 img 디렉토리
-    private final String fileDir = rootPath + "/src/main/resources/static/img/";
+    private final String fileDir = rootPath + "/src/main/resources/static/upload/";
     //TODO 아이템 업로드할때 쓰는 HttpServletRequest 에도 session이 있는가?
     private UserService userService;
 
@@ -71,14 +71,14 @@ public class RegisterItemService {
                         // 저장경로 설정해서 활용
 //                String fullPath = fileDir + part.getSubmittedFileName();
                         log.info("filedir = {}" , fileDir);
-                        String fileName = UUID.randomUUID().toString() + extention;
+                        String fileName = UUID.randomUUID() + extention;
                         // UUID.randomUUID() 또 하면 값이 달라짐!
                         String fullPath = fileDir + fileName;
                         log.info("파일 저장 fullPath={}", fullPath);
                         //파일 저장하기(static/img 경로)
                         part.write(fullPath);
                         //Dto 경로 저장
-                        itemPostDto.setImagePath("/img/"+fileName);
+                        itemPostDto.setImagePath("/upload/"+fileName);
                     }
                     break;
                 case "description":
