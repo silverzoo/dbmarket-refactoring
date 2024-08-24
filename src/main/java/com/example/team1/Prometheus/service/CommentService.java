@@ -3,6 +3,7 @@ package com.example.team1.Prometheus.service;
 import com.example.team1.Prometheus.entity.Comment;
 import com.example.team1.Prometheus.entity.CommentRequest;
 import com.example.team1.Prometheus.entity.CommentResponse;
+import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.repository.CommentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,23 @@ public class CommentService {
     public List<Comment> getAllCommentById(Long userId){
         return commentRepository.findAllByUser_UserId(userId);}
 
-    //comment id로 해당 댓글 조회
-    public Comment getCommentById(Long commentId){
-        return commentRepository.findById(commentId).get();
+    //해당 커멘트 아이디로 조히
+    public Comment getCommentById(Long commentId) {
+        return commentRepository.findById(commentId).orElse(null);
     }
 
     @Transactional
-    public CommentResponse updateComment(Long commentId, CommentRequest commentRequest){
+    public CommentResponse updateComment(Long commentId, CommentRequest commentRequest,String userName){
+
+
         //조회
         Comment comment = commentRepository.findById(commentId).orElse(null);
+
+        //댓글 작성자의 이름과 세션의 유저이름이 같지않으면 작성 권한이 없음
+        if (!comment.getReviewerName().equals(userName)) {
+            throw new SecurityException("User not authorized to update this comment");
+        }
+
         //요청 객체 내용 엔티티에 매핑
         comment.setContent(commentRequest.getContent());
         //업데이트된 엔티티 저장
@@ -40,8 +49,14 @@ public class CommentService {
         return new CommentResponse(comment);
 
     }
+    //세션 유저 이름이 커멘트의 리뷰어 이름이랑 같으면 삭제
+    public void deleteComment(String userName){
+        Comment comment = commentRepository.findByReviewerName(userName).orElse(null);
 
-    public void deleteComment(Long commentId){commentRepository.deleteById(commentId);}
+        if (!comment.getReviewerName().equals(userName)) {
+            throw new SecurityException("User not authorized to update this comment");
+        }
+        commentRepository.deleteByReviewerName();}
 
 
 
