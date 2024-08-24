@@ -5,6 +5,11 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### upload img directory ###
+/src/main/resources/static/upload/*.jpg
+/src/main/resources/static/upload/*.png
+
+
 ### STS ###
 .apt_generated
 .classpath

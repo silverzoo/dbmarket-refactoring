@@ -21,8 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemListViewController {
     private final ItemListService itemListService;
-
-    @Autowired
     private final UserService userService;
 
     @GetMapping("/items")
@@ -30,7 +28,7 @@ public class ItemListViewController {
 
         // 마이페이지로 넘어가기 위한 메서드 (로그인 세션 필요)
         User user = userService.getSessionUser(httpServletRequest);
-        model.addAttribute("username", user.getUserName());
+        model.addAttribute("myusername", user.getUserName());
         model.addAttribute("myuserid", user.getUserId());
         // 로그인 세션이 없다면 마이페이지 버튼을 숨기도록?
 
