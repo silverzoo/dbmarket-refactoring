@@ -1,6 +1,7 @@
 package com.example.team1.Prometheus.service;
 
 import com.example.team1.Prometheus.entity.Item;
+import com.example.team1.Prometheus.entity.ItemListViewResponse;
 import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.entity.UserDto;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
@@ -8,21 +9,19 @@ import com.example.team1.Prometheus.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private ItemDetailRepository itemDetailRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
+    private final ItemDetailRepository itemDetailRepository;
 
     // 회원가입 DB 저장 로직
     public String createUser(UserDto form, HttpServletRequest httpServletRequest) {
@@ -83,6 +82,15 @@ public class UserService {
         HttpSession session = httpServletRequest.getSession();
         return (User) session.getAttribute("user");
     }
+
+    public List<ItemListViewResponse> getItemsByUserId(Long userId){
+        User user = userRepository.findByUserId(userId);
+        List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
+        return items.stream()
+                .map(ItemListViewResponse::new)
+                .collect(Collectors.toList());
+    }
+
 
 
 }

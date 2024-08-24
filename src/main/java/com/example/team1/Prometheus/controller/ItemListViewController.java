@@ -21,8 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemListViewController {
     private final ItemListService itemListService;
-
-    @Autowired
     private final UserService userService;
 
     @GetMapping("/items")

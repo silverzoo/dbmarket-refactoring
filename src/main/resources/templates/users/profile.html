@@ -24,12 +24,23 @@
 
 </main>
 <main class="container mx-auto px-4 max-w-3xl overflow-hidden p-8 flex justify-left items-left">
-<button type="button" id="profile-btn">
-    <a th:href="@{/comments/{userid}(userid=${userid})}"
-       class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
-        <i data-feather="plus" class="mr-2"></i> 판매자 리뷰 보러가기
-    </a>
-</button>
+    <ul>
+        <li th:each="item : ${items}">
+            <!--            <p>상품 이미지 - <img th:src="@{/img/}+${item.imagePath}" alt="image"></p>-->
+            <p>상품 이미지 - <img th:src="${item.imagePath}" alt="image"></p>
+            <!--            로컬테스트가 어려움-->
+            <p>상품 카테고리 - <span th:text="${item.category}"></span></p>
+            <p>상품 이름 - <span th:text="${item.name}"></span></p>
+            <p>가격 - <span th:text="${item.price}"></span></p>
+            <button type="button" id="profile-btn">
+                <a th:href="@{/comments/{userid}(userid=${userid})}"
+                   class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                    <i data-feather="plus" class="mr-2"></i> 판매자 리뷰 보러가기
+                </a>
+            </button>
+        </li>
+    </ul>
+
 </main>>
 </body>
 </html>
