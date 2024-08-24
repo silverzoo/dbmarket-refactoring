@@ -10,7 +10,7 @@
         <div class="container mx-auto px-4 flex justify-end items-left">
 
             <div class="mx-3 my-2">
-        <button type="button" id="profile-btn">
+        <button type="button" id="mypage-btn">
             <a th:href="@{/users/{userid}(userid=${myuserid})}"
                class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
                 <i data-feather="user" class="mr-2"></i> 마이페이지
@@ -19,7 +19,7 @@
             </div>
 
             <div class="mx-3 my-2">
-        <button type="button" id="profile-btn">
+        <button type="button" id="logout-btn">
             <a th:href="@{/users/logout}"
                class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
                 <i data-feather="log-out" class="mr-2"></i> 로그아웃
@@ -38,7 +38,7 @@
         <div class="relative z-10 text-center">
             <h1 class="text-5xl font-bold mb-4 shadow-text">DBmarket</h1>
             <div>
-            <h4 class="text-xl text-blue-100 shadow-text" th:text="${username}"> </h4>
+            <h4 class="text-xl text-blue-100 shadow-text" th:text="${myusername}"> </h4>
             </div>
             <h4>DBmarket에 오신 것을 환영합니다.</h4>
 

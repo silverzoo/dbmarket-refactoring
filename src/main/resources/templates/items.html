@@ -10,7 +10,7 @@
 <main class="container mx-auto px-4 max-w-5xl">
     <button type="button" id="create-btn"
             th:onclick="|location.href='@{/registeritem}'|"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
+            class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
         <i data-feather="plus" class="mr-2"></i> 글 등록
     </button>
 
@@ -24,7 +24,8 @@
             <p>상품 이름 - <span th:text="${item.name}"></span></p>
             <p>가격 - <span th:text="${item.price}"></span></p>
             <button type="button" id="profile-btn">
-                <a th:href="@{/items/{id}(id=${item.itemId})}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
+                <a th:href="@{/items/{id}(id=${item.itemId})}"
+                   class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
                 <i data-feather="plus" class="mr-2"></i> 상세보기
                 </a>
             </button>
