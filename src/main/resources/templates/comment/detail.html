@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>댓글 상세 페이지</title>
+</head>
+<body>
+<main class="container mx-auto px-4 max-w-5xl">
+    <button type="button" id="create-btn"
+            th:onclick="|location.href='@{/comments/{userId}(userId=${comment.userId})}'|"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
+        <i data-feather="arrow-left" class="mr-2"></i> 목록으로 돌아가기
+    </button>
+
+    <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+        <article class="p-8">
+            <input type="hidden" id="comment-id" th:value="${comment.commentId}">
+            <input type="hidden" id="user-id" th:value="${comment.userId}">
+            <section class="mb-12 prose lg:prose-lg max-w-none">
+
+                <header class="mb-8 pb-8 border-b border-gray-200">
+                    <p class="text-lg leading-relaxed text-gray-700" th:text="${comment.reviewerName}"></p>
+                </header>
+                <p class="text-lg leading-relaxed text-gray-700" th:text="${comment.content}"></p>
+            </section>
+            <div class="flex space-x-4">
+                <div>
+                        <button type="button" id="modify-btn">
+                            <a th:href="@{/comments/edit/{commentId}(commentId=${comment.commentId})}"
+                               class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
+                                <i data-feather="edit-2" class="mr-2"></i> 수정
+                            </a>
+                        </button>
+                    </button>
+                </div>
+                <div>
+                    <form id="delete-form" method="post" action="#">
+                        <button type="submit" id="delete-comment-btn"
+                                class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
+                            <i data-feather="trash-2" class="mr-2"></i> 삭제
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </article>
+    </div>
+</main>
+</body>
+</html>
