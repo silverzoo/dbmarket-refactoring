@@ -5,6 +5,7 @@ import com.example.team1.Prometheus.entity.ItemDetailRequest;
 import com.example.team1.Prometheus.entity.ItemDetailResponse;
 import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.service.ItemDetailService;
+import com.example.team1.Prometheus.service.UserFilter;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +20,14 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ItemDetailViewController {
     private final ItemDetailService itemDetailService;
-    private final UserService userService;
+    private final UserFilter userFilter;
     
     // NOTE : 상세 페이지로 이동
     @GetMapping("/{id}")
-    public String getItem(@PathVariable("id") Long id, Model model, HttpServletRequest httpServletRequest) {
-        // 로그인 세션 빌런
-        User user = userService.getSessionUser(httpServletRequest);
-        model.addAttribute("myusername", user.getUserName());
-        model.addAttribute("myuserid", user.getUserId());
+    public String getItem(@PathVariable("id") Long id, Model model) {
+
+        // 세션
+        userFilter.findUserByFilter(model);
 
         ItemDetailResponse itemDetail = itemDetailService.findById(id);
         model.addAttribute("item", itemDetail);
@@ -37,12 +37,9 @@ public class ItemDetailViewController {
 
     // NOTE : 수정 페이지로 이동
     @GetMapping("/edit/{id}")
-    public String updateItem(@PathVariable("id") Long id, Model model, HttpServletRequest httpServletRequest) {
-        // 로그인 세션 빌런
-        User user = userService.getSessionUser(httpServletRequest);
-        model.addAttribute("myusername", user.getUserName());
-        model.addAttribute("myuserid", user.getUserId());
-
+    public String updateItem(@PathVariable("id") Long id, Model model) {
+        // 세션
+        userFilter.findUserByFilter(model);
         ItemDetailResponse itemDetail = itemDetailService.findById(id);
         model.addAttribute("item", itemDetail);
         return "itemdetail/edit";

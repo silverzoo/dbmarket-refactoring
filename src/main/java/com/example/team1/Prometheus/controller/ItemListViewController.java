@@ -3,6 +3,7 @@ package com.example.team1.Prometheus.controller;
 import com.example.team1.Prometheus.entity.ItemListViewResponse;
 import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.service.ItemListService;
+import com.example.team1.Prometheus.service.UserFilter;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,16 +22,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemListViewController {
     private final ItemListService itemListService;
-    private final UserService userService;
+    private final UserFilter userFilter;
 
     @GetMapping("/items")
-    public String getAllItems(Model model, HttpServletRequest httpServletRequest) {
+    public String getAllItems(Model model) {
 
-        // 마이페이지로 넘어가기 위한 메서드 (로그인 세션 필요)
-        User user = userService.getSessionUser(httpServletRequest);
-        model.addAttribute("myusername", user.getUserName());
-        model.addAttribute("myuserid", user.getUserId());
-        // 로그인 세션이 없다면 마이페이지 버튼을 숨기도록?
+        // 세션
+        userFilter.findUserByFilter(model);
+
 
         List<ItemListViewResponse> items = itemListService.getAllItems();
         model.addAttribute("items",items);

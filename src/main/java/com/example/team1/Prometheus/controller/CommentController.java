@@ -2,6 +2,7 @@ package com.example.team1.Prometheus.controller;
 
 import com.example.team1.Prometheus.entity.*;
 import com.example.team1.Prometheus.service.CommentService;
+import com.example.team1.Prometheus.service.UserFilter;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +20,13 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-    private final UserService userService;
+    private final UserFilter userFilter;
 
     // 모든 댓글 조회
     @GetMapping("/{userId}")
-    public String getAllCommentById(@PathVariable long userId, Model model, HttpServletRequest httpServletRequest){
-        //로그인 세션 빌런
-        User user = userService.getSessionUser(httpServletRequest);
-        model.addAttribute("myusername", user.getUserName());
-        model.addAttribute("myuserid", user.getUserId());
+    public String getAllCommentById(@PathVariable long userId, Model model){
+        // 세션
+        userFilter.findUserByFilter(model);
 
         List<CommentResponse> comments = commentService.getAllCommentById(userId);
         model.addAttribute("comments",comments);
@@ -37,11 +36,9 @@ public class CommentController {
 
     // 상세 페이지로 이동
     @GetMapping("/detail/{commentId}")
-    public String getComment(@PathVariable Long commentId, Model model, HttpServletRequest httpServletRequest) {
-        // 로그인 세션 빌런
-        User user = userService.getSessionUser(httpServletRequest);
-        model.addAttribute("myusername", user.getUserName());
-        model.addAttribute("myuserid", user.getUserId());
+    public String getComment(@PathVariable Long commentId, Model model) {
+        // 세션
+        userFilter.findUserByFilter(model);
 
         CommentResponse comment = commentService.getCommentById(commentId);
         model.addAttribute("comment", comment);

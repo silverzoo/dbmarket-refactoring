@@ -7,12 +7,12 @@ import com.example.team1.Prometheus.entity.UserDto;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import com.example.team1.Prometheus.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -24,10 +24,18 @@ public class UserService {
     private final ItemDetailRepository itemDetailRepository;
 
     // 회원가입 DB 저장 로직
-    public String createUser(UserDto form, HttpServletRequest httpServletRequest) {
+    public String createUser(UserDto form, String password_check, HttpServletRequest httpServletRequest) {
+
         User user = form.toEntity();
-        // 아이디 중복검사 로직
         User name = userRepository.findByUserName(form.getUsername());
+        // 비밀번호 이중확인 로직
+        // MD-5 암호화
+        String password1 = Encrypt.md5(user.getPassword());
+        String password2 = Encrypt.md5(password_check);
+
+        if (!password1.equals(password2)) {
+            return "/users/join_wrongpassword";
+        }
         if (name == null) {
             userRepository.save(user);
             //return "index";
@@ -44,8 +52,16 @@ public class UserService {
     public String login(String username, String password, HttpServletRequest httpServletRequest) {
         // 입력한 username-password 를 모두 충족하지 못하면 null
         User user = userRepository.findByUserNameAndPassword(username, password);
+
         // 로그인 검증 로직
         if (user == null) {
+            return "/users/login_retry";
+        }
+        // MD-5 암호화
+        String password1 = Encrypt.md5(password);
+        String password2 = Encrypt.md5(user.getPassword());
+
+        if (!password1.equals(password2)) {
             return "/users/login_retry";
         }
         // 로그인세션 부여
@@ -57,7 +73,7 @@ public class UserService {
         return "redirect:/items";
     }
 
-    public String logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public String logout(HttpServletRequest httpServletRequest) {
         if(httpServletRequest.getSession().getAttribute("user") == null) {
         return "/home";
         }
@@ -76,11 +92,6 @@ public class UserService {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         return user.getUserId();
-    }
-
-    public User getSessionUser(HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-        return (User) session.getAttribute("user");
     }
 
     public List<ItemListViewResponse> getItemsByUserId(Long userId){
