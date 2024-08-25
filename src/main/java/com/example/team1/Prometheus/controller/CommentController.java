@@ -23,7 +23,7 @@ public class CommentController {
 
     //모든 댓글
     @GetMapping("/{userId}")
-    public String getAllCommentById(@PathVariable Long userId, Model model, HttpServletRequest httpServletRequest){
+    public String getAllCommentById(@PathVariable long userId, Model model, HttpServletRequest httpServletRequest){
         //로그인 세션 빌런
         User user = userService.getSessionUser(httpServletRequest);
         model.addAttribute("myusername", user.getUserName());
@@ -35,6 +35,18 @@ public class CommentController {
     }
 
 
+    // 상세 페이지로 이동
+    @GetMapping("/detail/{commentId}")
+    public String getComment(@PathVariable Long commentId, Model model, HttpServletRequest httpServletRequest) {
+        // 로그인 세션 빌런
+        User user = userService.getSessionUser(httpServletRequest);
+        model.addAttribute("myusername", user.getUserName());
+        model.addAttribute("myuserid", user.getUserId());
+
+        CommentResponse comment = commentService.getCommentById(commentId);
+        model.addAttribute("comment", comment);
+        return "comment/detail";
+    }
 
     //댓글 수정 페이지 이동
     @GetMapping("edit/{commentId}")
@@ -44,8 +56,8 @@ public class CommentController {
         return "comment/edit";
     }
 
-    //수정 후 리다이렉트
-    @PostMapping("/{commentId}")
+    //수정 후 상세 페이지로 리다이렉트
+    @PostMapping("/detail/{commentId}")
     public String updateComment(@PathVariable("commentId") Long commentId,
                                 @ModelAttribute CommentRequest commentRequest) {
 

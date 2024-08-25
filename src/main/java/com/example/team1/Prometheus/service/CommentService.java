@@ -22,7 +22,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     // 해당 아이디의 유저 모든 comment를 CommentResponse 리스트로 리턴
-    public List<CommentResponse> getAllCommentById(Long userId) {
+    public List<CommentResponse> getAllCommentById(long userId) {
         List<Comment> comments = commentRepository.findAllByUser_UserId(userId);
 
         // Comment를 CommentResponse로 변환
@@ -32,7 +32,7 @@ public class CommentService {
     }
 
     //해당 커멘트 아이디로 조회
-    public CommentResponse getCommentById(Long commentId) {
+    public CommentResponse getCommentById(long commentId) {
         return new CommentResponse(commentRepository.findById(commentId).orElse(null));
     }
 
@@ -50,8 +50,7 @@ public class CommentService {
 
     }
 
-
-    public void deleteComment(Long commentId){
+    public void deleteComment(long commentId){
         commentRepository.deleteById(commentId);
     }
 

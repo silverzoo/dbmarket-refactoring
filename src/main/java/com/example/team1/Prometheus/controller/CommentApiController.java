@@ -1,9 +1,6 @@
 package com.example.team1.Prometheus.controller;
 
-import com.example.team1.Prometheus.entity.CommentDeleteResponse;
-import com.example.team1.Prometheus.entity.CommentRequest;
-import com.example.team1.Prometheus.entity.CommentResponse;
-import com.example.team1.Prometheus.entity.User;
+import com.example.team1.Prometheus.entity.*;
 import com.example.team1.Prometheus.service.CommentService;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,28 +21,37 @@ public class CommentApiController {
 
     //판매자의 모든 댓글 조회
     @GetMapping("/{userId}")
-    public ResponseEntity<List<CommentResponse>> getAllCommentById(@PathVariable("userId") Long userId) {
+    public ResponseEntity<List<CommentResponse>> getAllCommentById(@PathVariable("userId") long userId) {
         List<CommentResponse> commentResponses = commentService.getAllCommentById(userId);
         return ResponseEntity.ok().body(commentResponses);
     }
 
 
+    //댓글 상세 페이지의 데이터 조회
+    @GetMapping("/detail/{commentId}")
+    public ResponseEntity<CommentResponse> getCommentById(@PathVariable("commentId") long commentId) {
+        CommentResponse commentResponse = commentService.getCommentById(commentId);
+
+        return ResponseEntity.ok().body(commentResponse);
+    }
+
+
     //해당 commentId의 댓글 수정
-    @PutMapping("/{commentId}")
-    public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") Long commentId, @RequestBody CommentRequest commentRequest) {
+    @PutMapping("/detail/{commentId}")
+    public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") long commentId, @RequestBody CommentRequest commentRequest) {
 
         CommentResponse response = commentService.updateComment(commentId, commentRequest);
         return ResponseEntity.ok().body(response);
     }
 
-    /*
+
     //해당 commentId 댓글 삭제
-    @DeleteMapping("/{Id}")
-    public ResponseEntity<CommentDeleteResponse> deleteComment(Long commentId) {
-        commentService.deleteComment(comment.userId);
+    @DeleteMapping("/detail/{commentId}")
+    public ResponseEntity<CommentDeleteResponse> deleteComment(@PathVariable("commentId") long commentId) {
+        commentService.deleteComment(commentId);
         return ResponseEntity.ok().build();
     }
-*/
+
 
 
 }
