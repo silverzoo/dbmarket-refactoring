@@ -7,12 +7,12 @@ import com.example.team1.Prometheus.entity.UserDto;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import com.example.team1.Prometheus.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -24,10 +24,14 @@ public class UserService {
     private final ItemDetailRepository itemDetailRepository;
 
     // 회원가입 DB 저장 로직
-    public String createUser(UserDto form, HttpServletRequest httpServletRequest) {
+    public String createUser(UserDto form, String password_check, HttpServletRequest httpServletRequest) {
+
         User user = form.toEntity();
-        // 아이디 중복검사 로직
         User name = userRepository.findByUserName(form.getUsername());
+        // 비밀번호 이중확인 로직
+        if (!user.getPassword().equals(password_check)) {
+            return "/users/join_wrongpassword";
+        }
         if (name == null) {
             userRepository.save(user);
             //return "index";
