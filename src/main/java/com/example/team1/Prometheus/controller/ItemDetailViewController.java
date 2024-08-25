@@ -14,14 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/items")
-@Slf4j
 public class ItemDetailViewController {
     private final ItemDetailService itemDetailService;
     private final UserFilter userFilter;
-    
+
     // NOTE : 상세 페이지로 이동
     @GetMapping("/{id}")
     public String getItem(@PathVariable("id") Long id, Model model) {
@@ -31,27 +31,34 @@ public class ItemDetailViewController {
 
         ItemDetailResponse itemDetail = itemDetailService.findById(id);
         model.addAttribute("item", itemDetail);
-       log.info("\n\n 유저아이디 정보 확인: " + itemDetail.getUserId() + "\n\n");
+        log.info("\n\n 유저아이디 정보 확인: " + itemDetail.getUserId() + "\n\n");
+
         return "itemdetail/item";
     }
 
     // NOTE : 수정 페이지로 이동
     @GetMapping("/edit/{id}")
-    public String updateItem(@PathVariable("id") Long id, Model model) {
+    public String updateItem(@PathVariable("id") Long id, Model model, HttpServletRequest req) {
+
         // 세션
         userFilter.findUserByFilter(model);
+        String refer = userFilter.getHeader(req);
+        log.info(STR."\n\n상세 조회에서 세션 헤더 정보: \{refer}\n\n");
+
         ItemDetailResponse itemDetail = itemDetailService.findById(id);
         model.addAttribute("item", itemDetail);
         return "itemdetail/edit";
     }
 
-     // NOTE : 수정 후 상세페이지로 리다이렉트
-     // Q : 뷰 컨트롤러에서도 API 컨트롤러에서도 updateItem 메서드가 호출되는데 한쪽에서만 해당 메서드가 처리되는 것이 맞는지?
+    // NOTE : 수정 후 상세페이지로 리다이렉트
     @PostMapping("/{id}")
     public String updateItem(@PathVariable("id") Long id, @ModelAttribute ItemDetailRequest request) {
         itemDetailService.updateItem(id, request);
-        return "redirect:/items/" + id; // 수정 후 상세 페이지로 리다이렉트
+        return "redirect:/items/" + id;
     }
 
 
+
+
+    // TODO: 판매자 정보페이지에서 삭제 시, 판매자 정보 뷰로 돌아가게 하기
 }

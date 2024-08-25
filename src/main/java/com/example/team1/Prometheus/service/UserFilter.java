@@ -40,4 +40,8 @@ public class UserFilter implements Filter{
     public void destroy() {
         Filter.super.destroy();
     }
+
+    public String getHeader(HttpServletRequest request) {
+        return request.getHeader("referer");
+    }
 }
