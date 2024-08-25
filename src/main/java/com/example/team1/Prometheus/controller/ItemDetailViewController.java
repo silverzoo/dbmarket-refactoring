@@ -1,12 +1,10 @@
 package com.example.team1.Prometheus.controller;
 
-import com.example.team1.Prometheus.entity.Item;
-import com.example.team1.Prometheus.entity.ItemDetailRequest;
-import com.example.team1.Prometheus.entity.ItemDetailResponse;
-import com.example.team1.Prometheus.entity.User;
+import com.example.team1.Prometheus.entity.ItemModifyRequest;
+import com.example.team1.Prometheus.entity.ItemModifyResponse;
+import com.example.team1.Prometheus.entity.ItemResponse;
 import com.example.team1.Prometheus.service.ItemDetailService;
 import com.example.team1.Prometheus.service.UserFilter;
-import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +27,9 @@ public class ItemDetailViewController {
         // 세션
         userFilter.findUserByFilter(model);
 
-        ItemDetailResponse itemDetail = itemDetailService.findById(id);
-        model.addAttribute("item", itemDetail);
-        log.info("\n\n 유저아이디 정보 확인: " + itemDetail.getUserId() + "\n\n");
+        ItemResponse item = itemDetailService.findById(id);
+        model.addAttribute("item", item);
+        log.info("\n\n 유저아이디 정보 확인: " + item.getUserId() + "\n\n");
 
         return "itemdetail/item";
     }
@@ -45,15 +43,17 @@ public class ItemDetailViewController {
         String refer = userFilter.getHeader(req);
         log.info(STR."\n\n상세 조회에서 세션 헤더 정보: \{refer}\n\n");
 
-        ItemDetailResponse itemDetail = itemDetailService.findById(id);
-        model.addAttribute("item", itemDetail);
+        ItemResponse item = itemDetailService.findById(id);
+        model.addAttribute("item", item);
         return "itemdetail/edit";
     }
 
     // NOTE : 수정 후 상세페이지로 리다이렉트
     @PostMapping("/{id}")
-    public String updateItem(@PathVariable("id") Long id, @ModelAttribute ItemDetailRequest request) {
-        itemDetailService.updateItem(id, request);
+    public String updateItem(@PathVariable("id") Long id, @ModelAttribute ItemModifyRequest request) {
+
+        // FIXME: 뷰에 값은 잘 전송되는데 로그로는 왜 null만 뜨는지?
+        log.info("\n\n상품 수정 되었나요?: {}\n\n", itemDetailService.updateItem(id, request));
         return "redirect:/items/" + id;
     }
 
