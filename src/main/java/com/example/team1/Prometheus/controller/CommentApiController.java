@@ -19,7 +19,7 @@ public class CommentApiController {
     @Autowired
     private HttpServletRequest httpServletRequest;
 
-    //판매자의 모든 댓글 조회
+    // 판매자의 모든 댓글 조회
     @GetMapping("/{userId}")
     public ResponseEntity<List<CommentResponse>> getAllCommentById(@PathVariable("userId") long userId) {
         List<CommentResponse> commentResponses = commentService.getAllCommentById(userId);
@@ -27,7 +27,7 @@ public class CommentApiController {
     }
 
 
-    //댓글 상세 페이지의 데이터 조회
+    // 댓글 상세 페이지의 데이터 조회
     @GetMapping("/detail/{commentId}")
     public ResponseEntity<CommentResponse> getCommentById(@PathVariable("commentId") long commentId) {
         CommentResponse commentResponse = commentService.getCommentById(commentId);
@@ -36,7 +36,7 @@ public class CommentApiController {
     }
 
 
-    //해당 commentId의 댓글 수정
+    // 해당 commentId의 댓글 수정
     @PutMapping("/detail/{commentId}")
     public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") long commentId, @RequestBody CommentRequest commentRequest) {
 
@@ -45,7 +45,7 @@ public class CommentApiController {
     }
 
 
-    //해당 commentId 댓글 삭제
+    // 해당 commentId 댓글 삭제
     @DeleteMapping("/detail/{commentId}")
     public ResponseEntity<CommentDeleteResponse> deleteComment(@PathVariable("commentId") long commentId) {
         commentService.deleteComment(commentId);

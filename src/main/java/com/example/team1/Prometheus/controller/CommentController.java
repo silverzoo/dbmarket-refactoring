@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//유저의 후기 조회
+// 유저의 후기 조회
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/comments")
@@ -21,7 +21,7 @@ public class CommentController {
     private final CommentService commentService;
     private final UserService userService;
 
-    //모든 댓글
+    // 모든 댓글 조회
     @GetMapping("/{userId}")
     public String getAllCommentById(@PathVariable long userId, Model model, HttpServletRequest httpServletRequest){
         //로그인 세션 빌런
@@ -48,7 +48,7 @@ public class CommentController {
         return "comment/detail";
     }
 
-    //댓글 수정 페이지 이동
+    // 댓글 수정 페이지 이동
     @GetMapping("edit/{commentId}")
     public String updateComment(@PathVariable("commentId") Long commentId, Model model){
         CommentResponse comment = commentService.getCommentById(commentId);
@@ -56,7 +56,7 @@ public class CommentController {
         return "comment/edit";
     }
 
-    //수정 후 상세 페이지로 리다이렉트
+    // 수정 후 상세 페이지로 리다이렉트
     @PostMapping("/detail/{commentId}")
     public String updateComment(@PathVariable("commentId") Long commentId,
                                 @ModelAttribute CommentRequest commentRequest) {
