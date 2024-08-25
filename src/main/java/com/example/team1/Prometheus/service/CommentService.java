@@ -38,14 +38,14 @@ public class CommentService {
 
     @Transactional
     public CommentResponse updateComment(Long commentId, CommentRequest commentRequest){
-        //조회
+        // 조회
         Comment comment = commentRepository.findById(commentId).orElse(null);
 
-        //요청 객체 내용 엔티티에 매핑
+        // 요청 객체 내용 엔티티에 매핑
         comment.setContent(commentRequest.getContent());
-        //업데이트된 엔티티 저장
+        // 업데이트된 엔티티 저장
         commentRepository.save(comment);
-        //업데이트된 엔티티를 응답 DTO로 반환
+        // 업데이트된 엔티티를 응답 DTO로 반환
         return new CommentResponse(comment);
 
     }
