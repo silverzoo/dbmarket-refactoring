@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Table(name="item")
 @Entity
 @Getter
-// TODO 세터 확인
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +26,10 @@ public class Item {
 
     @Column(name = "user_id" , nullable = false)
     private Long userId;
+
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+//    User user;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -49,5 +53,4 @@ public class Item {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 }

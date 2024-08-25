@@ -28,14 +28,22 @@ public class ItemDetailService {
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
 
         // 2. 요청 객체의 내용을 엔티티에 매핑
-        item.setName(request.getName());
-        item.setDescription(request.getDescription());
+        Item updatedItem = Item.builder()
+                .itemId(item.getItemId())
+                .userId(item.getUserId())
+                .name(request.getName())
+                .price(item.getPrice())
+                .category(item.getCategory())
+                .imagePath(item.getImagePath())
+                .description(request.getDescription())
+                .createdAt(item.getCreatedAt())
+                .build();
 
         // 3. 업데이트된 엔티티를 저장
-        itemDetailRepository.save(item);
+        itemDetailRepository.save(updatedItem);
 
         // 4. 업데이트된 엔티티를 응답 DTO로 반환
-        return new ItemDetailResponse(item);
+        return new ItemDetailResponse(updatedItem);
     }
 
     public void deleteItem(long id) {
