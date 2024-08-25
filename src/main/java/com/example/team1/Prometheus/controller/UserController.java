@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Optional;
+
 @RequiredArgsConstructor
 @Controller
 public class UserController {
     private final UserService userService;
     private final UserFilter userFilter;
 
+    private Long useridForRedirect;
+
     // 첫 홈 화면
     @GetMapping("/home")
-    public String welcomeHome(Model model, HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-
+    public String welcomeHome(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
             return "redirect:/items";
         }
@@ -69,30 +69,31 @@ public class UserController {
     // 회원 상세 페이지
     @GetMapping("/users/{userid}")
     public String profile(@PathVariable Long userid, Model model) {
+        useridForRedirect = userid;
+            return "redirect:/users/profile";
+
+    }
+    @GetMapping("/users/profile")
+    public String profile(Model model) {
+        Long userid = useridForRedirect;
         String userName = userService.findUserName(userid);
         model.addAttribute("userid", userid);
         model.addAttribute("username", userName);
 
         // 세션
         userFilter.findUserByFilter(model);
-
-        List<ItemListViewResponse> items = userService.getItemsByUserId(userid);
-        model.addAttribute("items", items);
-            return "users/profile";
-
+        userService.getItemsByUserId(userid, model);
+        useridForRedirect = null;
+        return "users/profile";
     }
 
     // 마이페이지
     @GetMapping("/users/mypage")
     public String mypage(Model model, HttpServletRequest request) {
         Long userid = userService.getSession(request);
-
-
-        // 세션
         userFilter.findUserByFilter(model);
+        userService.getItemsByUserId(userid, model);
 
-        List<ItemListViewResponse> items = userService.getItemsByUserId(userid);
-        model.addAttribute("items", items);
         return "users/mypage";
 
     }

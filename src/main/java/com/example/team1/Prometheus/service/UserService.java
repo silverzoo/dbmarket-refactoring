@@ -10,16 +10,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
-
-
     private final UserRepository userRepository;
     private final ItemDetailRepository itemDetailRepository;
 
@@ -36,13 +34,14 @@ public class UserService {
         if (!password1.equals(password2)) {
             return "/users/join_wrongpassword";
         }
+        // DB가 비어있을 때만 save()
         if (name == null) {
             userRepository.save(user);
-            //return "index";
-
+            // 회원가입 성공시 세션 부여
             HttpSession httpSession = httpServletRequest.getSession(true);
             httpSession.setAttribute("user", user);
             return "redirect:/items";
+            // 이미 존재하는 계정일 경우
         } else {
             return "/users/join_retry";
         }
@@ -64,19 +63,19 @@ public class UserService {
         if (!password1.equals(password2)) {
             return "/users/login_retry";
         }
-        // 로그인세션 부여
+        // 로그인 성공시 세션 부여
         HttpSession httpSession = httpServletRequest.getSession(true);
         httpSession.setAttribute("user", user);
-
-        //return "index";
 
         return "redirect:/items";
     }
 
     public String logout(HttpServletRequest httpServletRequest) {
-        if(httpServletRequest.getSession().getAttribute("user") == null) {
-        return "/home";
+        // 세션이 이미 없는 경우
+        if (httpServletRequest.getSession().getAttribute("user") == null) {
+            return "/home";
         }
+        // 세션 제거
         else {
             HttpSession session = httpServletRequest.getSession(false);
             session.invalidate();
@@ -88,20 +87,18 @@ public class UserService {
         return userRepository.findByUserId(userId).getUserName();
     }
 
+
     public Long getSession(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         return user.getUserId();
     }
 
-    public List<ItemListViewResponse> getItemsByUserId(Long userId){
+    public void getItemsByUserId(Long userId, Model model) {
         User user = userRepository.findByUserId(userId);
         List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
-        return items.stream()
-                .map(ItemListViewResponse::new)
-                .collect(Collectors.toList());
+        model.addAttribute("items", items.stream().map(ItemListViewResponse::new).collect(Collectors.toList()));
     }
-
 
 
 }
