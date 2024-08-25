@@ -20,13 +20,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Optional;
+
 @RequiredArgsConstructor
 @Controller
 public class UserController {
     private final UserService userService;
     private final UserFilter userFilter;
+
+    private Long useridForRedirect;
 
     // 첫 홈 화면
     @GetMapping("/home")
@@ -68,6 +69,13 @@ public class UserController {
     // 회원 상세 페이지
     @GetMapping("/users/{userid}")
     public String profile(@PathVariable Long userid, Model model) {
+        useridForRedirect = userid;
+            return "redirect:/users/profile";
+
+    }
+    @GetMapping("/users/profile")
+    public String profile(Model model) {
+        Long userid = useridForRedirect;
         String userName = userService.findUserName(userid);
         model.addAttribute("userid", userid);
         model.addAttribute("username", userName);
@@ -75,9 +83,8 @@ public class UserController {
         // 세션
         userFilter.findUserByFilter(model);
         userService.getItemsByUserId(userid, model);
-
-            return "users/profile";
-
+        useridForRedirect = null;
+        return "users/profile";
     }
 
     // 마이페이지
