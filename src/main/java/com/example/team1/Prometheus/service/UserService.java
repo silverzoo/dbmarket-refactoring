@@ -29,7 +29,11 @@ public class UserService {
         User user = form.toEntity();
         User name = userRepository.findByUserName(form.getUsername());
         // 비밀번호 이중확인 로직
-        if (!user.getPassword().equals(password_check)) {
+        // MD-5 암호화
+        String password1 = Encrypt.md5(user.getPassword());
+        String password2 = Encrypt.md5(password_check);
+
+        if (!password1.equals(password2)) {
             return "/users/join_wrongpassword";
         }
         if (name == null) {
@@ -48,8 +52,16 @@ public class UserService {
     public String login(String username, String password, HttpServletRequest httpServletRequest) {
         // 입력한 username-password 를 모두 충족하지 못하면 null
         User user = userRepository.findByUserNameAndPassword(username, password);
+
         // 로그인 검증 로직
         if (user == null) {
+            return "/users/login_retry";
+        }
+        // MD-5 암호화
+        String password1 = Encrypt.md5(password);
+        String password2 = Encrypt.md5(user.getPassword());
+
+        if (!password1.equals(password2)) {
             return "/users/login_retry";
         }
         // 로그인세션 부여
