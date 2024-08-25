@@ -5,6 +5,10 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### mapper files ###
+/src/main/generated/com/example/team1/Prometheus/mapper/*Impl.java
+
+
 ### upload img directory ###
 /src/main/resources/static/upload/*.jpg
 /src/main/resources/static/upload/*.png
