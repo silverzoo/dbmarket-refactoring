@@ -57,7 +57,7 @@ public class UserService {
         return "redirect:/items";
     }
 
-    public String logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public String logout(HttpServletRequest httpServletRequest) {
         if(httpServletRequest.getSession().getAttribute("user") == null) {
         return "/home";
         }
@@ -76,11 +76,6 @@ public class UserService {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         return user.getUserId();
-    }
-
-    public User getSessionUser(HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-        return (User) session.getAttribute("user");
     }
 
     public List<ItemListViewResponse> getItemsByUserId(Long userId){

@@ -6,6 +6,7 @@ import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.entity.UserDto;
 import com.example.team1.Prometheus.repository.UserRepository;
 import com.example.team1.Prometheus.service.ItemListService;
+import com.example.team1.Prometheus.service.UserFilter;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,8 +26,7 @@ import java.util.Optional;
 @Controller
 public class UserController {
     private final UserService userService;
-    private final HttpServletRequest httpServletRequest;
-    private final ItemListService itemListService;
+    private final UserFilter userFilter;
 
     // 첫 홈 화면
     @GetMapping("/home")
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping("/users/join")
-    public String CreateUser(UserDto form) {
+    public String CreateUser(UserDto form, HttpServletRequest httpServletRequest) {
         return userService.createUser(form, httpServletRequest);
     }
 
@@ -62,24 +62,38 @@ public class UserController {
     }
 
     @GetMapping("/users/logout")
-    public String logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        return userService.logout(httpServletRequest,httpServletResponse);
+    public String logout(HttpServletRequest httpServletRequest) {
+        return userService.logout(httpServletRequest);
     }
 
     // 회원 상세 페이지
     @GetMapping("/users/{userid}")
-    public String profile(@PathVariable Long userid, Model model, HttpServletRequest httpServletRequest) {
+    public String profile(@PathVariable Long userid, Model model) {
         String userName = userService.findUserName(userid);
         model.addAttribute("userid", userid);
         model.addAttribute("username", userName);
 
-        User user = userService.getSessionUser(httpServletRequest);
-        model.addAttribute("myusername", user.getUserName());
-        model.addAttribute("myuserid", user.getUserId());
+        // 세션
+        userFilter.findUserByFilter(model);
 
         List<ItemListViewResponse> items = userService.getItemsByUserId(userid);
         model.addAttribute("items", items);
             return "users/profile";
+
+    }
+
+    // 마이페이지
+    @GetMapping("/users/mypage")
+    public String mypage(Model model, HttpServletRequest request) {
+        Long userid = userService.getSession(request);
+
+
+        // 세션
+        userFilter.findUserByFilter(model);
+
+        List<ItemListViewResponse> items = userService.getItemsByUserId(userid);
+        model.addAttribute("items", items);
+        return "users/mypage";
 
     }
 
