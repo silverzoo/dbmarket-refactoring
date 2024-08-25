@@ -4,18 +4,12 @@ import com.example.team1.Prometheus.entity.ItemPostDto;
 import com.example.team1.Prometheus.repository.ItemPostRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.Part;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
-import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.UUID;
 
 
@@ -24,7 +18,6 @@ import java.util.UUID;
 @Slf4j
 public class RegisterItemService {
     private ItemPostRepository itemPostRepository;
-    private ItemPostDto itemPostDto;
     //루트 경로 불러오기
     private final String rootPath = System.getProperty("user.dir");
     // 프로젝트 루트 경로에 있는 img 디렉토리
