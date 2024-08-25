@@ -3,7 +3,9 @@ package com.example.team1.Prometheus.service;
 import com.example.team1.Prometheus.entity.User;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 

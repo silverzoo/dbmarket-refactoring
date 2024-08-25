@@ -30,9 +30,8 @@ public class UserController {
 
     // 첫 홈 화면
     @GetMapping("/home")
-    public String welcomeHome(Model model, HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-
+    public String welcomeHome(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
             return "redirect:/items";
         }
@@ -75,9 +74,8 @@ public class UserController {
 
         // 세션
         userFilter.findUserByFilter(model);
+        userService.getItemsByUserId(userid, model);
 
-        List<ItemListViewResponse> items = userService.getItemsByUserId(userid);
-        model.addAttribute("items", items);
             return "users/profile";
 
     }
@@ -86,13 +84,9 @@ public class UserController {
     @GetMapping("/users/mypage")
     public String mypage(Model model, HttpServletRequest request) {
         Long userid = userService.getSession(request);
-
-
-        // 세션
         userFilter.findUserByFilter(model);
+        userService.getItemsByUserId(userid, model);
 
-        List<ItemListViewResponse> items = userService.getItemsByUserId(userid);
-        model.addAttribute("items", items);
         return "users/mypage";
 
     }
