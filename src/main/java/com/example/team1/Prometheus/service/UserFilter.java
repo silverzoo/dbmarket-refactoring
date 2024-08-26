@@ -27,14 +27,17 @@ public class UserFilter implements Filter{
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         user = (User) ((HttpServletRequest) request).getSession().getAttribute("user");
+        if (user != null) {
+            System.out.println(user.getUserName());
+        }
         filterChain.doFilter(request, response);
 
     }
 
-    public void findUserByFilter(Model model){
+    public User findUserByFilter(Model model){
         model.addAttribute("myusername", user.getUserName());
         model.addAttribute("myuserid", user.getUserId());
-        user = null;
+        return user;
     }
 
 

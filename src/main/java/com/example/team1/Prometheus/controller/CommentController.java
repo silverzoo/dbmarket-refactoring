@@ -25,8 +25,6 @@ public class CommentController {
     // 모든 댓글 조회
     @GetMapping("/{userId}")
     public String getAllCommentById(@PathVariable long userId, Model model){
-        // 세션
-        userFilter.findUserByFilter(model);
 
         List<CommentResponse> comments = commentService.getAllCommentById(userId);
         model.addAttribute("comments",comments);
@@ -45,8 +43,6 @@ public class CommentController {
     // 상세 페이지로 이동
     @GetMapping("/detail/{commentId}")
     public String getComment(@PathVariable Long commentId, Model model) {
-        // 세션
-        userFilter.findUserByFilter(model);
 
         CommentResponse comment = commentService.getCommentById(commentId);
         model.addAttribute("comment", comment);

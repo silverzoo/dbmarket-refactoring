@@ -27,9 +27,6 @@ public class ItemListViewController {
     @GetMapping("/items")
     public String getAllItems(Model model) {
 
-        // 세션
-        userFilter.findUserByFilter(model);
-
 
         List<ItemListViewResponse> items = itemListService.getAllItems();
         model.addAttribute("items",items);
