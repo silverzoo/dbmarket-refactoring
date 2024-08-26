@@ -24,8 +24,6 @@ public class ItemDetailViewController {
     @GetMapping("/{id}")
     public String getItem(@PathVariable("id") Long id, Model model) {
 
-        // 세션
-        userFilter.findUserByFilter(model);
 
         ItemResponse item = itemDetailService.findById(id);
         model.addAttribute("item", item);
@@ -38,8 +36,6 @@ public class ItemDetailViewController {
     @GetMapping("/edit/{id}")
     public String updateItem(@PathVariable("id") Long id, Model model, HttpServletRequest req) {
 
-        // 세션
-        userFilter.findUserByFilter(model);
         String refer = userFilter.getHeader(req);
         log.info("\n\n상세 조회에서 세션 헤더 정보: {}\n\n", refer);
 

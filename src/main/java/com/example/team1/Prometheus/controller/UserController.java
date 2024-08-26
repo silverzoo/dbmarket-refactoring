@@ -80,8 +80,6 @@ public class UserController {
         model.addAttribute("userid", userid);
         model.addAttribute("username", userName);
 
-        // 세션
-        userFilter.findUserByFilter(model);
         userService.getItemsByUserId(userid, model);
         useridForRedirect = null;
         return "users/profile";
@@ -89,10 +87,9 @@ public class UserController {
 
     // 마이페이지
     @GetMapping("/users/mypage")
-    public String mypage(Model model, HttpServletRequest request) {
-        Long userid = userService.getSession(request);
-        userFilter.findUserByFilter(model);
-        userService.getItemsByUserId(userid, model);
+    public String mypage(Model model) {
+        User user = userFilter.findUserByFilter(model);
+        userService.getItemsByUserId(user.getUserId(), model);
 
         return "users/mypage";
 
