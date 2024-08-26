@@ -49,3 +49,5 @@ public class RegisterItemService {
         itemPostRepository.save(itemPostDto.toEntity());
     }
 }
+
+//TODO repository 사용해서 데이터 저장만을 하는 서비스를 구현할 것
