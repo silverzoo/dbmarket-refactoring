@@ -4,10 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>상품 목록</title>
-
 </head>
 <body>
 <main class="container mx-auto px-4 max-w-5xl">
+    <!--    아이템 삭제 후 메시지 출력    -->
+    <div id="deleteMsg" th:data-value="${message}"></div>
+    <div id="deleteError" th:data-value="${error}"></div>
+
     <button type="button" id="create-btn"
             th:onclick="|location.href='@{/registeritem}'|"
             class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">

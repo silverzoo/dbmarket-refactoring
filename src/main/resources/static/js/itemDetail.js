@@ -16,7 +16,6 @@
 //             })
 //         })
 //             .then(() => {
-//                 // FIXME : alert() 적용 안됨
 //                 alert('수정이 완료되었습니다.');
 //                 location.replace(`/home`);
 //             });
@@ -24,17 +23,17 @@
 // }
 
 // 삭제 기능
-const deleteBtn = document.getElementById('delete-btn');
-
-if (deleteBtn) {
-    deleteBtn.addEventListener('click', event => {
-        let id = document.getElementById('article-id').value;
-        fetch(`/api/items/${id}`, {
-            method: 'DELETE'
-        })
-        .then(() => {
-            alert('삭제가 완료되었습니다.');
-            location.replace(`/items`);
-        });
-    });
-}
+// const deleteBtn = document.getElementById('delete-btn');
+//
+// if (deleteBtn) {
+//     deleteBtn.addEventListener('click', event => {
+//         let id = document.getElementById('item-id').value;
+//         fetch(`/api/items/${id}`, {
+//             method: 'DELETE'
+//         })
+//         .then(() => {
+//             alert('삭제가 완료되었습니다.');
+//             location.replace(`/items`);
+//         });
+//     });
+// }

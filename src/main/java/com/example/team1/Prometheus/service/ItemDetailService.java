@@ -52,7 +52,7 @@ public class ItemDetailService {
         Item savedItem = itemDetailRepository.save(finalItem);
 
         // 5. 저장된 엔티티를 DTO로 변환하여 반환
-        return itemMapper.toResponse(savedItem);
+        return itemMapper.toModifyResponse(savedItem);
     }
 
     @Transactional
