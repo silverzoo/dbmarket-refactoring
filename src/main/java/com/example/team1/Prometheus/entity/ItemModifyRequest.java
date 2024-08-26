@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemDetailRequest {
-    private Long itemId;
+public class ItemModifyRequest {
     private String name;
+    private int price;
+    private String category;
+    private String imagePath;
     private String description;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }
