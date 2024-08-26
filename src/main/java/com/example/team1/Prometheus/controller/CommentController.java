@@ -33,6 +33,14 @@ public class CommentController {
         return "comment/comments";
     }
 
+    // 댓글 작성
+    @PostMapping("/create")
+    public String createComment(@ModelAttribute CommentRequest commentRequest,
+                                @RequestParam("reviewerName") String reviewerName) {
+        commentService.createComment(commentRequest, reviewerName);
+        return "redirect:/comments/" + commentRequest.getUserId();
+    }
+
 
     // 상세 페이지로 이동
     @GetMapping("/detail/{commentId}")
