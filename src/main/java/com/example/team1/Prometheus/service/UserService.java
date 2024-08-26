@@ -28,11 +28,14 @@ public class UserService {
         User name = userRepository.findByUserName(form.getUsername());
         // 비밀번호 이중확인 로직
         // MD-5 암호화
+        if (user.getUserName().contains(" ") || user.getPassword().contains(" ")) {
+            return "/users/join";
+        }
+
         String password1 = Encrypt.md5(user.getPassword());
         String password2 = Encrypt.md5(password_check);
-
         if (!password1.equals(password2)) {
-            return "/users/join_wrongpassword";
+            return "/users/join";
         }
         // DB가 비어있을 때만 save()
         if (name == null) {
@@ -99,7 +102,6 @@ public class UserService {
         List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
         model.addAttribute("items", items.stream().map(ItemListViewResponse::new).collect(Collectors.toList()));
     }
-
 
 }
 
