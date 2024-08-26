@@ -27,9 +27,9 @@ public class UserFilter implements Filter{
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         user = (User) ((HttpServletRequest) request).getSession().getAttribute("user");
-        if (user != null) {
-            System.out.println(user.getUserName());
-        }
+//        if (user != null) {
+//            System.out.println(user.getUserName());
+//        }
         filterChain.doFilter(request, response);
 
     }

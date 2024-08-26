@@ -84,9 +84,14 @@ public class UserService {
             return "/home";
         }
     }
+    public User findUserById(Long userId){
+        return userRepository.findByUserId(userId);
+    }
+
 
     public String findUserName(Long userId) {
-        return userRepository.findByUserId(userId).getUserName();
+        User user = findUserById(userId);
+        return user.getUserName();
     }
 
 
@@ -101,7 +106,6 @@ public class UserService {
         List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
         model.addAttribute("items", items.stream().map(ItemListViewResponse::new).collect(Collectors.toList()));
     }
-
 }
 
 
