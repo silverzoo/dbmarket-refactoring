@@ -7,12 +7,12 @@
 </head>
 <body>
 <main class="container mx-auto px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center">
-    <form action="/users/login" method="post">
+    <form action="/users/login" method="post" onsubmit="return validateForm()">
         <p></p>
-        <input type="text" name="username"
+        <input type="text" name="username" id="username"
                class="px-4 py-3 text-2xl font-semibold border-b-2 border-purple-100 focus:border-purple-500 transition duration-300 bg-transparent focus:outline-none"
                placeholder="아이디"><br>
-        <input type="password" name="password"
+        <input type="password" name="password" id="password"
                class="px-4 py-3 text-2xl font-semibold border-b-2 border-purple-100 focus:border-purple-500 transition duration-300 bg-transparent focus:outline-none"
                placeholder="비밀번호"><br>
         <br>
@@ -22,6 +22,18 @@
         </button>
 
     </form>
+    <script>
+        function validateForm() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username.indexOf(' ') >= 0 || password.indexOf(' ') >= 0) {
+                alert("아이디와 비밀번호에는 공백을 입력할 수 없습니다.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </main>
 
 </body>
