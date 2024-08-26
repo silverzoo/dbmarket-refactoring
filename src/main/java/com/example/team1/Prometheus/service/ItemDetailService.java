@@ -3,18 +3,41 @@ package com.example.team1.Prometheus.service;
 import com.example.team1.Prometheus.entity.*;
 import com.example.team1.Prometheus.mapper.ItemMapper;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ItemDetailService {
     private final ItemDetailRepository itemDetailRepository;
     private final ItemMapper itemMapper;
+    private final UserService userService;
 
     @Transactional
-    public ItemResponse findById(long id) {
+    public ItemResponse findById(long id, HttpServletRequest httpServletRequest) {
+
+        Item item = itemDetailRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Item not found: " + id));
+
+        // TODO: 로그인한 유저의 ID를 가져오기
+        Long userId = userService.getSession(httpServletRequest);
+        log.info("\n\n세션정보: {}\n\n", userId);
+
+        // TODO: 로그인한 유저와 아이템의 판매자 비교
+        if(item.getUserId()!=(userId)) {
+            throw new SecurityException("수정 권한이 없습니다.");
+        }
+
+        return itemMapper.toItemResponse(item);
+    }
+
+
+    @Transactional
+    public ItemResponse viewIteam(long id) {
 
         Item item = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Item not found: " + id));
@@ -56,10 +79,18 @@ public class ItemDetailService {
     }
 
     @Transactional
-    public ItemDeleteResponse deleteItem(long id) {
+    public ItemDeleteResponse deleteItem(long id, HttpServletRequest httpServletRequest) {
 
         Item item = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+
+        // TODO: 로그인한 유저의 ID를 가져오기
+        Long userId = userService.getSession(httpServletRequest);
+
+        // TODO: 로그인한 유저와 아이템의 판매자 비교
+        if(item.getUserId()!=(userId)) {
+            throw new SecurityException("삭제 권한이 없습니다.");
+        }
 
         itemDetailRepository.deleteById(id);
 
