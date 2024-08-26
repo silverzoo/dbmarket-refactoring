@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -12,7 +13,7 @@ public class CommentResponse {
     private Long userId;
     private String reviewerName;
     private String content;
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     public CommentResponse(Comment comment){
         this.commentId = comment.getCommentId();

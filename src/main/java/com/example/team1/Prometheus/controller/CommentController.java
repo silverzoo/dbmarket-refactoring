@@ -25,7 +25,7 @@ public class CommentController {
     // 모든 댓글 조회
     @GetMapping("/{userId}")
     public String getAllCommentById(@PathVariable long userId, Model model){
-
+        userFilter.findUserByFilter(model);
         List<CommentResponse> comments = commentService.getAllCommentById(userId);
         model.addAttribute("comments",comments);
         return "comment/comments";

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,5 +17,5 @@ public class CommentRequest {
     private Long userId;  //?
     private String reviewerName;
     private String content;
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 }
