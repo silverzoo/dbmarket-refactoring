@@ -2,8 +2,9 @@ package com.example.team1.Prometheus.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.sql.Timestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.time.LocalDateTime;
 
 @Table(name="comment")
 @Entity
@@ -11,6 +12,7 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Comment {
 
     @Id
@@ -23,6 +25,8 @@ public class Comment {
 
     private String reviewerName;
     private String content;
-    private Timestamp createdAt;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 }
 
