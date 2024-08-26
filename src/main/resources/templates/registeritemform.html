@@ -43,14 +43,14 @@
     <div class="flex-container">
         <h1>제품 등록</h1>
 <!--        action에 post 보낼 링크 설정, 빈 폼 확인 -->
-        <form action="" method="post" id="postform" onsubmit="handleOnsubmit()" enctype="multipart/form-data">
+        <form action="" method="post" name="itemInfo" onsubmit="handleOnsubmit()" enctype="multipart/form-data">
             <!-- form은 name까지 넣어야 입력이 들어감 -->
-            상품명 : <input type="text" name="name" id="name"><br>
-            가격 : <input type="number" name="price" id="price"><br>
+            상품명 : <input type="text" name="itemInfo.name" id="name"><br>
+            가격 : <input type="number" name="itemInfo.price" id="price"><br>
         
             <br>
             <h3>카테고리</h3>
-            <select name="category" id="category">
+            <select name="itemInfo.category" id="category">
                 <option value="카테고리">카테고리</option>
                 <option value="핸드폰">핸드폰</option>
                 <option value="카메라">카메라</option>
@@ -60,9 +60,9 @@
             <!-- 비동기방식 -->
             <div class="wrapper">
                     <h3>상품 이미지</h3>
-                    <img src="https://i0.wp.com/adventure.co.kr/wp-content/uploads/2020/09/no-image.jpg" class="image-box"/><br>
-                    <label for="imgFile" class="upload-btn">
-                        <input id="imgFile" type="file" accept="image/*" name="imgFile" />
+                    <img src="https://i0.wp.com/adventure.co.kr/wp-content/uploads/2020/09/no-image.jpg" class="image-box" alt="no-image"/><br>
+                    <label for="itemImage" class="upload-btn">
+                        <input id="itemImage" type="file" accept="image/*" name="itemImage" />
                         <span>Upload Image</span>
                     </label>
             </div><br>
@@ -76,7 +76,7 @@
                 </label>
             </div> -->
             <h3>상품 설명</h3>
-            <textarea name="description" id="description" cols="30" rows="5"></textarea><br>
+            <textarea name="itemInfo.description" id="description" cols="30" rows="5"></textarea><br>
             <input type="submit" value="제품 등록">
         </form>
        

@@ -1,18 +1,15 @@
 package com.example.team1.Prometheus.controller;
 
+import com.example.team1.Prometheus.entity.ItemPostDto;
 import com.example.team1.Prometheus.service.RegisterItemService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.Part;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Collection;
 
 //TODO 상품등록 요청이 있을경우 REST컨트롤러 변경
 @Controller
@@ -30,21 +27,23 @@ public class RegisterItemController {
     public String register() {
         return "registeritemform";
     }
-
     @PostMapping
-    public String saveFileV1(HttpServletRequest request){
+    public String saveFormToDb(@ModelAttribute("itemPostDto") ItemPostDto itemPostDto, HttpServletRequest httpServletRequest){
 
-        log.info("request={}", request);
+        // form name=itemInfo하니까 인식됨, 객체로 인식
+        log.info("itemInfo={}", itemPostDto.getItemInfo());
+        log.info("itemInfo={}", itemPostDto.getItemInfo().getName());
+        log.info("itemImage={}", itemPostDto.getItemImage().getOriginalFilename());
 
         //DB저장작업
         try {
-            registerItemService.uploadItemToDb(request);
+            registerItemService.uploadItemToDb(itemPostDto, httpServletRequest);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //TODO 1 redirection 작업
+        //redirection 작업
         return "redirect:/items";
     }
 }
