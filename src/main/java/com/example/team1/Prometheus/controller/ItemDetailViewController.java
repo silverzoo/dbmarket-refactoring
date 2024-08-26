@@ -5,7 +5,6 @@ import com.example.team1.Prometheus.entity.ItemModifyRequest;
 import com.example.team1.Prometheus.entity.ItemModifyResponse;
 import com.example.team1.Prometheus.entity.ItemResponse;
 import com.example.team1.Prometheus.service.ItemDetailService;
-import com.example.team1.Prometheus.service.UserFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,14 +19,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/items")
 public class ItemDetailViewController {
     private final ItemDetailService itemDetailService;
-    private final UserFilter userFilter;
 
     // NOTE : 상세 페이지로 이동
     @GetMapping("/{id}")
     public String getItem(@PathVariable("id") Long id, Model model) {
 
 
-        ItemResponse item = itemDetailService.findById(id);
+        ItemResponse item = itemDetailService.viewIteam(id);
         model.addAttribute("item", item);
 
         log.info("\n\n아이템 확인: {}\n\n", item);
@@ -37,14 +35,19 @@ public class ItemDetailViewController {
 
     // NOTE : 수정 페이지로 이동
     @GetMapping("/edit/{id}")
-    public String updateItem(@PathVariable("id") Long id, Model model, HttpServletRequest req) {
+    public String updateItem(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
 
-        String refer = userFilter.getHeader(req);
+        try {
+            String refer = httpServletRequest.getHeader("referer");
+            log.info("\n\n상세 조회에서 세션 헤더 정보: {}\n\n", refer);
 
-        log.info("\n\n상세 조회에서 세션 헤더 정보: {}\n\n", refer);
+            ItemResponse item = itemDetailService.findById(id, httpServletRequest);
+            model.addAttribute("item", item);
 
-        ItemResponse item = itemDetailService.findById(id);
-        model.addAttribute("item", item);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/items";
+        }
 
         return "itemdetail/edit";
     }
@@ -61,15 +64,16 @@ public class ItemDetailViewController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteItem(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    public String deleteItem(@PathVariable("id") Long id, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
 
         try {
-            ItemDeleteResponse res = itemDetailService.deleteItem(id);
+            ItemDeleteResponse res = itemDetailService.deleteItem(id, httpServletRequest);
             log.info("\n\n상품 삭제 확인: {}\n\n", res);
 
             redirectAttributes.addFlashAttribute("message", "삭제되었습니다.");
+
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "삭제 실패: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
         return "redirect:/items";
