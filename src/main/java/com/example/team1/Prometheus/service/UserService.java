@@ -22,16 +22,15 @@ public class UserService {
     private final ItemDetailRepository itemDetailRepository;
 
     // 회원가입 DB 저장 로직
-    public String createUser(UserDto form, String password_check, HttpServletRequest httpServletRequest) {
-
+    public String createUser(UserDto form, String password_check,HttpServletRequest httpServletRequest) {
         User user = form.toEntity();
         User name = userRepository.findByUserName(form.getUsername());
-        // 비밀번호 이중확인 로직
-        // MD-5 암호화
-        if (user.getUserName().contains(" ") || user.getPassword().contains(" ")) {
+        // id, password 가 비어있는지 확인
+        if (user.getUserName().contains(" ") || user.getPassword().contains(" ") || user.getUserName().isEmpty() || user.getPassword().isEmpty()) {
             return "/users/join";
         }
-
+        // 비밀번호 이중확인 로직
+        // MD-5 암호화
         String password1 = Encrypt.md5(user.getPassword());
         String password2 = Encrypt.md5(password_check);
         if (!password1.equals(password2)) {

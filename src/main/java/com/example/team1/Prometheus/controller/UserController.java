@@ -42,12 +42,12 @@ public class UserController {
     }
 
     @GetMapping("/users/join")
-    public String joinForm() {
+    public String joinForm(Model model) {
         return "users/join";
     }
 
     @PostMapping("/users/join")
-    public String CreateUser(UserDto form,@RequestParam("password_check") String password_check, HttpServletRequest httpServletRequest) {
+    public String CreateUser(UserDto form,@RequestParam("password_check") String password_check,HttpServletRequest httpServletRequest) {
         return userService.createUser(form, password_check, httpServletRequest);
     }
 
