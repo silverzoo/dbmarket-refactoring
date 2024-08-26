@@ -9,7 +9,7 @@
     <div class="bg-white shadow-2xl rounded-lg overflow-hidden p-8 transform hover:scale-105 transition duration-300">
         <article>
             <form id="edit-form" method="post" th:action="@{/items/{id}(id=${item.itemId})}">
-                <input type="hidden" id="article-id" name="itemId" th:value="${item.itemId}">
+                <input type="hidden" id="item-id" name="itemId" th:value="${item.itemId}">
 
                 <header class="mb-6">
                     <input type="text" class="w-full px-4 py-3 text-2xl font-semibold border-b-2 border-purple-300 focus:border-purple-500 transition duration-300 bg-transparent focus:outline-none" placeholder="제목을 입력하세요" name="name" th:value="${item.name}">
