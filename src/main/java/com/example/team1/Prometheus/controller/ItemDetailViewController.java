@@ -41,7 +41,7 @@ public class ItemDetailViewController {
         // 세션
         userFilter.findUserByFilter(model);
         String refer = userFilter.getHeader(req);
-        log.info(STR."\n\n상세 조회에서 세션 헤더 정보: \{refer}\n\n");
+        log.info("\n\n상세 조회에서 세션 헤더 정보: {}\n\n", refer);
 
         ItemResponse item = itemDetailService.findById(id);
         model.addAttribute("item", item);

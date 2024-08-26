@@ -28,7 +28,7 @@ public class ItemDetailService {
 
         // 1. 엔티티를 데이터베이스에서 조회
         Item item = itemDetailRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(STR."not found : \{id}"));
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
 
         // 2. DTO를 엔티티로 변환
         Item updatedItem = itemMapper.toEntity(request);
@@ -59,7 +59,7 @@ public class ItemDetailService {
     public ItemDeleteResponse deleteItem(long id) {
 
         Item item = itemDetailRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(STR."not found: \{id}"));
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
 
         itemDetailRepository.deleteById(id);
 
