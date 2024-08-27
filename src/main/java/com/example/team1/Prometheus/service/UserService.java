@@ -94,6 +94,10 @@ public class UserService {
         return user.getUserName();
     }
 
+    public User findUserByUsername(String username) {
+        return userRepository.findByUserName(username);
+    }
+
 
     public Long getSession(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
