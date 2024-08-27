@@ -23,17 +23,18 @@
                 </header>
                 <p class="text-lg leading-relaxed text-gray-700" th:text="${comment.content}"></p>
             </section>
+
             <div class="flex space-x-4">
-                <div>
+                <div th:if="${user1 == user2}">
                         <button type="button" id="modify-btn">
                             <a th:href="@{/comments/edit/{commentId}(commentId=${comment.commentId})}"
                                class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
                                 <i data-feather="edit-2" class="mr-2"></i> 수정
                             </a>
                         </button>
-                    </button>
                 </div>
-                <div>
+                <div th:if="${user1 == user2}">
+
                     <form id="delete-form" method="post" action="#">
                         <button type="submit" id="delete-comment-btn"
                                 class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
@@ -45,6 +46,8 @@
             </div>
         </article>
     </div>
+
 </main>
 </body>
 </html>
+
