@@ -9,6 +9,7 @@
 <main class="container mx-auto px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center">
     <form action="/users/join" method="post" onsubmit="return validateForm()">
 
+        <p th:if="${param.error != null }"> 이미 존재하는 계정입니다. </p>
         <input type="text" name="username" id="username"
                class="px-4 py-3 text-2xl font-semibold border-b-2 border-purple-100 focus:border-purple-500 transition duration-300 bg-transparent focus:outline-none"
                placeholder="아이디"><br>

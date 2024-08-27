@@ -2,6 +2,8 @@ package com.example.team1.Prometheus.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,6 +15,7 @@ import lombok.*;
 @Table
 public class User {
     @Id
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
@@ -21,6 +24,7 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
 
 }
 

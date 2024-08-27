@@ -1,9 +1,7 @@
 package com.example.team1.Prometheus.service;
 
-import com.example.team1.Prometheus.entity.Item;
-import com.example.team1.Prometheus.entity.ItemListViewResponse;
-import com.example.team1.Prometheus.entity.User;
-import com.example.team1.Prometheus.entity.UserDto;
+import com.example.team1.Prometheus.entity.*;
+import com.example.team1.Prometheus.repository.CommentRepository;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import com.example.team1.Prometheus.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +18,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final ItemDetailRepository itemDetailRepository;
+    private final CommentRepository commentRepository;
 
     // 회원가입 DB 저장 로직
     public String createUser(UserDto form, String password_check,HttpServletRequest httpServletRequest) {
@@ -45,7 +44,7 @@ public class UserService {
             return "redirect:/items";
             // 이미 존재하는 계정일 경우
         } else {
-            return "/users/join_retry";
+            return "redirect:/users/join?error=already_exists";
         }
     }
 
@@ -56,14 +55,14 @@ public class UserService {
 
         // 로그인 검증 로직
         if (user == null) {
-            return "/users/login_retry";
+            return "redirect:/users/login?error= not_exist";
         }
         // MD-5 암호화
         String password1 = Encrypt.md5(password);
         String password2 = Encrypt.md5(user.getPassword());
 
         if (!password1.equals(password2)) {
-            return "/users/login_retry";
+            return "redirect:/users/login?error=wrong_password";
         }
         // 로그인 성공시 세션 부여
         HttpSession httpSession = httpServletRequest.getSession(true);
@@ -113,6 +112,24 @@ public class UserService {
 
     public void isSessionAvailable(Model model) {
         model.addAttribute("isSessionAvailable","false");
+    }
+
+    public void deleteItemsByUserId(Long userId){
+        User user = userRepository.findByUserId(userId);
+        List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
+
+        for (Item item : items) {
+            System.out.println(item.getName() + "삭제");
+            itemDetailRepository.delete(item);
+        }
+        List<Comment> comments = commentRepository.findAllByUser_UserId(user.getUserId());
+
+        for (Comment comment : comments) {
+            commentRepository.delete(comment);
+        }
+
+
+
     }
 }
 
