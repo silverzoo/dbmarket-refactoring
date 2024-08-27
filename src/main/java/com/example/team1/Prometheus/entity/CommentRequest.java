@@ -18,4 +18,5 @@ public class CommentRequest {
     private String reviewerName;
     private String content;
     private LocalDateTime createdAt;
+    private long rating;
 }
