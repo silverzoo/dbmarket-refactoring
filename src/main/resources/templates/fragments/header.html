@@ -7,7 +7,8 @@
             <img src="https://elice.io/images/elice_logo.svg" alt="elice_logo" class="h-8">
         </div>
 
-        <div class="container mx-auto px-4 flex justify-end items-left">
+
+        <div class="container mx-auto px-4 flex justify-end items-left" th:if="${isSessionAvailable != 'false'}">
 
             <div class="mx-3 my-2">
         <button type="button" id="mypage-btn">

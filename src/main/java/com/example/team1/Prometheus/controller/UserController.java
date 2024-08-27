@@ -29,27 +29,32 @@ public class UserController {
         if (session.getAttribute("user") != null) {
             return "redirect:/items";
         } else {
+           userService.isSessionAvailable(model);
             return "/home";
         }
     }
 
     @GetMapping("/users/join")
     public String joinForm(Model model) {
+        userService.isSessionAvailable(model);
         return "users/join";
     }
 
     @PostMapping("/users/join")
-    public String CreateUser(UserDto form, @RequestParam("password_check") String password_check, HttpServletRequest httpServletRequest) {
+    public String CreateUser(UserDto form, @RequestParam("password_check") String password_check, HttpServletRequest httpServletRequest, Model model) {
+        userService.isSessionAvailable(model);
         return userService.createUser(form, password_check, httpServletRequest);
     }
 
     @GetMapping("/users/login")
-    public String login() {
+    public String login(Model model) {
+        userService.isSessionAvailable(model);
         return "users/login";
     }
 
     @PostMapping("/users/login")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest httpServletRequest) {
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest httpServletRequest,Model model) {
+        userService.isSessionAvailable(model);
         return userService.login(username, password, httpServletRequest);
     }
 
