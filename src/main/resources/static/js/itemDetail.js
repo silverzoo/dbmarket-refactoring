@@ -21,13 +21,14 @@
 //             });
 //     });
 // }
-
+//
 // 삭제 기능
 // const deleteBtn = document.getElementById('delete-btn');
 //
 // if (deleteBtn) {
 //     deleteBtn.addEventListener('click', event => {
-//         let id = document.getElementById('item-id').value;
+//         const idEl = document.getElementById('item-id');
+//         const id = idEl? idEl.value : null;
 //         fetch(`/api/items/${id}`, {
 //             method: 'DELETE'
 //         })

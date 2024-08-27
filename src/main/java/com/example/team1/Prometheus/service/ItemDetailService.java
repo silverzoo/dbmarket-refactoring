@@ -1,6 +1,9 @@
 package com.example.team1.Prometheus.service;
 
 import com.example.team1.Prometheus.entity.*;
+import com.example.team1.Prometheus.exception.NotFoundItemById;
+import com.example.team1.Prometheus.exception.UnauthorizedDeleteByUser;
+import com.example.team1.Prometheus.exception.UnauthorizedModifyByUser;
 import com.example.team1.Prometheus.mapper.ItemMapper;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,40 +21,36 @@ public class ItemDetailService {
     private final UserService userService;
 
     @Transactional
+    public ItemResponse viewItem(long id) {
+
+        Item item = itemDetailRepository.findById(id)
+                .orElseThrow(() ->  new NotFoundItemById(id));
+
+        return itemMapper.toItemResponse(item);
+    }
+
+    @Transactional
     public ItemResponse findById(long id, HttpServletRequest httpServletRequest) {
 
         Item item = itemDetailRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Item not found: " + id));
+                .orElseThrow(() -> new NotFoundItemById(id));
 
-        // TODO: 로그인한 유저의 ID를 가져오기
         Long userId = userService.getSession(httpServletRequest);
-        log.info("\n\n세션정보: {}\n\n", userId);
-
-        // TODO: 로그인한 유저와 아이템의 판매자 비교
         if(item.getUserId()!=(userId)) {
-            throw new SecurityException("수정 권한이 없습니다.");
+            throw new UnauthorizedModifyByUser(userId);
         }
 
-        return itemMapper.toItemResponse(item);
-    }
-
-
-    @Transactional
-    public ItemResponse viewIteam(long id) {
-
-        Item item = itemDetailRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Item not found: " + id));
+        log.info("\n\n세션정보: {}\n\n", userId);
 
         return itemMapper.toItemResponse(item);
     }
-
 
     @Transactional
     public ItemModifyResponse updateItem(long id, ItemModifyRequest request) {
 
         // 1. 엔티티를 데이터베이스에서 조회
         Item item = itemDetailRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+                .orElseThrow(() -> new NotFoundItemById(id));
 
         // 2. DTO를 엔티티로 변환
         Item updatedItem = itemMapper.toEntity(request);
@@ -82,14 +81,11 @@ public class ItemDetailService {
     public ItemDeleteResponse deleteItem(long id, HttpServletRequest httpServletRequest) {
 
         Item item = itemDetailRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+                .orElseThrow(() -> new NotFoundItemById(id));
 
-        // TODO: 로그인한 유저의 ID를 가져오기
         Long userId = userService.getSession(httpServletRequest);
-
-        // TODO: 로그인한 유저와 아이템의 판매자 비교
         if(item.getUserId()!=(userId)) {
-            throw new SecurityException("삭제 권한이 없습니다.");
+            throw new UnauthorizedDeleteByUser(userId);
         }
 
         itemDetailRepository.deleteById(id);
