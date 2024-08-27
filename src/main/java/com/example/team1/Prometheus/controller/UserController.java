@@ -2,6 +2,7 @@ package com.example.team1.Prometheus.controller;
 
 import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.entity.UserDto;
+import com.example.team1.Prometheus.repository.UserRepository;
 import com.example.team1.Prometheus.service.UserFilter;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,16 +10,14 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
 public class UserController {
     private final UserService userService;
     private final UserFilter userFilter;
+    private final UserRepository userRepository;
 
     private User userForRedirect;
 
@@ -90,6 +89,17 @@ public class UserController {
 
         return "users/mypage";
 
+    }
+
+    @DeleteMapping("/users/delete")
+    public String deleteUser(Model model) {
+        User user = userFilter.findUserByFilter(model);
+        userService.deleteItemsByUserId(user.getUserId());
+
+        userRepository.deleteById(user.getUserId());
+        System.out.println(user.getUserName() + "삭제");
+
+        return "redirect:/users/logout";
     }
 
 

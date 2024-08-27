@@ -34,12 +34,12 @@
         </button>
     </div>
     <div class="mx-2">
-        <button type="button" id="logout-btn">
-        <a th:href="@{/comments/{userid}(userid=${myuserid})}"
-           class="bg-gradient-to-r from-red-700 to-pink-400 hover:from-red-800 hover:to-pink-500 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+        <form id="delete-form" th:method="delete" th:action="@{/users/delete}">
+        <button type="submit" id="delete-btn"
+                class="bg-gradient-to-r from-red-700 to-pink-400 hover:from-red-800 hover:to-pink-500 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
             <i data-feather="frown" class="mr-2"></i> 탈퇴
-        </a>
         </button>
+        </form>
     </div>
 </main>
 <main class="container mx-auto px-4 max-w-4xl overflow-hidden p-8 flex justify-left items-left">
