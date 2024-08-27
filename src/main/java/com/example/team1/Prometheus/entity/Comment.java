@@ -30,5 +30,7 @@ public class Comment {
 
     @CreatedDate
     private LocalDateTime createdAt;
+
+    private Long rating;
 }
 

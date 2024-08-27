@@ -28,7 +28,15 @@ public class CommentController {
     public String getAllCommentById(@PathVariable long userId, Model model){
         userFilter.findUserByFilter(model);
         List<CommentResponse> comments = commentService.getAllCommentById(userId);
+        Double ratingAverage = commentService.ratingAverage(userId);
+        int roundedStars = (int) Math.round(ratingAverage);  // 평점을 반올림하여 별의 개수로 변환
+        Double percentage = commentService.ratingPercentage(ratingAverage); // 퍼센트 계산
+
         model.addAttribute("comments",comments);
+        model.addAttribute("ratingAverage",ratingAverage);
+        model.addAttribute("roundedStars", roundedStars);
+        model.addAttribute("percentage", percentage); // 퍼센트를 정수로 반올림
+
         return "comment/comments";
     }
 

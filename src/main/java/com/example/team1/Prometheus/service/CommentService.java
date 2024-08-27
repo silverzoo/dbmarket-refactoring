@@ -30,6 +30,30 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    //유저의 평점 계산
+    public Double ratingAverage(long userId) {
+        List<Comment> comments = commentRepository.findAllByUser_UserId(userId);
+        if (comments.isEmpty()) {
+            return 0.0; // 리뷰가 없는 경우 0.0을 반환
+        }
+
+        double sum = 0;
+        for (Comment comment : comments) {
+            sum += comment.getRating();
+        }
+
+        double average = sum / comments.size();
+        return Double.parseDouble(String.format("%.1f", average));
+    }
+
+    //유저 평점 퍼센트 계산
+    public Double ratingPercentage(Double ratingAverage) {
+        double maxRating = 5.0; // 최대 평점
+        double percent = (ratingAverage / maxRating) * 100; // 퍼센트 계산
+        return Double.parseDouble(String.format("%.1f", percent));
+    }
+
+
     //해당 커멘트 아이디로 조회
     public CommentResponse getCommentById(long commentId) {
         return new CommentResponse(commentRepository.findById(commentId).orElse(null));
@@ -48,6 +72,7 @@ public class CommentService {
         comment.setReviewerName(reviewerName);
         comment.setContent(commentRequest.getContent());
         comment.setCreatedAt(commentRequest.getCreatedAt());
+        comment.setRating(commentRequest.getRating());
 
         // Comment 엔티티 저장
         commentRepository.save(comment);

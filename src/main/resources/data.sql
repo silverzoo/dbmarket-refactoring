@@ -20,9 +20,9 @@ INSERT INTO user(user_name, password) VALUES
                                           ('김지수','3333'),
                                           ('이지훈','4444');
 
-INSERT INTO comment(user_id, reviewer_name, content, created_at) VALUES
-                                                                   (1,'이지훈','따뜻한 마음 감사해요.',NOW()),
-                                                                   (1,'이지은','감사합니다^^',NOW()),
-                                                                   (2,'김민수','쿨거래 감사합니다',NOW()),
-                                                                   (2,'김지수','다음에 또 재구매 할게요',NOW()),
-                                                                   (3,'이지은','판매자님이 정말 친절해요',NOW());
+INSERT INTO comment(user_id, reviewer_name, content, created_at, rating) VALUES
+                                                                   (1,'이지훈','따뜻한 마음 감사해요.',NOW(), 3),
+                                                                   (1,'이지은','감사합니다^^',NOW(), 2),
+                                                                   (2,'김민수','쿨거래 감사합니다',NOW(), 1),
+                                                                   (2,'김지수','다음에 또 재구매 할게요',NOW(), 4),
+                                                                   (3,'이지은','판매자님이 정말 친절해요',NOW(),5);

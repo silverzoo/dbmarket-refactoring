@@ -14,6 +14,7 @@ public class CommentResponse {
     private String reviewerName;
     private String content;
     private LocalDateTime createdAt;
+    private long rating;
 
     public CommentResponse(Comment comment){
         this.commentId = comment.getCommentId();
@@ -21,6 +22,7 @@ public class CommentResponse {
         this.reviewerName = comment.getReviewerName();
         this.content = comment.getContent();
         this.createdAt = comment.getCreatedAt();
+        this.rating = comment.getRating();
     }
 
 }
