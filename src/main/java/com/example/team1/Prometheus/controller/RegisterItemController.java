@@ -2,7 +2,6 @@ package com.example.team1.Prometheus.controller;
 
 import com.example.team1.Prometheus.entity.ItemPostDto;
 import com.example.team1.Prometheus.service.RegisterItemService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +27,8 @@ public class RegisterItemController {
         return "registeritemform";
     }
     @PostMapping
-    public String saveFormToDb(@ModelAttribute("itemPostDto") ItemPostDto itemPostDto, HttpServletRequest httpServletRequest){
+    public String saveFormToDb(@ModelAttribute("itemPostDto") ItemPostDto itemPostDto, HttpServletRequest httpServletRequest) throws IOException {
+        //TODO http서블렛 getsession 받아서 service로 넘기기
 
         // form name=itemInfo하니까 인식됨, 객체로 인식
         log.info("itemInfo={}", itemPostDto.getItemInfo());
@@ -36,13 +36,9 @@ public class RegisterItemController {
         log.info("itemImage={}", itemPostDto.getItemImage().getOriginalFilename());
 
         //DB저장작업
-        try {
-            registerItemService.uploadItemToDb(itemPostDto, httpServletRequest);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+        registerItemService.uploadItemToDb(itemPostDto, httpServletRequest);
+
         //redirection 작업
         return "redirect:/items";
     }

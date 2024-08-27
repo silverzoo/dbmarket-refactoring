@@ -6,13 +6,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-
+// TODO AOP 예외처리 확인
+@ControllerAdvice
 @Service
 @AllArgsConstructor
 @Slf4j
@@ -25,7 +29,8 @@ public class RegisterItemService {
     //TODO 아이템 업로드할때 쓰는 HttpServletRequest 에도 session이 있는가?
     private UserService userService;
 
-    public void uploadItemToDb(ItemPostDto itemPostDto, HttpServletRequest httpServletRequest) throws ServletException, IOException {
+    // throws ServletException, IOException 이미 전역처리했음
+    public void uploadItemToDb(ItemPostDto itemPostDto, HttpServletRequest httpServletRequest) throws IOException{
         // 작업을 service로 분리
         itemPostDto.getItemInfo().setUserId(userService.getSession(httpServletRequest));
 //        편의 메서드
