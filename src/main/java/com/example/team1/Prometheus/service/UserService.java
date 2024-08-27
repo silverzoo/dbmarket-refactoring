@@ -110,6 +110,10 @@ public class UserService {
         List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
         model.addAttribute("items", items.stream().map(ItemListViewResponse::new).collect(Collectors.toList()));
     }
+
+    public void isSessionAvailable(Model model) {
+        model.addAttribute("isSessionAvailable","false");
+    }
 }
 
 
