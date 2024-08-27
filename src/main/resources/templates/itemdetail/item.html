@@ -6,14 +6,17 @@
 </head>
 <body>
 <main class="container mx-auto px-4 max-w-5xl">
-    <button type="button" id="create-btn"
-            th:onclick="|location.href='@{/items}'|"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
-        <i data-feather="arrow-left" class="mr-2"></i> 목록으로 돌아가기
+    <!--    아이템 수정 후 성공 메시지 출력    -->
+    <div id="success" th:data-value="${success}"></div>
+    <button type="button" id="create-btn">
+        <a th:href = '@{/items}'
+           class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
+            <i data-feather="arrow-left" class="mr-2"></i> 목록으로 돌아가기
+        </a>
     </button>
     <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
         <article class="p-8">
-            <input type="hidden" id="article-id" th:value="${item.itemId}">
+            <input type="hidden" id="item-id" th:value="${item.itemId}">
             <header class="mb-8 pb-8 border-b border-gray-200">
                 <h1 class="text-4xl font-bold mb-4 text-gray-800" th:text="${item.name}"></h1>
                 <div class="flex items-center text-gray-600">
@@ -40,7 +43,8 @@
                     </button>
                 </div>
                 <div>
-                    <form id="delete-form" method="post" action="#">
+                    <form id="delete-form" th:method="delete" th:action="@{/items/{id}(id=${item.itemId})}">
+<!--                    <form id="delete-form" method="post" action="#">-->
                         <button type="submit" id="delete-btn"
                                 class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
                             <i data-feather="trash-2" class="mr-2"></i> 삭제

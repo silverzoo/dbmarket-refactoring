@@ -5,16 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemDetailRequest {
-    private Long itemId;
+public class ItemModifyRequest {
+    private Long userId;
     private String name;
+    private int price;
+    private String category;
+    private String imagePath;
     private String description;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

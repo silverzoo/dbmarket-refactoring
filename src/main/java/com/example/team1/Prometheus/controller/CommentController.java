@@ -21,26 +21,44 @@ public class CommentController {
 
     private final CommentService commentService;
     private final UserFilter userFilter;
+    private final UserService userService;
 
     // 모든 댓글 조회
     @GetMapping("/{userId}")
     public String getAllCommentById(@PathVariable long userId, Model model){
-        // 세션
         userFilter.findUserByFilter(model);
-
         List<CommentResponse> comments = commentService.getAllCommentById(userId);
         model.addAttribute("comments",comments);
         return "comment/comments";
+    }
+
+    // 댓글 작성
+    @PostMapping("/create")
+    public String createComment(@ModelAttribute CommentRequest commentRequest,
+                                @RequestParam("reviewerName") String reviewerName) {
+        commentService.createComment(commentRequest, reviewerName);
+        return "redirect:/comments/" + commentRequest.getUserId();
     }
 
 
     // 상세 페이지로 이동
     @GetMapping("/detail/{commentId}")
     public String getComment(@PathVariable Long commentId, Model model) {
-        // 세션
-        userFilter.findUserByFilter(model);
 
+        // 1. 세션 정보 가져오기
+        String user1 = userFilter.findUserByFilter(model).getUserName();
+        System.out.println(user1);
+
+        // 2. 댓글 작성자 가져오기
         CommentResponse comment = commentService.getCommentById(commentId);
+        String user2 = comment.getReviewerName();
+        System.out.println(user2);
+
+        // 3. 모델에 등록하기
+        model.addAttribute("user1",user1);
+        model.addAttribute("user2",user2);
+
+
         model.addAttribute("comment", comment);
         return "comment/detail";
     }
@@ -60,11 +78,10 @@ public class CommentController {
 
         // 댓글 수정 서비스 호출
         commentService.updateComment(commentId, commentRequest);
-
         // 수정 후 댓글 목록 페이지로 리디렉션
         return "redirect:/comments/" + commentRequest.getUserId();
     }
-
+    
 
 
 
