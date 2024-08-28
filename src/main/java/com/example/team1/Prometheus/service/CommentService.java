@@ -108,9 +108,12 @@ public class CommentService {
     }
 
     // 댓글 삭제
-    public void deleteComment(long commentId) {
+    public Long deleteComment(long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentbyCommentId(commentId));
         commentRepository.delete(comment);
+
+        User user = comment.getUser();
+        return user.getUserId();
     }
 }

@@ -48,29 +48,6 @@ public class CommentController {
         return "redirect:/comments/" + commentRequest.getUserId();
     }
 
-
-    // 상세 페이지로 이동
-    @GetMapping("/detail/{commentId}")
-    public String getComment(@PathVariable Long commentId, Model model) {
-
-        // 1. 세션 정보 가져오기
-        String user1 = userFilter.findUserByFilter(model).getUserName();
-        System.out.println(user1);
-
-        // 2. 댓글 작성자 가져오기
-        CommentResponse comment = commentService.getCommentById(commentId);
-        String user2 = comment.getReviewerName();
-        System.out.println(user2);
-
-        // 3. 모델에 등록하기
-        model.addAttribute("user1",user1);
-        model.addAttribute("user2",user2);
-
-
-        model.addAttribute("comment", comment);
-        return "comment/detail";
-    }
-
     // 댓글 수정 페이지 이동
     @GetMapping("edit/{commentId}")
     public String updateComment(@PathVariable("commentId") Long commentId, Model model){
@@ -89,6 +66,14 @@ public class CommentController {
         // 수정 후 댓글 목록 페이지로 리디렉션
         return "redirect:/comments/" + commentRequest.getUserId();
     }
+
+    @DeleteMapping("/delete/{commentId}")
+    public String deleteComment(@PathVariable("commentId") Long commentId) {
+        Long userId = commentService.deleteComment(commentId);
+
+        return "redirect:/comments/" + userId;
+    }
+
     
 
 

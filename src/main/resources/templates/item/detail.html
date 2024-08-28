@@ -37,8 +37,8 @@
                 <div>
                     <button type="button" id="modify-btn">
                         <a th:href="@{/items/edit/{id}(id=${item.itemId})}"
-                           class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
-                            <i data-feather="edit-2" class="mr-2"></i> 수정
+                           class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from:blue-600 hover:to-purple-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                            <i data-feather="edit-3" class="mr-2"></i> 수정
                         </a>
                     </button>
                 </div>
@@ -46,7 +46,7 @@
                     <form id="delete-form" th:method="delete" th:action="@{/items/{id}(id=${item.itemId})}">
                         <button type="submit" id="delete-btn" th:data-value="${error}"
                                 onclick="return this.dataset.value ? true : confirm('삭제 하시겠습니까?');"
-                                class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
+                                class="bg-gradient-to-r from-red-700 to-pink-400 hover:from-red-800 hover:to-pink-500 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
                             <i data-feather="trash-2" class="mr-2"></i> 삭제
                         </button>
                     </form>
