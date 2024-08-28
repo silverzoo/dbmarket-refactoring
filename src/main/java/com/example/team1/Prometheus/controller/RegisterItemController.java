@@ -30,7 +30,7 @@ public class RegisterItemController {
     public String register(HttpServletRequest httpServletRequest) {
         User user =userService.getSessionUser(httpServletRequest);
         log.info("UserSession={}",user);
-        return "/item/registeritemform";
+        return "item/registeritemform";
     }
     @PostMapping
     public String saveFormToDb(@ModelAttribute("itemPostDto") @Valid ItemPostDto itemPostDto, HttpServletRequest httpServletRequest) throws IOException {
@@ -49,6 +49,6 @@ public class RegisterItemController {
         registerItemService.uploadItemToDb(itemPostDto, user);
 
         //redirection 작업
-        return "redirect:/items";
+        return "redirect:items";
     }
 }
