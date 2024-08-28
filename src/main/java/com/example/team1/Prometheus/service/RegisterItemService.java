@@ -1,6 +1,7 @@
 package com.example.team1.Prometheus.service;
 
 import com.example.team1.Prometheus.entity.ItemPostDto;
+import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.repository.ItemPostRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -24,15 +25,13 @@ public class RegisterItemService {
     // 프로젝트 루트 경로에 있는 img 디렉토리
     private final String fileDir = rootPath + "/src/main/resources/static/upload/";
     //TODO 아이템 업로드할때 쓰는 HttpServletRequest 에도 session이 있는가?
-    private UserService userService;
-
     // throws ServletException, IOException 이미 전역처리했음
     // DB에 ItemPostDto 처리
-    public void uploadItemToDb(ItemPostDto itemPostDto, HttpServletRequest httpServletRequest) throws IOException{
+    public void uploadItemToDb(ItemPostDto itemPostDto, User user) throws IOException{
         // 작업을 service로 분리
 
         //TODO  아예 여기에서 문제가 생김(id가 없을 경우) , getSessionUser 예외처리 필요.
-        itemPostDto.getItemInfo().setUserId(userService.getSessionUser(httpServletRequest).getUserId());
+        log.info("uploadItemToDb={}", user.getUserId());
 //        편의 메서드
         log.info("size={}", itemPostDto.getItemImage().getSize()); //이미지 크기 체크
         log.info("submittedFileName={}", itemPostDto.getItemImage().getOriginalFilename());
@@ -48,10 +47,10 @@ public class RegisterItemService {
         log.info("파일 저장 fullPath={}", fullPath);
         //파일 저장하기(static/img 경로)
         //Dto 경로 저장
-        itemPostDto.getItemInfo().setImagePath("/upload/"+fileName);
+        String imagePath = "/upload/"+fileName;
         // TODO 저장 경로 생각해보기
         itemPostDto.getItemImage().transferTo(new File(fullPath));
-        itemPostRepository.save(itemPostDto.toEntity());
+        itemPostRepository.save(itemPostDto.toEntity(user.getUserId(), imagePath));
     }
 }
 // TODO Mapper 사용 Mapstruct 적용

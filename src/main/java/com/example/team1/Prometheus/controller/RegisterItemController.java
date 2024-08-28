@@ -1,7 +1,9 @@
 package com.example.team1.Prometheus.controller;
 
 import com.example.team1.Prometheus.entity.ItemPostDto;
+import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.service.RegisterItemService;
+import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -18,13 +20,16 @@ import java.io.IOException;
 @AllArgsConstructor
 public class RegisterItemController {
     private final RegisterItemService registerItemService;
+    UserService userService;
 //    private final RegisterMapper mapper;
 
     //file.dir 값 주입, 자료 넘길시 사용
 //    @Value("${file.dir}")
 //    private String fileDir;
     @GetMapping
-    public String register() {
+    public String register(HttpServletRequest httpServletRequest) {
+        User user =userService.getSessionUser(httpServletRequest);
+        log.info("UserSession={}",user);
         return "/item/registeritemform";
     }
     @PostMapping
@@ -38,8 +43,10 @@ public class RegisterItemController {
 //        log.info("itemImage={}", itemPostDto.getItemImage().getOriginalFilename());
 
         //DB저장작업
+        User user =userService.getSessionUser(httpServletRequest);
+        log.info("UserSession={}",user);
 
-        registerItemService.uploadItemToDb(itemPostDto, httpServletRequest);
+        registerItemService.uploadItemToDb(itemPostDto, user);
 
         //redirection 작업
         return "redirect:/items";
