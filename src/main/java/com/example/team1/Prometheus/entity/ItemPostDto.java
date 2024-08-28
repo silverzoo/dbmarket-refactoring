@@ -27,12 +27,13 @@ public class ItemPostDto{
     private MultipartFile itemImage;
 
 
-    public Item toEntity() {
+    public Item toEntity(Long userId, String imagePath) {
         return Item.builder()
+                .userId(userId)
                 .name(getItemInfo().getName())
                 .price(getItemInfo().getPrice())
                 .category(getItemInfo().getCategory())
-                .imagePath(getItemInfo().getImagePath())
+                .imagePath(imagePath)
                 .description(getItemInfo().getDescription()).build();
     }
 }
