@@ -19,7 +19,8 @@
                     <textarea class="w-full px-4 py-3 text-gray-700 border-2 border-purple-200 rounded-lg focus:border-purple-500 focus:outline-none transition duration-300 min-h-[200px]" rows="10" placeholder="당신의 이야기를 들려주세요..." name="content" th:text="${comment.content}"></textarea>
                 </section>
                 <div class="flex justify-end space-x-4">
-                    <button type="submit" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center shadow-lg">
+                    <button type="submit"  onclick="return confirm('수정하시겠습니까?')"
+                            class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center shadow-lg">
                         <i data-feather="edit-2" class="mr-2"></i> 수정하기
                     </button>
                 </div>
