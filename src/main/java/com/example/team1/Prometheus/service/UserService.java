@@ -7,12 +7,14 @@ import com.example.team1.Prometheus.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -98,11 +100,12 @@ public class UserService {
     }
 
 
-    public Long getSession(HttpServletRequest httpServletRequest) {
+
+    public User getSessionUser(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
-        User user = (User) session.getAttribute("user");
-        return user.getUserId();
+        return (User) session.getAttribute("user");
     }
+
 
     public void getItemsByUserId(Long userId, Model model) {
         User user = userRepository.findByUserId(userId);
@@ -120,6 +123,7 @@ public class UserService {
         List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
         for (Item item : items) {
             System.out.println(item.getName() + "삭제");
+            log.info("\n\n세션정보: {}\n\n", userId);
             itemDetailRepository.delete(item);
         }
 
