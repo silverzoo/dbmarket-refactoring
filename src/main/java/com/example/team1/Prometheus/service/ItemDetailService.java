@@ -36,8 +36,9 @@ public class ItemDetailService {
                 .orElseThrow(() -> new NotFoundItemById(id));
 
         Long userId = userService.getSessionUser(httpServletRequest).getUserId();
+        String userName = userService.getSessionUser(httpServletRequest).getUserName();
         if(item.getUserId()!=(userId)) {
-            throw new UnauthorizedModifyByUser(userId);
+            throw new UnauthorizedModifyByUser(userName);
         }
 
         log.info("\n\n세션정보: {}\n\n", userId);
@@ -84,8 +85,9 @@ public class ItemDetailService {
                 .orElseThrow(() -> new NotFoundItemById(id));
 
         Long userId = userService.getSessionUser(httpServletRequest).getUserId();
+        String userName = userService.getSessionUser(httpServletRequest).getUserName();
         if(item.getUserId()!=(userId)) {
-            throw new UnauthorizedDeleteByUser(userId);
+            throw new UnauthorizedDeleteByUser(userName);
         }
 
         itemDetailRepository.deleteById(id);
