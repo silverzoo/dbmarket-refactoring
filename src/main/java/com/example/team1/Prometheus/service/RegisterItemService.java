@@ -6,7 +6,6 @@ import com.example.team1.Prometheus.property.FileUploadProperties;
 import com.example.team1.Prometheus.repository.ItemPostRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
