@@ -44,7 +44,8 @@
                 </div>
                 <div>
                     <form id="delete-form" th:method="delete" th:action="@{/items/{id}(id=${item.itemId})}">
-                        <button type="submit" id="delete-btn"
+                        <button type="submit" id="delete-btn" th:data-value="${error}"
+                                onclick="return this.dataset.value ? true : confirm('삭제 하시겠습니까?');"
                                 class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
                             <i data-feather="trash-2" class="mr-2"></i> 삭제
                         </button>
