@@ -1,5 +1,6 @@
 package com.example.team1.Prometheus.controller;
 
+import com.example.team1.Prometheus.entity.CategoryRequest;
 import com.example.team1.Prometheus.entity.CategoryResponse;
 import com.example.team1.Prometheus.entity.ItemResponse;
 import com.example.team1.Prometheus.service.CategoryService;
@@ -7,9 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,7 +28,13 @@ public class CategoryController {
     }
 
     @GetMapping("/edit")
-    public String updateCategory() {
+    public String createCategory() {
+
+        return "category/edit";
+    }
+
+    @GetMapping("/edit")
+    public String createCategory(@ModelAttribute("categoryRequest") CategoryRequest categoryRequest) {
 
         return "category/edit";
     }
