@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
 @Controller
@@ -27,7 +26,7 @@ public class UserController {
     public String welcomeHome(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
-            return "redirect:/items";
+            return "redirect:/categories";
         } else {
            userService.isSessionAvailable(model);
             return "/home";
@@ -86,6 +85,9 @@ public class UserController {
     // 마이페이지
     @GetMapping("/users/mypage")
     public String mypage(Model model) {
+        if(userFilter.findUserByFilter(model) == null) {
+            return "redirect:/users/logout";
+        }
         User user = userFilter.findUserByFilter(model);
         userService.getItemsByUserId(user.getUserId(), model);
 
@@ -94,14 +96,42 @@ public class UserController {
     }
 
     @DeleteMapping("/users/delete")
-    public String deleteUser(Model model, RedirectAttributes redirectAttributes) {
+    public String deleteUser(Model model) {
         User user = userFilter.findUserByFilter(model);
         userService.deleteUser(user.getUserId());
 
-        redirectAttributes.addFlashAttribute("success", "삭제되었습니다.");
-
         return "redirect:/users/logout";
     }
+
+    @GetMapping("/users/edit")
+    public String editUser(Model model) {
+        User user = userFilter.findUserByFilter(model);
+        model.addAttribute("user", user);
+
+        return "users/edit";
+    }
+
+    @PostMapping("/users/editName")
+    public String editUserName(Model model, @RequestParam("username") String newUserName,HttpServletRequest request) {
+        User user = userFilter.findUserByFilter(model);
+        return userService.editUserName(user,newUserName,request);
+    }
+
+    @PostMapping("/users/editPassword")
+    public String editUserPassword(Model model,@RequestParam("password") String newPassword, @RequestParam("password_check") String newPasswordCheck, HttpServletRequest request) {
+        User user = userFilter.findUserByFilter(model);
+        return userService.editUserPassword(user, newPassword, newPasswordCheck, request);
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 }

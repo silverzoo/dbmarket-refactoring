@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보 수정</title>
+</head>
+<body>
+
+<main >
+    <div class="container mx-auto my-4 px-4 max-w-3xl">
+
+    <button type="button">
+        <a th:href="@{/users/mypage}"
+           class="my-4 bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+            <i data-feather="arrow-left" class="mr-2"></i>  뒤로가기
+        </a>
+    </button>
+        <h2 class="px-4 py-2 text-2xl font-semibold"> 회원 정보 수정</h2>
+        <h2 class="px-4 py-2 text-2xl">  [[${myusername}]] 님 </h2>
+    </div>
+
+    <!-- 아이디 변경 -->
+    <div class="container mx-auto my-4 px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center transform hover:scale-100 transition duration-300">
+    <form action="/users/editName" method="post" onsubmit="return validateIdForm()">
+        <p th:if="${param.notNew}">기존 아이디와 다른 아이디를 입력해 주세요 </p>
+        <p th:if="${param.alreadyExists}"> 이미 존재하는 아이디 입니다. </p>
+        <p th:if="${param.Success}"> 아이디가 성공적으로 변경되었습니다. </p>
+        <p th:if="${param.error == null }">  </p>
+
+        <input type="text" name="username" id="username"
+               class="px-4 py-3 text-2xl font-semibold border-b-2 border-purple-100 focus:border-purple-500 transition duration-300 bg-transparent focus:outline-none"
+               placeholder="새로운 아이디를 입력하세요"><br>
+        <div class="container ustify-end items-right">
+        <button type="submit"
+                onclick="return confirm('수정 하시겠습니까?');"
+                class="my-2 bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+            <i data-feather="edit-3" class="mr-2"></i>아이디 변경하기</button>
+        </div>
+    </form>
+    </div>
+
+    <!-- 비밀번호 변경 -->
+    <div class="container mx-auto my-4 px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center transform hover:scale-100 transition duration-300">
+        <form action="/users/editPassword" method="post" onsubmit="return validatePasswordForm()">
+            <p th:if="${param.PasswordNotCorrect}">비밀번호가 일치하지 않습니다.</p>
+            <p th:if="${param.PasswordNotNew}">기존 비밀번호와 다른 비밀번호를 입력해 주세요</p>
+            <p th:if="${param.PasswordUpdateSuccess}">비밀번호가 성공적으로 변경되었습니다.</p>
+
+        <input type="password" name="password" id="password"
+               class="px-4 py-3 text-2xl font-semibold border-b-2 border-purple-100 focus:border-purple-500 transition duration-300 bg-transparent focus:outline-none"
+               placeholder="비밀번호"><br>
+        <input type="password" name="password_check" id="password_check"
+               class="px-4 py-3 text-2xl font-semibold border-b-2 border-purple-100 focus:border-purple-500 transition duration-300 bg-transparent focus:outline-none"
+               placeholder="비밀번호 확인"><br>
+        <br>
+
+            <div class="container ustify-end items-right">
+            <button type="submit"
+                    onclick="return confirm('수정 하시겠습니까?');"
+                    class="my-2 bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                <i data-feather="edit-3" class="mr-2"></i>비밀번호 변경하기</button>
+            <div class="mx-2">
+
+
+            </div>
+        </div>
+
+    </form>
+    </div>
+    <script>
+        // 아이디 공백 방지
+        function validateIdForm() {
+            const username = document.getElementById('username').value;
+            if (username.indexOf(' ') >= 0 || username === ""){
+                alert("아이디에는 공백을 입력할 수 없습니다.");
+                return false;
+            }
+            return true;
+        }
+
+
+
+        function validatePasswordForm() {
+
+            const password = document.getElementById('password').value;
+            const password_check = document.getElementById('password_check').value;
+            // 공백 방지
+            if (password.indexOf(' ') >= 0 || password_check.indexOf(' ') >= 0 || password === "") {
+                alert("비밀번호에는 공백을 입력할 수 없습니다.");
+                return false;
+            }
+            else if (password !== password_check){
+                alert("비밀번호가 일치하지 않습니다.")
+                return false;
+            }
+            return true;
+        }
+    </script>
+</main>
+
+</body>
+</html>

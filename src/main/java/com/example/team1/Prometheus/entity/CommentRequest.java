@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentRequest {
     private Long commentId;
-    private Long userId;  //?
+    private Long userId;
     private String reviewerName;
     private String content;
     private LocalDateTime createdAt;

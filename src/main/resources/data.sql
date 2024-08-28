@@ -26,3 +26,10 @@ INSERT INTO comment(user_id, reviewer_name, content, created_at, rating) VALUES
                                                                    (2,'김민수','쿨거래 감사합니다',NOW(), 1),
                                                                    (2,'김지수','다음에 또 재구매 할게요',NOW(), 4),
                                                                    (3,'이지은','판매자님이 정말 친절해요',NOW(),5);
+
+INSERT INTO category(name, created_at) VALUES
+                                           ('핸드폰',NOW()),
+                                           ('의류',NOW()),
+                                           ('반려동물',NOW()),
+                                           ('서적',NOW()),
+                                           ('기타',NOW());
