@@ -23,9 +23,6 @@ public class RegisterItemController {
     UserService userService;
 //    private final RegisterMapper mapper;
 
-    //file.dir 값 주입, 자료 넘길시 사용
-//    @Value("${file.dir}")
-//    private String fileDir;
     @GetMapping
     public String register(HttpServletRequest httpServletRequest) {
         User user =userService.getSessionUser(httpServletRequest);
