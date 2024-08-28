@@ -85,6 +85,9 @@ public class UserController {
     // 마이페이지
     @GetMapping("/users/mypage")
     public String mypage(Model model) {
+        if(userFilter.findUserByFilter(model) == null) {
+            return "redirect:/users/logout";
+        }
         User user = userFilter.findUserByFilter(model);
         userService.getItemsByUserId(user.getUserId(), model);
 

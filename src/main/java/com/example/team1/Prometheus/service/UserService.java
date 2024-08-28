@@ -1,6 +1,7 @@
 package com.example.team1.Prometheus.service;
 
 import com.example.team1.Prometheus.entity.*;
+import com.example.team1.Prometheus.exception.UnauthorizedModifyByUser;
 import com.example.team1.Prometheus.repository.CommentRepository;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import com.example.team1.Prometheus.repository.UserRepository;
@@ -166,6 +167,7 @@ public class UserService {
 
         HttpSession httpSession = httpServletRequest.getSession(true);
         httpSession.setAttribute("user", target);
+
 
 
         return "redirect:/users/edit?Success=success";

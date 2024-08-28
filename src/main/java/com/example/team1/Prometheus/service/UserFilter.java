@@ -26,15 +26,14 @@ public class UserFilter implements Filter{
     // 요청이 올 때 마다 해당 메서드가 호출
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        user = (User) ((HttpServletRequest) request).getSession().getAttribute("user");
-//        if (user != null) {
-//            System.out.println(user.getUserName());
-//        }
-        filterChain.doFilter(request, response);
-
+            user = (User) ((HttpServletRequest) request).getSession().getAttribute("user");
+            filterChain.doFilter(request, response);
     }
 
     public User findUserByFilter(Model model){
+        if(user == null){
+            return null;
+        }
         model.addAttribute("myusername", user.getUserName());
         model.addAttribute("myuserid", user.getUserId());
         return user;
