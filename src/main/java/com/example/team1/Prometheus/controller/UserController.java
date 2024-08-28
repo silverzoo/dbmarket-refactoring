@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
 @Controller
@@ -94,14 +93,38 @@ public class UserController {
     }
 
     @DeleteMapping("/users/delete")
-    public String deleteUser(Model model, RedirectAttributes redirectAttributes) {
+    public String deleteUser(Model model) {
         User user = userFilter.findUserByFilter(model);
         userService.deleteUser(user.getUserId());
 
-        redirectAttributes.addFlashAttribute("success", "삭제되었습니다.");
-
         return "redirect:/users/logout";
     }
+
+    @GetMapping("/users/edit")
+    public String editUser(Model model) {
+        User user = userFilter.findUserByFilter(model);
+        model.addAttribute("user", user);
+
+        return "users/edit";
+    }
+
+    @PostMapping("/users/editName")
+    public String editUserName(Model model, @RequestParam("username") String newUserName,HttpServletRequest request) {
+        System.out.println("요청 접수");
+        User user = userFilter.findUserByFilter(model);
+        System.out.println("현재 이름 : " + user.getUserName());
+        return userService.editUserName(user,newUserName,request);
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 }

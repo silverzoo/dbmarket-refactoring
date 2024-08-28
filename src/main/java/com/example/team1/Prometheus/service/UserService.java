@@ -143,6 +143,34 @@ public class UserService {
         userRepository.delete(user);
         log.info("\n회원 삭제 : {} 삭제 \n", user.getUserName());
     }
+
+    public String editUserName(User user, String newUserName,HttpServletRequest httpServletRequest) {
+        System.out.println("서비스 요청 접수");
+        System.out.println("변경 목표 이름" + newUserName);
+        // 기존 아이디를 재 입력했을 경우
+        if(user.getUserName().equals(newUserName)){
+            System.out.println("기존 아이디 재사용");
+            return "redirect:/users/edit?notNew=error";
+        }
+        // 이미 존재하는 아이디일 경우
+        User searchUser = userRepository.findByUserName(newUserName);
+        if (searchUser != null) {
+            System.out.println("계정 존재");
+            return "redirect:/users/edit?alreadyExists=error";
+        }
+        // 성공할 경우
+        User target = userRepository.findByUserName(user.getUserName());
+        target.setUserName(newUserName);
+        userRepository.save(target);
+        log.info("\n회원 아이디 변경 {} -> {} ", user.getUserName(), target.getUserName());
+
+        HttpSession httpSession = httpServletRequest.getSession(true);
+        httpSession.setAttribute("user", target);
+
+
+        return "redirect:/users/edit?Success=success";
+
+    }
 }
 
 
