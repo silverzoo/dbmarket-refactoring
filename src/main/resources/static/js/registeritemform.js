@@ -21,11 +21,10 @@ function formValidation(){
                     alert('공백을 입력하지 말아주세요.');
                     return false;
         }
-//        alert(document.getElementById('itemImage').files[0]);
-//        if (!document.getElementById('itemImage').files[0]) { // id 라는 id 를 선택하고 해당 input이 공백일 경우
-//                            alert('파일을 업로드 해주세요.);
-//                            return false;
-//        }
+        if (!document.getElementById('itemImage').files.length ) { // id 라는 id 를 선택하고 해당 input이 공백일 경우
+                            alert('파일을 업로드 해주세요.');
+                            return false;
+        }
     };
     const fileDOM = document.querySelector('#itemImage');
     const preview = document.querySelector('#image-box');
