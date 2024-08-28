@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
 @Controller
@@ -92,9 +93,11 @@ public class UserController {
     }
 
     @DeleteMapping("/users/delete")
-    public String deleteUser(Model model) {
+    public String deleteUser(Model model, RedirectAttributes redirectAttributes) {
         User user = userFilter.findUserByFilter(model);
         userService.deleteUser(user.getUserId());
+
+        redirectAttributes.addFlashAttribute("success", "삭제되었습니다.");
 
         return "redirect:/users/logout";
     }
