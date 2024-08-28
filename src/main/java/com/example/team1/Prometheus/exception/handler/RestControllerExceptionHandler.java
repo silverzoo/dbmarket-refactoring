@@ -24,6 +24,9 @@ com.example.team1.Prometheus.controller.RegisterItemController.saveFormToDb(com.
 throws java.io.IOException: [Field error in object 'itemPostDto' on field 'itemInfo.price': rejected value [];
 codes [typeMismatch.itemPostDto.itemInfo.price,typeMismatch.itemInfo.price,typeMismatch.price,typeMismatch.int,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [itemPostDto.itemInfo.price,itemInfo.price]; arguments []; default message [itemInfo.price]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'int' for property 'itemInfo.price'; For input string: ""]]
 
+//TODO 용량처리
+   2024-08-28T14:07:53.808+09:00  WARN 3208 --- [Prometheus] [nio-8080-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.multipart.MaxUploadSizeExceededException: Maximum upload size exceeded]
+
     IOException 컨트롤러단 처리
     제대로 @값을 입력해주세요
 
