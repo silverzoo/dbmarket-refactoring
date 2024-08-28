@@ -94,10 +94,7 @@ public class UserController {
     @DeleteMapping("/users/delete")
     public String deleteUser(Model model) {
         User user = userFilter.findUserByFilter(model);
-        userService.deleteItemsByUserId(user.getUserId());
-
-        userRepository.deleteById(user.getUserId());
-        System.out.println(user.getUserName() + "삭제");
+        userService.deleteUser(user.getUserId());
 
         return "redirect:/users/logout";
     }
