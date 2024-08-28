@@ -29,14 +29,14 @@ public class UserService {
         User name = userRepository.findByUserName(form.getUsername());
         // id, password 가 비어있는지 확인
         if (user.getUserName().contains(" ") || user.getPassword().contains(" ") || user.getUserName().isEmpty() || user.getPassword().isEmpty()) {
-            return "/users/join";
+            return "users/join";
         }
         // 비밀번호 이중확인 로직
         // MD-5 암호화
         String password1 = Encrypt.md5(user.getPassword());
         String password2 = Encrypt.md5(password_check);
         if (!password1.equals(password2)) {
-            return "/users/join";
+            return "users/join";
         }
         // DB가 비어있을 때만 save()
         if (name == null) {
@@ -77,13 +77,13 @@ public class UserService {
     public String logout(HttpServletRequest httpServletRequest, Model model) {
         // 세션이 이미 없는 경우
         if (httpServletRequest.getSession().getAttribute("user") == null) {
-            return "/home";
+            return "home";
         }
         // 세션 제거
         else {
             HttpSession session = httpServletRequest.getSession(false);
             session.invalidate();
-            return "/home";
+            return "home";
         }
     }
     public User findUserById(Long userId){
