@@ -32,7 +32,7 @@ public class RegisterItemService {
     // throws ServletException, IOException 이미 전역처리했음
     public void uploadItemToDb(ItemPostDto itemPostDto, HttpServletRequest httpServletRequest) throws IOException{
         // 작업을 service로 분리
-        itemPostDto.getItemInfo().setUserId(userService.getSession(httpServletRequest));
+        itemPostDto.getItemInfo().setUserId(userService.getSessionUser(httpServletRequest).getUserId());
 //        편의 메서드
         log.info("size={}", itemPostDto.getItemImage().getSize()); //이미지 크기 체크
         log.info("submittedFileName={}", itemPostDto.getItemImage().getOriginalFilename());

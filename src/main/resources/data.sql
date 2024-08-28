@@ -14,11 +14,11 @@ INSERT INTO item(user_id, name, price, category, image_path,description,created_
     (4,'스벅 아아 2잔 5000원',5000,'기타','/img/iphone.jpg','빠른 입금하실 수 있는 분!',NOW());
 
 INSERT INTO user(user_name, password) VALUES
-                                          ('','qwe'),
                                           ('김민수','1111'),
                                           ('이지은','2222'),
                                           ('김지수','3333'),
-                                          ('이지훈','4444');
+                                          ('이지훈','4444'),
+                                          ('','qwe');
 
 INSERT INTO comment(user_id, reviewer_name, content, created_at, rating) VALUES
                                                                    (1,'이지훈','따뜻한 마음 감사해요.',NOW(), 3),

@@ -35,7 +35,7 @@ public class ItemDetailService {
         Item item = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundItemById(id));
 
-        Long userId = userService.getSession(httpServletRequest);
+        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
         if(item.getUserId()!=(userId)) {
             throw new UnauthorizedModifyByUser(userId);
         }
@@ -83,7 +83,7 @@ public class ItemDetailService {
         Item item = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundItemById(id));
 
-        Long userId = userService.getSession(httpServletRequest);
+        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
         if(item.getUserId()!=(userId)) {
             throw new UnauthorizedDeleteByUser(userId);
         }
