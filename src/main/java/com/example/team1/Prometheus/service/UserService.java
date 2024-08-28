@@ -116,15 +116,24 @@ public class UserService {
 
     public void deleteItemsByUserId(Long userId){
         User user = userRepository.findByUserId(userId);
+        // 작성한 판매글 List 삭제
         List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
-
         for (Item item : items) {
             System.out.println(item.getName() + "삭제");
             itemDetailRepository.delete(item);
         }
-        List<Comment> comments = commentRepository.findAllByUser_UserId(user.getUserId());
 
+        // 탈퇴한 회원이 작성한 코멘트 삭제
+        List<Comment> comments = commentRepository.findAllByUser_UserId(user.getUserId());
         for (Comment comment : comments) {
+            System.out.println(comment.getContent() + "삭제");
+            commentRepository.delete(comment);
+        }
+
+        // 회원에게 작성된 코멘트 삭제
+        List<Comment> comments1 = commentRepository.findAllByReviewerName(user.getUserName());
+        for (Comment comment : comments1) {
+            System.out.println(comment.getContent() + "삭제");
             commentRepository.delete(comment);
         }
 
