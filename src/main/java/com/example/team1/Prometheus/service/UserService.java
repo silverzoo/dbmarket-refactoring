@@ -73,7 +73,7 @@ public class UserService {
         return "redirect:/items";
     }
 
-    public String logout(HttpServletRequest httpServletRequest) {
+    public String logout(HttpServletRequest httpServletRequest, Model model) {
         // 세션이 이미 없는 경우
         if (httpServletRequest.getSession().getAttribute("user") == null) {
             return "/home";
@@ -117,32 +117,31 @@ public class UserService {
         model.addAttribute("isSessionAvailable","false");
     }
 
-    public void deleteItemsByUserId(Long userId){
+    public void deleteUser(Long userId){
         User user = userRepository.findByUserId(userId);
         // 작성한 판매글 List 삭제
         List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
         for (Item item : items) {
-            System.out.println(item.getName() + "삭제");
-            log.info("\n\n세션정보: {}\n\n", userId);
+            log.info("\n회원이 작성한 게시글 : {} 삭제 \n", item.getName());
             itemDetailRepository.delete(item);
         }
 
         // 탈퇴한 회원이 작성한 코멘트 삭제
         List<Comment> comments = commentRepository.findAllByUser_UserId(user.getUserId());
         for (Comment comment : comments) {
-            System.out.println(comment.getContent() + "삭제");
+            log.info("\n회원이 작성한 코멘트 : {} 삭제 \n", comment.getContent());
             commentRepository.delete(comment);
         }
 
         // 회원에게 작성된 코멘트 삭제
         List<Comment> comments1 = commentRepository.findAllByReviewerName(user.getUserName());
         for (Comment comment : comments1) {
-            System.out.println(comment.getContent() + "삭제");
+            log.info("\n회원에게 작성된 코멘트 : {} 삭제 \n", comment.getContent());
             commentRepository.delete(comment);
         }
 
-
-
+        userRepository.delete(user);
+        log.info("\n회원 삭제 : {} 삭제 \n", user.getUserName());
     }
 }
 
