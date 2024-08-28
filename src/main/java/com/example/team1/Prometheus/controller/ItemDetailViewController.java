@@ -34,7 +34,7 @@ public class ItemDetailViewController {
 
         log.info("\n\n아이템 확인: {}\n\n", item);
 
-        return "itemdetail/item";
+        return "item/detail";
     }
 
     // NOTE : 수정 페이지로 이동
@@ -47,7 +47,7 @@ public class ItemDetailViewController {
         ItemResponse item = itemDetailService.findById(id, httpServletRequest);
         model.addAttribute("item", item);
 
-        return "itemdetail/edit";
+        return "item/edit";
     }
 
     // NOTE : 수정 후 상세페이지로 리다이렉트

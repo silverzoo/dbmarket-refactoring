@@ -44,7 +44,6 @@
                 </div>
                 <div>
                     <form id="delete-form" th:method="delete" th:action="@{/items/{id}(id=${item.itemId})}">
-<!--                    <form id="delete-form" method="post" action="#">-->
                         <button type="submit" id="delete-btn"
                                 class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center">
                             <i data-feather="trash-2" class="mr-2"></i> 삭제
