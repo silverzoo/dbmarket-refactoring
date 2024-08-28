@@ -59,8 +59,9 @@ public class UserController {
     }
 
     @GetMapping("/users/logout")
-    public String logout(HttpServletRequest httpServletRequest) {
-        return userService.logout(httpServletRequest);
+    public String logout(HttpServletRequest httpServletRequest, Model model) {
+        userService.isSessionAvailable(model);
+        return userService.logout(httpServletRequest, model);
     }
 
     // 회원 상세 페이지
