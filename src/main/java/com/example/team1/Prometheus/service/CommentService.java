@@ -4,6 +4,8 @@ import com.example.team1.Prometheus.entity.Comment;
 import com.example.team1.Prometheus.entity.CommentRequest;
 import com.example.team1.Prometheus.entity.CommentResponse;
 import com.example.team1.Prometheus.entity.User;
+import com.example.team1.Prometheus.exception.NotFoundCommentbyCommentId;
+import com.example.team1.Prometheus.exception.NotFoundUserbyUserId;
 import com.example.team1.Prometheus.repository.CommentRepository;
 import com.example.team1.Prometheus.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -22,6 +24,9 @@ public class CommentService {
 
     // 해당 아이디의 유저 모든 comment를 CommentResponse 리스트로 리턴
     public List<CommentResponse> getAllCommentById(long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundUserbyUserId(userId));
+
         List<Comment> comments = commentRepository.findAllByUser_UserId(userId);
 
         // Comment를 CommentResponse로 변환
@@ -32,9 +37,12 @@ public class CommentService {
 
     //유저의 평점 계산
     public Double ratingAverage(long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundUserbyUserId(userId));
+
         List<Comment> comments = commentRepository.findAllByUser_UserId(userId);
         if (comments.isEmpty()) {
-            return 0.0; // 리뷰가 없는 경우 0.0을 반환
+            return 0.0; // 리뷰가 없는 경우
         }
 
         double sum = 0;
@@ -56,7 +64,12 @@ public class CommentService {
 
     //해당 커멘트 아이디로 조회
     public CommentResponse getCommentById(long commentId) {
-        return new CommentResponse(commentRepository.findById(commentId).orElse(null));
+        // Comment를 먼저 조회
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new NotFoundCommentbyCommentId(commentId));
+
+        // 조회한 Comment로부터 userId를 가져와서 사용
+        return new CommentResponse(comment);
     }
 
     // 댓글 작성
@@ -64,7 +77,7 @@ public class CommentService {
 
         // User 엔티티를 조회
         User user = userRepository.findById(commentRequest.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("유저 아이디" + commentRequest.getUserId() +"가 존재하지않습니다."));
+                .orElseThrow(() -> new NotFoundUserbyUserId(commentRequest.getUserId()));
 
         // 새로운 Comment 엔티티 생성
         Comment comment = new Comment();
@@ -83,8 +96,7 @@ public class CommentService {
     @Transactional
     public CommentResponse updateComment(Long commentId, CommentRequest commentRequest){
         // 조회
-        Comment comment = commentRepository.findById(commentId).orElse(null);
-
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new NotFoundCommentbyCommentId(commentId));
         // 요청 객체 내용 엔티티에 매핑
         comment.setContent(commentRequest.getContent());
         // 업데이트된 엔티티 저장
@@ -96,6 +108,7 @@ public class CommentService {
 
     // 댓글 삭제
     public void deleteComment(long commentId){
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new NotFoundCommentbyCommentId(commentId));
         commentRepository.deleteById(commentId);
     }
 
