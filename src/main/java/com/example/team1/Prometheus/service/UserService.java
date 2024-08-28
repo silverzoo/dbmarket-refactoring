@@ -77,13 +77,13 @@ public class UserService {
     public String logout(HttpServletRequest httpServletRequest, Model model) {
         // 세션이 이미 없는 경우
         if (httpServletRequest.getSession().getAttribute("user") == null) {
-            return "/home";
+            return "home";
         }
         // 세션 제거
         else {
             HttpSession session = httpServletRequest.getSession(false);
             session.invalidate();
-            return "/home";
+            return "home";
         }
     }
     public User findUserById(Long userId){
