@@ -24,6 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
         dir = fileUploadProperties.getRootPath()+ fileUploadProperties.getDir();
 
         //클라이언트가 파일에 접근하기 위한 url
+        //TODO OS별로 경로가 다른건지 확인해볼 것
         if(fileUploadProperties.getEnvName().equals("dev")){
             registry.addResourceHandler(fileUploadProperties.getImagePath()+"**")
                     .addResourceLocations("file:/"+dir);
@@ -31,14 +32,5 @@ public class WebConfig implements WebMvcConfigurer {
             registry.addResourceHandler(fileUploadProperties.getImagePath()+"**")
                     .addResourceLocations("file://"+dir);
         }
-
-//        WebMvcConfigurer.super.addResourceHandlers(registry);
-
-//        private final String rootPath = System.getProperty("user.dir");
-//        private final String fileDir = rootPath + "/src/main/resources/static/upload/";
-//        @Override
-//        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//            registry.addResourceHandler("/upload/**")
-//                    .addResourceLocations("file:/"+fileDir);
     }
 }
