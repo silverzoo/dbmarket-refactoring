@@ -27,7 +27,7 @@ public class UserController {
     public String welcomeHome(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
-            return "redirect:/items";
+            return "redirect:/categories";
         } else {
            userService.isSessionAvailable(model);
             return "/home";
