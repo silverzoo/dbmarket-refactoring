@@ -29,7 +29,7 @@ public class UserController {
             return "redirect:/categories";
         } else {
            userService.isSessionAvailable(model);
-            return "/home";
+            return "home";
         }
     }
 
