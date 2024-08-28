@@ -30,21 +30,28 @@
             <input class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 ring-1 ring-slate-200 shadow-sm" type="text" aria-label="Filter items" placeholder="찾으시는 제품을 입력해 주세요.">
         </form>
     </header>
-    <button type="button" id="create-btn">
-        <a th:href = '@{/registeritem}'
-            style="margin-top: 50px; margin-bottom: 50px;"
-            class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
-            <i data-feather="plus" class="mr-2"></i> 글 등록
-        </a>
-    </button>
+    <div class="flex justify-between items-center">
+        <button type="button" id="create-btn">
+            <a th:href = '@{/registeritem}'
+                style="margin-top: 50px; margin-bottom: 50px;"
+                class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                <i data-feather="plus" class="mr-2"></i> 글 등록
+            </a>
+        </button>
+        <select id="sorting-option"
+                class="text-gray-700 focus:ring-2 focus:ring-blue-500 text-black font-semibold py-2 px-3 rounded-lg ease-in-out flex items-center">
+            <option value="최신순" selected>최신순</option>
+            <option value="오래된순">오래된순</option>
+        </select>
+    </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
         <div th:each="item : ${items}" class="relative group">
             <a th:href="@{/items/{id}(id=${item.itemId})}" class="block">
-                <img th:src="${item.imagePath}" alt="image" class="w-full h-full object-cover rounded-lg transition duration-300 transform group-hover:scale-105">
+                <img th:src="${item.imagePath}" alt="image" class="w-full h-80 object-cover rounded-lg transition duration-300 transform group-hover:scale-105">
             </a>
 
-            <div class="absolute bottom-0 left-0 right-0 p-4 bg-white bg-opacity-80 rounded-b-lg transition duration-300 opacity-0 group-hover:opacity-100">
+            <div class="bg-white shadow-xl rounded-lg overflow-hidden space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6 absolute bottom-0 left-0 right-0 p-4 bg-white bg-opacity-80 rounded-b-lg transition duration-300 opacity-0 group-hover:opacity-100">
                 <a th:href="@{/items/{id}(id=${item.itemId})}" class="block">
                     <h2 class="text-lg font-medium text-center">
                         <span th:text="${item.name}"></span>
