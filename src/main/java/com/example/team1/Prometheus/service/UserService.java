@@ -43,7 +43,7 @@ public class UserService {
             // 회원가입 성공시 세션 부여
             HttpSession httpSession = httpServletRequest.getSession(true);
             httpSession.setAttribute("user", user);
-            return "redirect:/items";
+            return "redirect:/categories";
             // 이미 존재하는 계정일 경우
         } else {
             return "redirect:/users/join?error=already_exists";
@@ -70,7 +70,7 @@ public class UserService {
         HttpSession httpSession = httpServletRequest.getSession(true);
         httpSession.setAttribute("user", user);
 
-        return "redirect:/items";
+        return "redirect:/categories";
     }
 
     public String logout(HttpServletRequest httpServletRequest, Model model) {
