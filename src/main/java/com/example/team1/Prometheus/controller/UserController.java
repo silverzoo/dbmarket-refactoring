@@ -113,10 +113,14 @@ public class UserController {
 
     @PostMapping("/users/editName")
     public String editUserName(Model model, @RequestParam("username") String newUserName,HttpServletRequest request) {
-        System.out.println("요청 접수");
         User user = userFilter.findUserByFilter(model);
-        System.out.println("현재 이름 : " + user.getUserName());
         return userService.editUserName(user,newUserName,request);
+    }
+
+    @PostMapping("/users/editPassword")
+    public String editUserPassword(Model model,@RequestParam("password") String newPassword, @RequestParam("password_check") String newPasswordCheck, HttpServletRequest request) {
+        User user = userFilter.findUserByFilter(model);
+        return userService.editUserPassword(user, newPassword, newPasswordCheck, request);
     }
 
 

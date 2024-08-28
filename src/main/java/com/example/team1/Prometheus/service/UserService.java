@@ -1,7 +1,7 @@
 package com.example.team1.Prometheus.service;
 
 import com.example.team1.Prometheus.entity.*;
-import com.example.team1.Prometheus.exception.UnauthorizedModifyByUser;
+import com.example.team1.Prometheus.exception.NotFoundUserException;
 import com.example.team1.Prometheus.repository.CommentRepository;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import com.example.team1.Prometheus.repository.UserRepository;
@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.List;
@@ -101,10 +102,14 @@ public class UserService {
     }
 
 
-
+    @Transactional
     public User getSessionUser(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
-        return (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
+                if(user == null) {
+                    throw new NotFoundUserException();
+                }
+        return user;
     }
 
 
@@ -114,6 +119,7 @@ public class UserService {
         model.addAttribute("items", items.stream().map(ItemListViewResponse::new).collect(Collectors.toList()));
     }
 
+    // 헤더에 마이페이지, 로그아웃 안보이게 하는 로직
     public void isSessionAvailable(Model model) {
         model.addAttribute("isSessionAvailable","false");
     }
@@ -146,17 +152,15 @@ public class UserService {
     }
 
     public String editUserName(User user, String newUserName,HttpServletRequest httpServletRequest) {
-        System.out.println("서비스 요청 접수");
-        System.out.println("변경 목표 이름" + newUserName);
         // 기존 아이디를 재 입력했을 경우
         if(user.getUserName().equals(newUserName)){
-            System.out.println("기존 아이디 재사용");
+            log.info("아이디 수정 실패 : 기존 아이디를 재입력함");
             return "redirect:/users/edit?notNew=error";
         }
         // 이미 존재하는 아이디일 경우
         User searchUser = userRepository.findByUserName(newUserName);
         if (searchUser != null) {
-            System.out.println("계정 존재");
+            log.info("아이디 수정 실패 : 이미 존재하는 계정");
             return "redirect:/users/edit?alreadyExists=error";
         }
         // 성공할 경우
@@ -164,13 +168,33 @@ public class UserService {
         target.setUserName(newUserName);
         userRepository.save(target);
         log.info("\n회원 아이디 변경 {} -> {} ", user.getUserName(), target.getUserName());
-
         HttpSession httpSession = httpServletRequest.getSession(true);
         httpSession.setAttribute("user", target);
+        return "redirect:/users/edit?Success=Success";
+    }
 
+    public String editUserPassword(User user, String newPassword, String newPasswordCheck, HttpServletRequest request) {
+        String oldPassword = Encrypt.md5(user.getPassword());
+        String nuPassword = Encrypt.md5(newPassword);
+        String nuPasswordCheck = Encrypt.md5(newPasswordCheck);
 
+        // 비밀번호 불일치
+        if(!nuPassword.equals(nuPasswordCheck)){
+            log.info("비밀번호 수정 실패 : 비밀번호가 일치하지 않음");
+            return "redirect:/users/edit?PasswordNotCorrect=error";
+        }
+        // 기존 비밀번호 재 입력
+        if(nuPassword.equals(oldPassword)){
+            log.info("비밀번호 수정 실패 : 기존 비밀번호와 동일함");
+            return "redirect:/users/edit?PasswordNotNew=error";
+        }
+        // 성공
+        User target = userRepository.findByUserName(user.getUserName());
+        target.setPassword(newPassword);
+        userRepository.save(target);
+        log.info("비밀번호 수정 성공");
+        return "redirect:/users/edit?PasswordUpdateSuccess=Success";
 
-        return "redirect:/users/edit?Success=success";
 
     }
 }

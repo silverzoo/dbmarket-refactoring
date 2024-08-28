@@ -1,5 +1,6 @@
 package com.example.team1.Prometheus.exception.handler;
 
+import com.example.team1.Prometheus.exception.NotFoundUserException;
 import com.example.team1.Prometheus.exception.NotFoundItemById;
 import com.example.team1.Prometheus.exception.UnauthorizedDeleteByUser;
 import com.example.team1.Prometheus.exception.UnauthorizedModifyByUser;
@@ -26,5 +27,11 @@ public class ControllerExceptionHandler {
     public String handleUnauthorizedModifyByUser(UnauthorizedModifyByUser e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());
         return "redirect:/items";
+    }
+
+    @ExceptionHandler(NotFoundUserException.class)
+    public String handleNonFoundUserException(NotFoundUserException e, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", e.getMessage());
+        return "redirect:/home";
     }
 }

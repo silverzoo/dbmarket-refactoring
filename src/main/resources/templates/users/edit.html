@@ -16,7 +16,8 @@
             <i data-feather="arrow-left" class="mr-2"></i>  뒤로가기
         </a>
     </button>
-        <h2 class="px-4 py-3 text-2xl font-semibold"> 회원 정보 수정 [[${myusername}]] 님 </h2>
+        <h2 class="px-4 py-2 text-2xl font-semibold"> 회원 정보 수정</h2>
+        <h2 class="px-4 py-2 text-2xl font-semibold">  [[${myusername}]] 님 </h2>
     </div>
 
     <!-- 아이디 변경 -->
@@ -42,6 +43,10 @@
     <!-- 비밀번호 변경 -->
     <div class="container mx-auto my-4 px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center transform hover:scale-100 transition duration-300">
         <form action="/users/editPassword" method="post" onsubmit="return validatePasswordForm()">
+            <p th:if="${param.PasswordNotCorrect}">비밀번호가 일치하지 않습니다.</p>
+            <p th:if="${param.PasswordNotNew}">기존 비밀번호와 다른 비밀번호를 입력해 주세요</p>
+            <p th:if="${param.PasswordUpdateSuccess}">비밀번호가 성공적으로 변경되었습니다.</p>
+
         <input type="password" name="password" id="password"
                class="px-4 py-3 text-2xl font-semibold border-b-2 border-purple-100 focus:border-purple-500 transition duration-300 bg-transparent focus:outline-none"
                placeholder="비밀번호"><br>
