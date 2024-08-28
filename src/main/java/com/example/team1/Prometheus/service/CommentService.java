@@ -54,6 +54,18 @@ public class CommentService {
         return Double.parseDouble(String.format("%.1f", average));
     }
 
+    // 유더 평점 업데이트
+    private void updateUserRating(long userId) {
+        // ratingAverage 메서드를 사용하여 평균 평점을 계산
+        Double averageRating = ratingAverage(userId);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundUserbyUserId(userId));
+        user.setRating(averageRating);
+
+        userRepository.save(user);
+    }
+
     // 유저 평점 퍼센트 계산
     public Double ratingPercentage(Double ratingAverage) {
         double maxRating = 5.0; // 최대 평점
@@ -85,7 +97,7 @@ public class CommentService {
 
         // Comment 엔티티 저장
         Comment savedComment = commentRepository.save(comment);
-
+        updateUserRating(user.getUserId());
         return commentMapper.toResponse(savedComment);
     }
 
@@ -102,8 +114,8 @@ public class CommentService {
 
         // 업데이트된 엔티티 저장
         Comment updatedComment = commentRepository.save(comment);
+        updateUserRating(comment.getUser().getUserId());
 
-        // 업데이트된 엔티티를 응답 DTO로 반환
         return commentMapper.toResponse(updatedComment);
     }
 
@@ -111,9 +123,9 @@ public class CommentService {
     public Long deleteComment(long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentbyCommentId(commentId));
+        Long userId = comment.getUser().getUserId();
         commentRepository.delete(comment);
-
-        User user = comment.getUser();
-        return user.getUserId();
+        updateUserRating(userId);
+        return userId;
     }
 }
