@@ -33,7 +33,7 @@ public class CategoryController {
         return "category/edit";
     }
 
-    @GetMapping("/edit")
+    @PostMapping("/edit")
     public String createCategory(@ModelAttribute("categoryRequest") CategoryRequest categoryRequest) {
 
         return "category/edit";
