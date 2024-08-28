@@ -3,7 +3,6 @@ package com.example.team1.Prometheus.controller;
 import com.example.team1.Prometheus.entity.ItemPostDto;
 import com.example.team1.Prometheus.service.RegisterItemService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -25,7 +24,7 @@ public class RegisterItemController {
 //    private String fileDir;
     @GetMapping
     public String register() {
-        return "registeritemform";
+        return "/item/registeritemform";
     }
     @PostMapping
     public String saveFormToDb(@ModelAttribute("itemPostDto") ItemPostDto itemPostDto, HttpServletRequest httpServletRequest) throws IOException {
