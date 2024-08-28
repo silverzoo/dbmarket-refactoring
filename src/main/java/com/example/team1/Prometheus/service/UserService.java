@@ -1,7 +1,6 @@
 package com.example.team1.Prometheus.service;
 
 import com.example.team1.Prometheus.entity.*;
-import com.example.team1.Prometheus.exception.NotFoundUserException;
 import com.example.team1.Prometheus.repository.CommentRepository;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import com.example.team1.Prometheus.repository.UserRepository;
@@ -106,9 +105,6 @@ public class UserService {
     public User getSessionUser(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-                if(user == null) {
-                    throw new NotFoundUserException();
-                }
         return user;
     }
 
