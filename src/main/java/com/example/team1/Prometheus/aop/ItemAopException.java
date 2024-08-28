@@ -1,6 +1,7 @@
 package com.example.team1.Prometheus.aop;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 //        super("연락처를 찾을 수 없습니다.");
 //    }
 //}
+//TODO Ioexception return RuntimeException()
 
 @Aspect
 @Component
@@ -58,7 +60,6 @@ public class ItemAopException {
     //     // 예외가 발생한 메서드명과 예외 메시지 로그 기록
     //     log.error("[예외 발생] 메서드: {}, 에러 메시지: {}", joinPoint.getSignature().toShortString(), ex.getMessage());
     // }
-
 
 
 //    @AfterThrowing(pointcut = "targetMethod()", throwing = "ex")

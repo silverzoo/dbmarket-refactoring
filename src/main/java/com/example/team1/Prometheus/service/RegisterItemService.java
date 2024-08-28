@@ -2,12 +2,9 @@ package com.example.team1.Prometheus.service;
 
 import com.example.team1.Prometheus.entity.ItemPostDto;
 import com.example.team1.Prometheus.repository.ItemPostRepository;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
@@ -30,8 +27,11 @@ public class RegisterItemService {
     private UserService userService;
 
     // throws ServletException, IOException 이미 전역처리했음
+    // DB에 ItemPostDto 처리
     public void uploadItemToDb(ItemPostDto itemPostDto, HttpServletRequest httpServletRequest) throws IOException{
         // 작업을 service로 분리
+
+        //TODO  아예 여기에서 문제가 생김(id가 없을 경우) , getSessionUser 예외처리 필요.
         itemPostDto.getItemInfo().setUserId(userService.getSessionUser(httpServletRequest).getUserId());
 //        편의 메서드
         log.info("size={}", itemPostDto.getItemImage().getSize()); //이미지 크기 체크
@@ -54,5 +54,6 @@ public class RegisterItemService {
         itemPostRepository.save(itemPostDto.toEntity());
     }
 }
+// TODO Mapper 사용 Mapstruct 적용
 
 //TODO repository 사용해서 데이터 저장만을 하는 서비스를 구현할 것

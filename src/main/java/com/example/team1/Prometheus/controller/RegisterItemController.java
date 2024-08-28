@@ -3,6 +3,7 @@ package com.example.team1.Prometheus.controller;
 import com.example.team1.Prometheus.entity.ItemPostDto;
 import com.example.team1.Prometheus.service.RegisterItemService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,9 +32,10 @@ public class RegisterItemController {
         //TODO http서블렛 getsession 받아서 service로 넘기기
 
         // form name=itemInfo하니까 인식됨, 객체로 인식
-        log.info("itemInfo={}", itemPostDto.getItemInfo());
-        log.info("itemInfo={}", itemPostDto.getItemInfo().getName());
-        log.info("itemImage={}", itemPostDto.getItemImage().getOriginalFilename());
+//        log.info("itemPostDto={}", itemPostDto);
+//        log.info("itemInfo={}", itemPostDto.getItemInfo());
+//        log.info("itemInfo().getName()={}", itemPostDto.getItemInfo().getName());
+//        log.info("itemImage={}", itemPostDto.getItemImage().getOriginalFilename());
 
         //DB저장작업
 
