@@ -1,4 +1,4 @@
-let headText = mb-8 pb-8 border-b border-gray-200
+let headText = mb-8 border-b border-gray-200
 let normalText = text-lg leading-relaxed text-gray-700
 let sectionSplitText = w-full px-4 py-3 text-2xl font-semibold border-b border-black-500 focus:border-black-500 transition duration-300 bg-transparent focus:outline-none rounded-sm
 // 그라데이션 사각 라운드 버튼
