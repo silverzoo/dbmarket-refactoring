@@ -2,10 +2,7 @@ package com.example.team1.Prometheus.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -17,7 +14,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Valid
@@ -38,24 +34,28 @@ public class Item {
 //    @JoinColumn(name = "user_id", nullable = false)
 //    User user;
 
-    @NotEmpty(message = "상품 이름을 제대로 입력해주세요.")
+    //TODO ConstraintViolationException 처리 => pattrn, notblank 둘 다 처리됨
+    @NotBlank(message = "상품 이름은 공백으로 두시면 안됩니다.")
     @Pattern(regexp = "^[가-힣a-zA-Z0-9]+[가-힣a-zA-Z0-9\\s]*$",message = "상품 이름을 제대로 등록해주세요.")
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Size(min = 10 , max = 2147483646, message = "가격은 2147483646원을 넘을 수 없습니다.")
-    @NotEmpty(message = "가격을 제대로 입력해주세요.")
+//    @NotBlank(message = "가격을 제대로 입력해주세요.") integer에선 적용 X
+    // ConstraintViolationException:
+    @Max(value = 2147483646,message = "가격은 2147483646원을 넘을 수 없습니다.")
+    @Min(value = 10 , message = "가격은 10원부터 시작합니다.")
     @Column(name = "price", nullable = false)
     private int price;
 
+    @NotNull(message = "카테고리를 제대로 등록해주세요.")
     @Column(name = "category", nullable = false)
     private String category;
 
-    @NotEmpty(message = "이미지를 등록해주세요.")
+    //itemPostDto 에서 validate
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
-    @NotEmpty(message = "내용을 입력해주세요.")
+    @NotBlank(message = "내용을 입력해주세요.")
     @Column(name = "description")
     private String description;
 
