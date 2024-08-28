@@ -1,10 +1,8 @@
 package com.example.team1.Prometheus.controller;
 
-import com.example.team1.Prometheus.entity.ItemDeleteResponse;
-import com.example.team1.Prometheus.entity.ItemModifyRequest;
-import com.example.team1.Prometheus.entity.ItemModifyResponse;
-import com.example.team1.Prometheus.entity.ItemResponse;
+import com.example.team1.Prometheus.entity.*;
 import com.example.team1.Prometheus.service.ItemDetailService;
+import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,16 +21,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/items")
 public class ItemDetailViewController {
     private final ItemDetailService itemDetailService;
+    private final UserService userService;
 
     // NOTE : 상세 페이지로 이동
     @GetMapping("/{id}")
-    public String getItem(@PathVariable("id") Long id, Model model) {
-
+    public String getItem(@PathVariable("id") Long id, Model model, HttpServletRequest httpServletRequest) {
 
         ItemResponse item = itemDetailService.viewItem(id);
-        model.addAttribute("item", item);
-
         log.info("\n\n아이템 확인: {}\n\n", item);
+
+        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
+        log.info("\n\n현재 세션 아이디 확인: {}\n\n", userId);
+
+        model.addAttribute("userId", userId);
+        model.addAttribute("item", item);
 
         return "item/detail";
     }
@@ -40,9 +42,6 @@ public class ItemDetailViewController {
     // NOTE : 수정 페이지로 이동
     @GetMapping("/edit/{id}")
     public String updateItem(@PathVariable("id") Long id, Model model, HttpServletRequest httpServletRequest) {
-
-        String refer = httpServletRequest.getHeader("referer");
-        log.info("\n\n상세 조회에서 세션 헤더 정보: {}\n\n", refer);
 
         ItemResponse item = itemDetailService.findById(id, httpServletRequest);
         model.addAttribute("item", item);
@@ -52,13 +51,7 @@ public class ItemDetailViewController {
 
     // NOTE : 수정 후 상세페이지로 리다이렉트
     @PostMapping("/{id}")
-    public String updateItem(@PathVariable("id") Long id, RedirectAttributes redirectAttributes, @Valid @ModelAttribute ItemModifyRequest request, BindingResult bindingResult) {
-
-//        // 모든 에러 처리
-//        if(bindingResult.hasErrors()) {
-//            log.info("\n\n수정 실패\n\n");
-//            return "/item/" + id;
-//        }
+    public String updateItem(@PathVariable("id") Long id, RedirectAttributes redirectAttributes, ItemModifyRequest request) {
 
         ItemModifyResponse res = itemDetailService.updateItem(id, request);
         log.info("\n\n상품 수정 확인: {}\n\n", res);
@@ -76,11 +69,5 @@ public class ItemDetailViewController {
         redirectAttributes.addFlashAttribute("success", "삭제되었습니다.");
         return "redirect:/items";
     }
-
-    // TODO: 판매자 정보페이지에서 삭제 시, 판매자 정보 뷰로 돌아가게 하기
-//    @RequestMapping("/redirectAfterDelete")
-//    public String redirectAfterDelete() {
-//        return "items";
-//    }
 
 }
