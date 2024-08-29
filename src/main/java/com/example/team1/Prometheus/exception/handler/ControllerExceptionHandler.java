@@ -26,6 +26,12 @@ public class ControllerExceptionHandler {
         return "redirect:/items";
     }
 
+    @ExceptionHandler(UnauthorizedCreateByUser.class)
+    public String handleUnauthorizedCreateByUser(UnauthorizedModifyByUser e, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", e.getMessage());
+        return "redirect:/categories";
+    }
+
     @ExceptionHandler(NotFoundUserbyUserId.class)
     public String handleNotFoundUserbyUserId(NotFoundUserbyUserId e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());

@@ -9,8 +9,9 @@ import lombok.Getter;
 public class UserDto {
     private String username;
     private String password;
+    private Double rate;
 
     public User toEntity() {
-        return new User(null,username, password);
+        return new User(null,username, password, rate);
     }
 }
