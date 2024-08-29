@@ -39,7 +39,7 @@ dev_deploy:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - scp -o StrictHostKeyChecking=no -i "$SSH_KEY_FILE" ./home/elice/Prometheus/build/lib/*.jar ubuntu@"$DEPLOY_SERVER":/home/elice/Prometheus/build/lib/*.jar
-    - ssh -o StrictHostKeyChecking=no -i "$SSH_KEY_FILE" ubuntu@"$DEPLOY_SERVER" 'bash ~/.ssh/deploy.sh'
+    - ssh -o StrictHostKeyChecking=no -i "$SSH_KEY_FILE" ubuntu@"$DEPLOY_SERVER" 'bash ~/Prometheus/deploy.sh'
   tags:
     - Prometheus-Project-runner
   when: manual
