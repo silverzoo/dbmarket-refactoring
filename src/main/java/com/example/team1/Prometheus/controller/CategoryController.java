@@ -1,16 +1,15 @@
 package com.example.team1.Prometheus.controller;
 
-import com.example.team1.Prometheus.entity.CategoryRequest;
-import com.example.team1.Prometheus.entity.CategoryResponse;
+import com.example.team1.Prometheus.entity.*;
 import com.example.team1.Prometheus.service.CategoryService;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -45,20 +44,49 @@ public class CategoryController {
 
     @PostMapping("/new")
     public String createCategory(@ModelAttribute("categoryRequest") CategoryRequest categoryRequest,
-                                 HttpServletRequest httpServletRequest){
+                                 RedirectAttributes redirectAttributes,
+                                 HttpServletRequest httpServletRequest) {
+
         CategoryResponse category = categoryService.createCategory(categoryRequest, httpServletRequest);
         log.info("\n\n등록할 카테고리 확인: {}\n\n", category);
 
+        redirectAttributes.addFlashAttribute("success", "등록되었습니다.");
         return "redirect:/categories";
     }
 
-    @PutMapping()
-    public String updateCategory() {
-        return "";
+    @GetMapping("/{id}")
+    public String updateCategory(@PathVariable("id") Long id, Model model,
+                                 HttpServletRequest httpServletRequest) {
+
+        CategoryResponse category = categoryService.findById(id, httpServletRequest);
+
+        model.addAttribute("category", category);
+
+        return "category/edit";
+    }
+
+    @PostMapping("/{id}")
+    public String updateCategory(@PathVariable("id") Long id,
+                                 CategoryRequest request,
+                                 RedirectAttributes redirectAttributes,
+                                 HttpServletRequest httpServletRequest) {
+
+        CategoryResponse res = categoryService.updateItem(id, request, httpServletRequest);
+        log.info("\n\n상품 수정 확인: {}\n\n", res);
+
+        redirectAttributes.addFlashAttribute("success", "수정되었습니다.");
+        return "redirect:/categories";
     }
 
     @DeleteMapping()
-    public String deleteCategory() {
-        return "";
+    public String deleteCategory(@RequestParam("categoryId") Long id,
+                                 RedirectAttributes redirectAttributes,
+                                 HttpServletRequest httpServletRequest) {
+
+        CategoryResponse res = categoryService.deleteItem(id, httpServletRequest);
+        log.info("\n\n상품 삭제 확인: {}\n\n", res);
+
+        redirectAttributes.addFlashAttribute("success", "삭제되었습니다.");
+        return "redirect:/categories";
     }
 }
