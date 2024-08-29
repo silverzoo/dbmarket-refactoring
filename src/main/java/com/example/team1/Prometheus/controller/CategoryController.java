@@ -5,6 +5,7 @@ import com.example.team1.Prometheus.entity.CategoryResponse;
 import com.example.team1.Prometheus.service.CategoryService;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,11 +24,11 @@ public class CategoryController {
     private final UserService userService;
 
     @GetMapping()
-    public String getAllCategories(Model model, HttpServletRequest httpServletRequest) {
+    public String getAllCategories(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
         List<CategoryResponse> categories = categoryService.getAll();
 
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
+        String userName = userService.getSessionUser(httpServletRequest, httpServletResponse).getUserName();
         log.info("\n\n현재 세션 유저네임 확인: {}\n\n", userName);
 
         model.addAttribute("userName", userName);
@@ -44,9 +45,8 @@ public class CategoryController {
 
     @PostMapping("/new")
     public String createCategory(@ModelAttribute("categoryRequest") CategoryRequest categoryRequest,
-                                 HttpServletRequest httpServletRequest) {
-
-        CategoryResponse category = categoryService.createCategory(categoryRequest, httpServletRequest);
+                                 HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        CategoryResponse category = categoryService.createCategory(categoryRequest, httpServletRequest,httpServletResponse);
         log.info("\n\n등록할 카테고리 확인: {}\n\n", category);
 
         return "redirect:/categories";
