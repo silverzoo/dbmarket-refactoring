@@ -26,11 +26,18 @@ public class CommentController {
     // 모든 댓글 조회
     @GetMapping("/{userId}")
     public String getAllCommentById(@PathVariable long userId, Model model){
-        userFilter.findUserByFilter(model);
+        User reviewer = userFilter.findUserByFilter(model);
         List<CommentResponse> comments = commentService.getAllCommentById(userId);
         Double ratingAverage = commentService.ratingAverage(userId);
         int roundedStars = (int) Math.round(ratingAverage);  // 평점을 반올림하여 별의 개수로 변환
         Double percentage = commentService.ratingPercentage(ratingAverage); // 퍼센트 계산
+
+        // 댓글 중복검사
+        boolean hasCommented = commentService.userHasCommented(userId,reviewer.getUserName());
+        if(hasCommented){
+            // 이미 리뷰를 작성한 경우 리뷰작성 버튼 숨기기
+            model.addAttribute("hasCommented", "hasCommented");
+        }
 
         model.addAttribute("comments",comments);
         model.addAttribute("ratingAverage",ratingAverage);
