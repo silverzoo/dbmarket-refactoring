@@ -8,6 +8,7 @@ import com.example.team1.Prometheus.exception.UnauthorizedCreateByUser;
 import com.example.team1.Prometheus.mapper.CategoryMapper;
 import com.example.team1.Prometheus.repository.CategoryRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +35,8 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryResponse createCategory(CategoryRequest categoryRequest, HttpServletRequest httpServletRequest) {
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
+    public CategoryResponse createCategory(CategoryRequest categoryRequest, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        String userName = userService.getSessionUser(httpServletRequest, httpServletResponse).getUserName();
 
         if (!userName.equals("admin")) {
             throw new UnauthorizedCreateByUser(userName);
