@@ -30,7 +30,7 @@ public class RegisterItemService {
 
     //TODO 아이템 업로드할때 쓰는 HttpServletRequest 에도 session이 있는가?
     //TODO ItemUploadException 체크
-    public void uploadItemToDb(ItemPostDto itemPostDto, User user) throws ImageUploadException {
+    public Item uploadItemToDb(ItemPostDto itemPostDto, User user) throws ImageUploadException {
         log.info("uploadItemToDb={}", user.getUserId());
 //        편의 메서드
         log.info("size={}", itemPostDto.getItemImage().getSize()); //이미지 크기 체크
@@ -59,7 +59,7 @@ public class RegisterItemService {
         } catch (IOException e) {
             throw new ImageUploadException(e.getMessage());
         }
-        itemPostRepository.save(itemPostDto.toEntity(user.getUserId(), dbImagePath));
+        return itemPostRepository.save(itemPostDto.toEntity(user.getUserId(), dbImagePath));
     }
 
 
