@@ -12,12 +12,12 @@ INSERT INTO item(user_id, name, price, category, image_path,description,created_
     (1,'파세코에어컨',70000,'기타','/img/airconditioner.jpg','이사갈 집에 시스템에어컨이 설치가 되어있는 집이라 27일 오전에 가져가실 분만 연락 기다립니다.',NOW()),
     (4,'스벅 아아 2잔 5000원',5000,'기타','/img/starbucks.jpg','빠른 입금하실 수 있는 분!',NOW());
 
-INSERT INTO user(user_name, password) VALUES
-                                          ('김민수','1111'),
-                                          ('이지은','2222'),
-                                          ('김지수','3333'),
-                                          ('이지훈','4444'),
-                                          ('','qwe');
+INSERT INTO user(user_name, password,rate) VALUES
+                                          ('김민수','1111',0.0),
+                                          ('이지은','2222',0.0),
+                                          ('김지수','3333',0.0),
+                                          ('이지훈','4444',0.0),
+                                          ('','qwe',0.0);
 
 INSERT INTO comment(user_id, reviewer_name, content, created_at, rating) VALUES
                                                                    (1,'이지훈','따뜻한 마음 감사해요.',NOW(), 3),
