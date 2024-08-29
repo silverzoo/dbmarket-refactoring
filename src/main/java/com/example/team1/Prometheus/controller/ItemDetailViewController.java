@@ -1,7 +1,9 @@
 package com.example.team1.Prometheus.controller;
 
 import com.example.team1.Prometheus.entity.*;
+import com.example.team1.Prometheus.exception.ImageUploadException;
 import com.example.team1.Prometheus.service.ItemDetailService;
+import com.example.team1.Prometheus.service.RegisterItemService;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ItemDetailViewController {
     private final ItemDetailService itemDetailService;
     private final UserService userService;
+    private final RegisterItemService registerItemService;
 
     // NOTE : 상세 페이지로 이동
     @GetMapping("/{id}")
@@ -55,10 +58,11 @@ public class ItemDetailViewController {
 
     // NOTE : 수정 후 상세페이지로 리다이렉트
     @PostMapping("/{id}")
-    public String updateItem(@PathVariable("id") Long id, RedirectAttributes redirectAttributes, ItemModifyRequest request) {
+    public String updateItem(@PathVariable("id") Long id,
+                             RedirectAttributes redirectAttributes,
+                             @ModelAttribute("itemPostDto") @Valid ItemPostDto itemPostDto) throws ImageUploadException {
 
-        ItemModifyResponse res = itemDetailService.updateItem(id, request);
-        log.info("\n\n상품 수정 확인: {}\n\n", res);
+        registerItemService.updateItemToDb(id, itemPostDto);
 
         redirectAttributes.addFlashAttribute("success", "수정되었습니다.");
         return "redirect:/items/" + id;

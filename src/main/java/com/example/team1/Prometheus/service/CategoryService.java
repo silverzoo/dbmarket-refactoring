@@ -22,6 +22,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final UserService userService;
     private final CategoryMapper categoryMapper;
+    private final CategoryMappingService categoryMappingService;
 
     @Transactional
     public List<CategoryResponse> getAll() {
@@ -44,6 +45,7 @@ public class CategoryService {
         Category category = categoryMapper.toEntity(categoryRequest);
 
         Category savedCategory = categoryRepository.save(category);
+
 
         return categoryMapper.toResponse(savedCategory);
     }
@@ -101,4 +103,5 @@ public class CategoryService {
 
         return categoryMapper.toResponse(category);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.team1.Prometheus.controller;
 
 import com.example.team1.Prometheus.entity.ItemListViewResponse;
+import com.example.team1.Prometheus.entity.ItemResponse;
 import com.example.team1.Prometheus.service.ItemListService;
 import com.example.team1.Prometheus.service.UserFilter;
 import groovy.util.logging.Slf4j;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,12 +26,13 @@ public class ItemListViewController {
     private final ItemListService itemListService;
     private final UserFilter userFilter;
 
-    @GetMapping("/items")
-    public String getAllItems(Model model) {
-        List<ItemListViewResponse> items = itemListService.getAllItems();
+    @GetMapping("/category/{categoryId}")
+    public String getAllItems(@PathVariable("categoryId") Long categoryId, Model model) {
+        List<ItemResponse> items = itemListService.getItemsByCategory(categoryId);
         model.addAttribute("items",items);
         return "item/items";
     }
+
     @PostMapping("/sorting/")
     public String getSortItems(Model model, @RequestParam("sorting-option") String sortValue) {
         List<ItemListViewResponse> items = itemListService.getAllItems();

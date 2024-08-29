@@ -2,6 +2,7 @@ package com.example.team1.Prometheus.entity;
 
 
 
+import com.example.team1.Prometheus.service.CategoryMappingService;
 import com.example.team1.Prometheus.validation.ValidFile;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ItemPostDto{
 
     private ItemInfo itemInfo;
+    private CategoryMappingService categoryMapper;
 //    @NotNull(message = "notnull 이미지를 넣어주세요") file은 null값 반환 X
 //    @NotBlank(message = "blank 이미지를 넣어주세요") 이미지 작동 X
 //    @NotEmpty(message = "empty 이미지를 넣어주세요") 이미지 작동 X
@@ -28,10 +30,14 @@ public class ItemPostDto{
 
 
     public Item toEntity(Long userId, String imagePath) {
+
+        Long categoryId = CategoryMappingService.getCategoryId(getItemInfo().getCategory());
+
         return Item.builder()
                 .userId(userId)
                 .name(getItemInfo().getName())
                 .price(getItemInfo().getPrice())
+                .categoryId(categoryId)
                 .category(getItemInfo().getCategory())
                 .imagePath(imagePath)
                 .description(getItemInfo().getDescription()).build();
