@@ -27,7 +27,7 @@ public class UserService {
     private final ItemDetailRepository itemDetailRepository;
     private final CommentRepository commentRepository;
 
-    public String createUser(UserDto form, String password_check,HttpServletRequest httpServletRequest) {
+    public String createUser(UserDto form, String password_check, HttpServletRequest httpServletRequest) {
         User user = form.toEntity();
         User name = userRepository.findByUserName(form.getUsername());
 
@@ -83,15 +83,15 @@ public class UserService {
         if (httpServletRequest.getSession().getAttribute("user") == null) {
             log.info("이미 세션이 없으므로 home으로 리다이렉트");
             return "home";
-        }
-        else {
+        } else {
             log.info("세션제거, home으로 리다이렉트");
             HttpSession session = httpServletRequest.getSession(false);
             session.invalidate();
             return "home";
         }
     }
-    public User findUserById(Long userId){
+
+    public User findUserById(Long userId) {
         User user = userRepository.findByUserId(userId);
         return user;
     }
@@ -107,10 +107,10 @@ public class UserService {
     }
 
 
-    public User getSessionUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
-                HttpSession session = httpServletRequest.getSession();
-                User user = (User) session.getAttribute("user");
-                return user;
+    public User getSessionUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
+        return user;
     }
 
 
@@ -122,10 +122,10 @@ public class UserService {
 
     // 헤더에 마이페이지, 로그아웃 안보이게 하는 로직
     public void isSessionAvailable(Model model) {
-        model.addAttribute("isSessionAvailable","false");
+        model.addAttribute("isSessionAvailable", "false");
     }
 
-    public void deleteUser(Long userId){
+    public void deleteUser(Long userId) {
         User user = userRepository.findByUserId(userId);
         // 작성한 판매글 List 삭제
         List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
@@ -152,9 +152,9 @@ public class UserService {
         log.info("\n회원 삭제 : {} 삭제 \n", user.getUserName());
     }
 
-    public String editUserName(User user, String newUserName,HttpServletRequest httpServletRequest) {
+    public String editUserName(User user, String newUserName, HttpServletRequest httpServletRequest) {
         // 기존 아이디를 재 입력했을 경우
-        if(user.getUserName().equals(newUserName)){
+        if (user.getUserName().equals(newUserName)) {
             log.info("아이디 수정 실패 : 기존 아이디를 재입력함");
             return "redirect:/users/edit?notNew=error";
         }
@@ -180,12 +180,12 @@ public class UserService {
         String nuPasswordCheck = Encrypt.md5(newPasswordCheck);
 
         // 비밀번호 불일치
-        if(!nuPassword.equals(nuPasswordCheck)){
+        if (!nuPassword.equals(nuPasswordCheck)) {
             log.info("비밀번호 수정 실패 : 비밀번호가 일치하지 않음");
             return "redirect:/users/edit?PasswordNotCorrect=error";
         }
         // 기존 비밀번호 재 입력
-        if(nuPassword.equals(oldPassword)){
+        if (nuPassword.equals(oldPassword)) {
             log.info("비밀번호 수정 실패 : 기존 비밀번호와 동일함");
             return "redirect:/users/edit?PasswordNotNew=error";
         }
