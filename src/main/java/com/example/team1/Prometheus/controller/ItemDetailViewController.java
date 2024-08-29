@@ -33,6 +33,9 @@ public class ItemDetailViewController {
         Long userId = userService.getSessionUser(httpServletRequest).getUserId();
         log.info("\n\n현재 세션 아이디 확인: {}\n\n", userId);
 
+        String username = userService.findUserById(item.getUserId()).getUserName();
+        model.addAttribute("username", username);
+
         model.addAttribute("userId", userId);
         model.addAttribute("item", item);
 
