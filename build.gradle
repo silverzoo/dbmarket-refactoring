@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.example.team1'
-version = '0.0.3-SNAPSHOT'
+version = '0.0.5-SNAPSHOT'
 
 java {
 	toolchain {
