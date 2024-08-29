@@ -49,6 +49,10 @@ public class CommentController {
             model.addAttribute("hasCommented", "hasCommented");
         }
 
+        // 호스트 이름
+        User host = userService.findUserById(userId);
+        model.addAttribute("host", host.getUserName());
+
         model.addAttribute("comments",comments);
         model.addAttribute("ratingAverage",ratingAverage);
         model.addAttribute("roundedStars", roundedStars);
