@@ -116,4 +116,14 @@ public class CommentService {
         User user = comment.getUser();
         return user.getUserId();
     }
+
+    public boolean userHasCommented(Long hostId, String reviewerName) {
+        List<CommentResponse> comments = getAllCommentById(hostId);
+        for (CommentResponse comment : comments) {
+            if (comment.getReviewerName().equals(reviewerName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
