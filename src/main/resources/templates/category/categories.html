@@ -23,16 +23,19 @@
             </a>
             </div>
         </li>
-        <li class="flex">
-            <div class="h-auto  w-full rounded-md bg-gradient-to-r from-blue-0 to-purple-0 hover:from-blue-400 hover:to-purple-400 text-white font-semibold py-1 px-1 rounded-md transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg p-1">
-            <a th:href="@{/categories/edit}"
-               class="bg-white group w-full flex flex-col items-center justify-center rounded-md border-1  border-slate-0 text-sm leading-6 text-slate-900 font-big py-2">
-            <svg class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor" aria-hidden="true">
-                    <path d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />
-                </svg>
-                New Category
-            </a>
-        </li>
+        <div th:if="${userName == 'admin'}">
+            <li class="flex">
+                <div class="h-auto  w-full rounded-md bg-gradient-to-r from-blue-0 to-purple-0 hover:from-blue-400 hover:to-purple-400 text-white font-semibold py-1 px-1 rounded-md transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg p-1">
+                    <a th:href="@{/categories/new}"
+                       class="bg-white group w-full flex flex-col items-center justify-center rounded-md border-1  border-slate-0 text-sm leading-6 text-slate-900 font-big py-2">
+                    <svg class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor" aria-hidden="true">
+                            <path d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />
+                        </svg>
+                        New Category
+                    </a>
+                </div>
+            </li>
+        </div>
     </ul>
 </main>
 </body>
