@@ -39,13 +39,22 @@
     </div>
 
     <br>
-<!-- 나는 내 리뷰를 작성할 수 없다!!! -->
-    <div th:if="${myuserid} != ${userId}">
-    <button id="form-btn" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out  hover:scale-105 ease-in-out">
-        후기 등록
-    </button>
+<!-- 마이페이지인 경우 리뷰를 작성할 수 없음 -->
+    <div th:if="${myuserid} != ${userId} ">
+<!-- 이미 리뷰를 작성한 경우 리뷰 추가 작성 불가-->
+        <div th:if="${hasCommented} == null ">
+
+            <button id="form-btn" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out  hover:scale-105 ease-in-out">
+                후기 등록
+            </button>
+
+        </div>
     </div>
+
+
     <br><br>
+
+
 
     <!-- 댓글 작성 폼 -->
     <div id="comment-form" class="mb-6" style="display: none;">
