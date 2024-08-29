@@ -21,11 +21,11 @@ INSERT INTO user(user_name, password,rate) VALUES
                                                ('admin', 'admin', 0.0);
 
 INSERT INTO comment(user_id, reviewer_name, content, created_at, rating) VALUES
-                                                                   (1,'이지훈','따뜻한 마음 감사해요.',NOW(), 3),
-                                                                   (1,'이지은','감사합니다^^',NOW(), 2),
-                                                                   (2,'김민수','쿨거래 감사합니다',NOW(), 1),
-                                                                   (2,'김지수','다음에 또 재구매 할게요',NOW(), 4),
-                                                                   (3,'이지은','판매자님이 정말 친절해요',NOW(),5);
+                                                                   (1,'이지훈','따뜻한 마음 감사해요.',TIMESTAMP '2024-03-14 10:00:00', 3),
+                                                                   (1,'이지은','감사합니다^^',TIMESTAMP '2024-05-16 07:00:00', 2),
+                                                                   (2,'김민수','쿨거래 감사합니다',TIMESTAMP '2024-01-03 03:00:00', 1),
+                                                                   (2,'김지수','다음에 또 재구매 할게요',TIMESTAMP '2024-02-14 18:00:00', 4),
+                                                                   (3,'이지은','판매자님이 정말 친절해요',TIMESTAMP '2024-05-17 16:00:00',5);
 
 INSERT INTO category(name, created_at) VALUES
                                            ('핸드폰',NOW()),
