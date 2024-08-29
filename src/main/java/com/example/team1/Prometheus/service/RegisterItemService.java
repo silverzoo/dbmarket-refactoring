@@ -16,6 +16,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
+import static java.time.LocalDateTime.now;
+
 // TODO AOP 예외처리 or exception 처리
 @Service
 @Slf4j
@@ -30,7 +32,7 @@ public class RegisterItemService {
 
     //TODO 아이템 업로드할때 쓰는 HttpServletRequest 에도 session이 있는가?
     //TODO ItemUploadException 체크
-    public void uploadItemToDb(ItemPostDto itemPostDto, User user) throws ImageUploadException {
+    public Item uploadItemToDb(ItemPostDto itemPostDto, User user) throws ImageUploadException {
         log.info("uploadItemToDb={}", user.getUserId());
 //        편의 메서드
         log.info("size={}", itemPostDto.getItemImage().getSize()); //이미지 크기 체크
@@ -59,7 +61,7 @@ public class RegisterItemService {
         } catch (IOException e) {
             throw new ImageUploadException(e.getMessage());
         }
-        itemPostRepository.save(itemPostDto.toEntity(user.getUserId(), dbImagePath));
+        return itemPostRepository.save(itemPostDto.toEntity(user.getUserId(), dbImagePath));
     }
 
 
@@ -90,11 +92,13 @@ public class RegisterItemService {
         Item updatedItem = Item.builder()
                 .userId(existingItem.getUserId())
                 .itemId(existingItem.getItemId())
+                .categoryId(existingItem.getCategoryId())
                 .name(itemPostDto.getItemInfo().getName())
                 .price(itemPostDto.getItemInfo().getPrice())
                 .category(itemPostDto.getItemInfo().getCategory())
                 .imagePath(dbImagePath)
-                .description(itemPostDto.getItemInfo().getImagePath()).build();
+                .description(itemPostDto.getItemInfo().getDescription())
+                .build();
 
         try {
             itemPostDto.getItemImage().transferTo(new File(fullPath));
@@ -106,6 +110,7 @@ public class RegisterItemService {
         itemPostRepository.save(updatedItem);
         fileDelete(existingItem.getImagePath());
     }
+    //TODO 파일삭제 => 파일이 존재하지 않습니다. 경로
     public void fileDelete(String dir){
         File file = new File(dir);
 

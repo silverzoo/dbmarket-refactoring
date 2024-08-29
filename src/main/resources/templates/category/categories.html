@@ -8,7 +8,7 @@
 <body>
 <main class="container mx-auto px-4 max-w-3xl rounded-lg overflow-hidden p-2 flex justify-center items-center">
     <div>
-        <h2 class="px-4 py-2 text-2xl font-semibold"> Categories </h2>
+        <h2 class="mb-20 grid place-items-center block text-3xl font-semibold leading-6 text-gray-900"> 카테고리 </h2>
     </div>
 
 </main>
@@ -38,10 +38,10 @@
             </div>
 
             <!-- 카테고리 정보 표시 -->
-            <div class="h-auto w-full rounded-md bg-gradient-to-r from-blue-300 to-purple-300 hover:from-blue-400 hover:to-purple-400 text-white font-semibold py-1 px-1 transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg p-1">
-                <a th:href="@{/items}"
-                   class="bg-white group w-full flex flex-col items-center justify-center rounded-md border border-slate-0 text-sm leading-6 text-slate-900 font-big py-2">
-                    <div th:text="${category.categoryId}"></div>
+            <div class="h-auto w-full rounded-md bg-gradient-to-r from-blue-300 to-purple-300 hover:from-blue-400 hover:to-purple-400 text-white py-1 px-1 transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg p-1">
+                <a th:href="@{/category/{categoryId}(categoryId=${category.categoryId})}"
+                   class="bg-white group w-full flex flex-col items-center justify-center rounded-md border border-slate-0 text-lg leading-6 text-slate-900 font-big py-8">
+<!--                    <div th:text="${category.categoryId}"></div>-->
                     <div th:text="${category.name}"></div>
                 </a>
             </div>
@@ -49,13 +49,13 @@
 
         <div th:if="${userName == 'admin'}">
             <li class="relative mb-4 flex items-start">
-                <div class="h-auto  w-full rounded-md bg-gradient-to-r from-blue-0 to-purple-0 hover:from-blue-400 hover:to-purple-400 text-white font-semibold py-1 px-1 rounded-md transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg p-1">
+                <div class="h-auto  w-full rounded-md bg-gradient-to-r from-blue-0 to-purple-0 hover:from-blue-400 hover:to-purple-400 text-white py-1 px-1 rounded-md transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg p-1">
                     <a th:href="@{/categories/new}"
-                       class="bg-white group w-full flex flex-col items-center justify-center rounded-md border-1  border-slate-0 text-sm leading-6 text-slate-900 font-big py-2">
+                       class="bg-white group w-full flex flex-col items-center justify-center rounded-md border-1  border-slate-0 text-base leading-6 text-slate-900 font-big py-6">
                     <svg class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor" aria-hidden="true">
                             <path d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />
                         </svg>
-                        New Category
+                        새 카테고리
                     </a>
                 </div>
             </li>

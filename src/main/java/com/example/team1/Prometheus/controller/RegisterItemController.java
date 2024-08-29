@@ -1,7 +1,9 @@
 package com.example.team1.Prometheus.controller;
 
+import com.example.team1.Prometheus.entity.Item;
 import com.example.team1.Prometheus.entity.ItemPostDto;
 import com.example.team1.Prometheus.entity.User;
+import com.example.team1.Prometheus.service.ItemDetailService;
 import com.example.team1.Prometheus.service.RegisterItemService;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,9 +47,9 @@ public class RegisterItemController {
         User user =userService.getSessionUser(httpServletRequest);
         log.info("UserSession={}",user);
 
-        registerItemService.uploadItemToDb(itemPostDto, user);
+        Item item = registerItemService.uploadItemToDb(itemPostDto, user);
 
         //redirection 작업
-        return "redirect:items";
+        return "redirect:category/" + item.getCategoryId();
     }
 }
