@@ -1,4 +1,4 @@
-# image: java:22-jdk
+image: java:22-jdk
 
 stages:
   - build
