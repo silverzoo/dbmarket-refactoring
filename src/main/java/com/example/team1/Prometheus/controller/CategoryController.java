@@ -24,11 +24,11 @@ public class CategoryController {
     private final UserService userService;
 
     @GetMapping()
-    public String getAllCategories(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public String getAllCategories(Model model, HttpServletRequest httpServletRequest) {
 
         List<CategoryResponse> categories = categoryService.getAll();
 
-        String userName = userService.getSessionUser(httpServletRequest, httpServletResponse).getUserName();
+        String userName = userService.getSessionUser(httpServletRequest).getUserName();
         log.info("\n\n현재 세션 유저네임 확인: {}\n\n", userName);
 
         model.addAttribute("userName", userName);
@@ -45,8 +45,8 @@ public class CategoryController {
 
     @PostMapping("/new")
     public String createCategory(@ModelAttribute("categoryRequest") CategoryRequest categoryRequest,
-                                 HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
-        CategoryResponse category = categoryService.createCategory(categoryRequest, httpServletRequest,httpServletResponse);
+                                 HttpServletRequest httpServletRequest){
+        CategoryResponse category = categoryService.createCategory(categoryRequest, httpServletRequest);
         log.info("\n\n등록할 카테고리 확인: {}\n\n", category);
 
         return "redirect:/categories";

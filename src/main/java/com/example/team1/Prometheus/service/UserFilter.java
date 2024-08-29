@@ -53,7 +53,7 @@ public class UserFilter implements Filter {
        catch (Exception e){throw e;}
     }
 
-    public User findUserByFilter(Model model, HttpServletRequest request, HttpServletResponse response) {
+    public User findUserByFilter(Model model, HttpServletRequest request) {
         user = (User) request.getSession().getAttribute("user");
             model.addAttribute("myusername", user.getUserName());
             model.addAttribute("myuserid", user.getUserId());
