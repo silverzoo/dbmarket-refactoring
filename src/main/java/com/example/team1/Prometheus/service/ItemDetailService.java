@@ -17,8 +17,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemDetailService {
     private final ItemDetailRepository itemDetailRepository;
-    private final ItemMapper itemMapper;
     private final UserService userService;
+    private final ItemMapper itemMapper;
 
     @Transactional
     public ItemResponse viewItem(long id) {
