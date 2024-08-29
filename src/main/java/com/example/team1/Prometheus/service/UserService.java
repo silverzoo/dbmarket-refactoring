@@ -174,7 +174,7 @@ public class UserService {
         return "redirect:/users/edit?Success=Success";
     }
 
-    public String editUserPassword(User user, String newPassword, String newPasswordCheck, HttpServletRequest request) {
+    public String editUserPassword(User user, String newPassword, String newPasswordCheck) {
         String oldPassword = Encrypt.md5(user.getPassword());
         String nuPassword = Encrypt.md5(newPassword);
         String nuPasswordCheck = Encrypt.md5(newPasswordCheck);

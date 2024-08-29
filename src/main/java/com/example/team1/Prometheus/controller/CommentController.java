@@ -29,8 +29,8 @@ public class CommentController {
     @GetMapping("/{userId}")
     public String getAllCommentById(@PathVariable long userId, Model model,
                                     @RequestParam(value ="sort", required = false) String sort,
-                                    HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
-        User reviewer = userFilter.findUserByFilter(model, httpServletRequest, httpServletResponse);
+                                    HttpServletRequest httpServletRequest){
+        User reviewer = userFilter.findUserByFilter(model, httpServletRequest);
         List<CommentResponse> comments;
         if ("latest".equals(sort)) {
             //최신순 정렬

@@ -89,11 +89,11 @@ public class UserController {
 
     // 마이페이지
     @GetMapping("/users/mypage")
-    public String mypage(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        if(userFilter.findUserByFilter(model,httpServletRequest,httpServletResponse) == null) {
+    public String mypage(Model model, HttpServletRequest httpServletRequest) {
+        if(userFilter.findUserByFilter(model,httpServletRequest) == null) {
             return "redirect:/users/logout";
         }
-        User user = userFilter.findUserByFilter(model,httpServletRequest,httpServletResponse);
+        User user = userFilter.findUserByFilter(model,httpServletRequest);
         userService.getItemsByUserId(user.getUserId(), model);
 
         return "users/mypage";
@@ -101,31 +101,31 @@ public class UserController {
     }
 
     @DeleteMapping("/users/delete")
-    public String deleteUser(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        User user = userFilter.findUserByFilter(model, httpServletRequest, httpServletResponse);
+    public String deleteUser(Model model, HttpServletRequest httpServletRequest) {
+        User user = userFilter.findUserByFilter(model, httpServletRequest);
         userService.deleteUser(user.getUserId());
 
         return "redirect:/users/logout";
     }
 
     @GetMapping("/users/edit")
-    public String editUser(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        User user = userFilter.findUserByFilter(model,httpServletRequest, httpServletResponse);
+    public String editUser(Model model, HttpServletRequest httpServletRequest) {
+        User user = userFilter.findUserByFilter(model,httpServletRequest);
         model.addAttribute("user", user);
 
         return "users/edit";
     }
 
     @PostMapping("/users/editName")
-    public String editUserName(Model model, @RequestParam("username") String newUserName,HttpServletRequest request, HttpServletResponse response) {
-        User user = userFilter.findUserByFilter(model, request, response);
+    public String editUserName(Model model, @RequestParam("username") String newUserName,HttpServletRequest request) {
+        User user = userFilter.findUserByFilter(model, request);
         return userService.editUserName(user,newUserName,request);
     }
 
     @PostMapping("/users/editPassword")
-    public String editUserPassword(Model model,@RequestParam("password") String newPassword, @RequestParam("password_check") String newPasswordCheck, HttpServletRequest request, HttpServletResponse response) {
-        User user = userFilter.findUserByFilter(model, request, response);
-        return userService.editUserPassword(user, newPassword, newPasswordCheck, request);
+    public String editUserPassword(Model model,@RequestParam("password") String newPassword, @RequestParam("password_check") String newPasswordCheck, HttpServletRequest request) {
+        User user = userFilter.findUserByFilter(model, request);
+        return userService.editUserPassword(user, newPassword, newPasswordCheck);
     }
 
 
