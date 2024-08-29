@@ -73,8 +73,9 @@ public class CommentController {
         return "comment/edit";
     }
 
-    // 수정 후 상세 페이지로 리다이렉트
-    @PostMapping("/detail/{commentId}")
+
+    // 수정 후 댓글 목록 페이지로 리다이렉트
+    @PostMapping("/edit/{commentId}")
     public String updateComment(@PathVariable("commentId") Long commentId,
                                 @ModelAttribute CommentRequest commentRequest) {
 
