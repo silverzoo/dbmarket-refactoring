@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+
 @Setter
 @ToString
-
+@Getter
 @Entity
 @Table
 public class User {

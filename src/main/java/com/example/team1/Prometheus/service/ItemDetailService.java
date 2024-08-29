@@ -7,6 +7,7 @@ import com.example.team1.Prometheus.exception.UnauthorizedModifyByUser;
 import com.example.team1.Prometheus.mapper.ItemMapper;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,13 +31,13 @@ public class ItemDetailService {
     }
 
     @Transactional
-    public ItemResponse findById(long id, HttpServletRequest httpServletRequest) {
+    public ItemResponse findById(long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
         Item item = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundItemById(id));
 
-        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
+        Long userId = userService.getSessionUser(httpServletRequest,httpServletResponse).getUserId();
+        String userName = userService.getSessionUser(httpServletRequest,httpServletResponse).getUserName();
         if(item.getUserId()!=(userId)) {
             throw new UnauthorizedModifyByUser(userName);
         }
@@ -79,13 +80,13 @@ public class ItemDetailService {
     }
 
     @Transactional
-    public ItemDeleteResponse deleteItem(long id, HttpServletRequest httpServletRequest) {
+    public ItemDeleteResponse deleteItem(long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
         Item item = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundItemById(id));
 
-        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
+        Long userId = userService.getSessionUser(httpServletRequest,httpServletResponse).getUserId();
+        String userName = userService.getSessionUser(httpServletRequest,httpServletResponse).getUserName();
         if(item.getUserId()!=(userId)) {
             throw new UnauthorizedDeleteByUser(userName);
         }

@@ -4,7 +4,9 @@ import com.example.team1.Prometheus.entity.*;
 import com.example.team1.Prometheus.repository.CommentRepository;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import com.example.team1.Prometheus.repository.UserRepository;
+import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,30 +27,30 @@ public class UserService {
     private final ItemDetailRepository itemDetailRepository;
     private final CommentRepository commentRepository;
 
-    // 회원가입 DB 저장 로직
-    public String createUser(UserDto form, String password_check,HttpServletRequest httpServletRequest) {
+    public String createUser(UserDto form, String password_check, HttpServletRequest httpServletRequest) {
         User user = form.toEntity();
         User name = userRepository.findByUserName(form.getUsername());
-        // id, password 가 비어있는지 확인
+
         if (user.getUserName().contains(" ") || user.getPassword().contains(" ") || user.getUserName().isEmpty() || user.getPassword().isEmpty()) {
             return "users/join";
         }
-        // 비밀번호 이중확인 로직
-        // MD-5 암호화
         String password1 = Encrypt.md5(user.getPassword());
         String password2 = Encrypt.md5(password_check);
         if (!password1.equals(password2)) {
+            log.info("회원가입 실패 : 비밀번호 불일치");
             return "users/join";
         }
-        // DB가 비어있을 때만 save()
+
         if (name == null) {
             userRepository.save(user);
-            // 회원가입 성공시 세션 부여
+            log.info("회원가입 성공, 세션 부여");
             HttpSession httpSession = httpServletRequest.getSession(true);
             httpSession.setAttribute("user", user);
+            log.info("계정 DB저장 성공");
             return "redirect:/categories";
-            // 이미 존재하는 계정일 경우
+
         } else {
+            log.info("회원가입 실패 : 이미 존재하는 계정");
             return "redirect:/users/join?error=already_exists";
         }
     }
@@ -58,16 +62,17 @@ public class UserService {
 
         // 로그인 검증 로직
         if (user == null) {
+            log.info("로그인 실패 : 존재하지 않는 계정");
             return "redirect:/users/login?error= not_exist";
         }
-        // MD-5 암호화
         String password1 = Encrypt.md5(password);
         String password2 = Encrypt.md5(user.getPassword());
 
         if (!password1.equals(password2)) {
+            log.info("로그인 실패 : 틀린 비밀번호");
             return "redirect:/users/login?error=wrong_password";
         }
-        // 로그인 성공시 세션 부여
+        log.info("로그인 성공, 세션 부여");
         HttpSession httpSession = httpServletRequest.getSession(true);
         httpSession.setAttribute("user", user);
 
@@ -75,19 +80,20 @@ public class UserService {
     }
 
     public String logout(HttpServletRequest httpServletRequest, Model model) {
-        // 세션이 이미 없는 경우
         if (httpServletRequest.getSession().getAttribute("user") == null) {
+            log.info("이미 세션이 없으므로 home으로 리다이렉트");
             return "home";
-        }
-        // 세션 제거
-        else {
+        } else {
+            log.info("세션제거, home으로 리다이렉트");
             HttpSession session = httpServletRequest.getSession(false);
             session.invalidate();
             return "home";
         }
     }
-    public User findUserById(Long userId){
-        return userRepository.findByUserId(userId);
+
+    public User findUserById(Long userId) {
+        User user = userRepository.findByUserId(userId);
+        return user;
     }
 
 
@@ -101,8 +107,7 @@ public class UserService {
     }
 
 
-    @Transactional
-    public User getSessionUser(HttpServletRequest httpServletRequest) {
+    public User getSessionUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         return user;
@@ -117,10 +122,10 @@ public class UserService {
 
     // 헤더에 마이페이지, 로그아웃 안보이게 하는 로직
     public void isSessionAvailable(Model model) {
-        model.addAttribute("isSessionAvailable","false");
+        model.addAttribute("isSessionAvailable", "false");
     }
 
-    public void deleteUser(Long userId){
+    public void deleteUser(Long userId) {
         User user = userRepository.findByUserId(userId);
         // 작성한 판매글 List 삭제
         List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
@@ -147,9 +152,9 @@ public class UserService {
         log.info("\n회원 삭제 : {} 삭제 \n", user.getUserName());
     }
 
-    public String editUserName(User user, String newUserName,HttpServletRequest httpServletRequest) {
+    public String editUserName(User user, String newUserName, HttpServletRequest httpServletRequest) {
         // 기존 아이디를 재 입력했을 경우
-        if(user.getUserName().equals(newUserName)){
+        if (user.getUserName().equals(newUserName)) {
             log.info("아이디 수정 실패 : 기존 아이디를 재입력함");
             return "redirect:/users/edit?notNew=error";
         }
@@ -175,12 +180,12 @@ public class UserService {
         String nuPasswordCheck = Encrypt.md5(newPasswordCheck);
 
         // 비밀번호 불일치
-        if(!nuPassword.equals(nuPasswordCheck)){
+        if (!nuPassword.equals(nuPasswordCheck)) {
             log.info("비밀번호 수정 실패 : 비밀번호가 일치하지 않음");
             return "redirect:/users/edit?PasswordNotCorrect=error";
         }
         // 기존 비밀번호 재 입력
-        if(nuPassword.equals(oldPassword)){
+        if (nuPassword.equals(oldPassword)) {
             log.info("비밀번호 수정 실패 : 기존 비밀번호와 동일함");
             return "redirect:/users/edit?PasswordNotNew=error";
         }
