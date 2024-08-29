@@ -14,7 +14,7 @@
     <div class="bg-white shadow-2xl rounded-lg overflow-hidden p-8 transform hover:scale-105 transition duration-300">
 
         <article>
-            <form id="edit-form" method="post" th:action="@{/comments/detail/{commentId}(commentId=${comment.commentId})}">
+            <form id="edit-form" method="post" th:action="@{/comments/edit/{commentId}(commentId=${comment.commentId})}">
                 <input type="hidden" name="commentId" th:value="${comment.commentId}"/>
                 <input type="hidden" name="userId" th:value="${comment.userId}"/>
                 <div class="mb-6 flex items-center">

@@ -27,17 +27,8 @@ public class CommentApiController {
     }
 
 
-    // 댓글 상세 페이지의 데이터 조회
-    @GetMapping("/detail/{commentId}")
-    public ResponseEntity<CommentResponse> getCommentById(@PathVariable("commentId") long commentId) {
-        CommentResponse commentResponse = commentService.getCommentById(commentId);
-
-        return ResponseEntity.ok().body(commentResponse);
-    }
-
-
     // 해당 commentId의 댓글 수정
-    @PutMapping("/detail/{commentId}")
+    @PutMapping("/edit/{commentId}")
     public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") long commentId, @RequestBody CommentRequest commentRequest) {
 
         CommentResponse response = commentService.updateComment(commentId, commentRequest);
@@ -46,7 +37,7 @@ public class CommentApiController {
 
 
     // 해당 commentId 댓글 삭제
-    @DeleteMapping("/detail/{commentId}")
+    @DeleteMapping("/delete/{commentId}")
     public ResponseEntity<CommentDeleteResponse> deleteComment(@PathVariable("commentId") long commentId) {
         commentService.deleteComment(commentId);
         return ResponseEntity.ok().build();
