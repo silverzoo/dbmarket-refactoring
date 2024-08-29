@@ -5,6 +5,7 @@ import com.example.team1.Prometheus.service.CommentService;
 import com.example.team1.Prometheus.service.UserFilter;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,10 +25,19 @@ public class CommentController {
     private final UserService userService;
 
     // 모든 댓글 조회
+
     @GetMapping("/{userId}")
-    public String getAllCommentById(@PathVariable long userId, Model model){
-        User reviewer = userFilter.findUserByFilter(model);
-        List<CommentResponse> comments = commentService.getAllCommentById(userId);
+    public String getAllCommentById(@PathVariable long userId, Model model,
+                                    @RequestParam(value ="sort", required = false) String sort,
+                                    HttpServletRequest httpServletRequest){
+        User reviewer = userFilter.findUserByFilter(model, httpServletRequest);
+        List<CommentResponse> comments;
+        if ("latest".equals(sort)) {
+            //최신순 정렬
+            comments = commentService.getAllCommentByIdSorted(userId);
+        } else{
+            comments = commentService.getAllCommentById(userId);}
+
         Double ratingAverage = commentService.ratingAverage(userId);
         int roundedStars = (int) Math.round(ratingAverage);  // 평점을 반올림하여 별의 개수로 변환
         Double percentage = commentService.ratingPercentage(ratingAverage); // 퍼센트 계산
@@ -39,10 +49,14 @@ public class CommentController {
             model.addAttribute("hasCommented", "hasCommented");
         }
 
+        // 호스트 이름
+        User host = userService.findUserById(userId);
+        model.addAttribute("host", host.getUserName());
+
         model.addAttribute("comments",comments);
         model.addAttribute("ratingAverage",ratingAverage);
         model.addAttribute("roundedStars", roundedStars);
-        model.addAttribute("percentage", percentage); // 퍼센트를 정수로 반올림
+        model.addAttribute("percentage", percentage);
 
         return "comment/comments";
     }
@@ -63,8 +77,9 @@ public class CommentController {
         return "comment/edit";
     }
 
-    // 수정 후 상세 페이지로 리다이렉트
-    @PostMapping("/detail/{commentId}")
+
+    // 수정 후 댓글 목록 페이지로 리다이렉트
+    @PostMapping("/edit/{commentId}")
     public String updateComment(@PathVariable("commentId") Long commentId,
                                 @ModelAttribute CommentRequest commentRequest) {
 

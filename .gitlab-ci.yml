@@ -1,0 +1,45 @@
+# image: java:22-jdk
+
+stages:
+  - build
+  - deploy
+cache:
+    paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  only:
+    - dev
+  before_script:
+    - echo 'build starts'
+    - chmod +x ./gradlew
+  script:
+    - ./gradlew clean build
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 week 
+  tags:
+    - Prometheus-Project-runner
+  when: manual 
+
+dev_deploy:
+  stage: deploy
+  only:
+    - dev
+  before_script:
+    - command -v ssh-agent > /dev/null || (apt-get update -y && apt-get install openssh-client -y)
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - scp -o StrictHostKeyChecking=no -i "$SSH_KEY_FILE" ./home/elice/Prometheus/libs/*.jar ubuntu@"$DEPLOY_SERVER":/home/elice/Prometheus/libs/*.jar
+    - ssh -o StrictHostKeyChecking=no -i "$SSH_KEY_FILE" ubuntu@"$DEPLOY_SERVER" 'bash ~/.ssh/deploy.sh'
+  tags:
+    - Prometheus-Project-runner
+  when: manual

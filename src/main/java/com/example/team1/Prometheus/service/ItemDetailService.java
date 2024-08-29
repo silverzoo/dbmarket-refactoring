@@ -7,6 +7,7 @@ import com.example.team1.Prometheus.exception.UnauthorizedModifyByUser;
 import com.example.team1.Prometheus.mapper.ItemMapper;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemDetailService {
     private final ItemDetailRepository itemDetailRepository;
-    private final ItemMapper itemMapper;
     private final UserService userService;
+    private final ItemMapper itemMapper;
 
     @Transactional
     public ItemResponse viewItem(long id) {

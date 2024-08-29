@@ -24,7 +24,7 @@ public class CommentService {
     private final CommentMapper commentMapper;
 
     // 해당 아이디의 유저 모든 comment를 CommentResponse 리스트로 리턴
-    public List<CommentResponse> getAllCommentById(long userId) {
+    public List<CommentResponse> getAllCommentById(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundUserbyUserId(userId));
 
@@ -37,7 +37,7 @@ public class CommentService {
     }
 
     // 유저의 평점 계산
-    public Double ratingAverage(long userId) {
+    public Double ratingAverage(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundUserbyUserId(userId));
 
@@ -55,7 +55,7 @@ public class CommentService {
     }
 
     // 유더 평점 업데이트
-    private void updateUserRating(long userId) {
+    private void updateUserRating(Long userId) {
         // ratingAverage 메서드를 사용하여 평균 평점을 계산
         Double averageRating = ratingAverage(userId);
 
@@ -75,7 +75,7 @@ public class CommentService {
     }
 
     // 해당 커멘트 아이디로 조회
-    public CommentResponse getCommentById(long commentId) {
+    public CommentResponse getCommentById(Long commentId) {
         // Comment를 먼저 조회
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentbyCommentId(commentId));
@@ -137,5 +137,16 @@ public class CommentService {
             }
         }
         return false;
+    }
+
+    //댓글 최신순 정렬
+    public List<CommentResponse> getAllCommentByIdSorted(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundUserbyUserId(userId));
+        List<Comment> comments = commentRepository.findAllByUser_UserIdOrderByCreatedAtDesc(userId);
+        return comments.stream()
+                .map(commentMapper::toResponse)
+                .collect(Collectors.toList());
+
     }
 }

@@ -13,18 +13,19 @@ INSERT INTO item(user_id, name, price, category, image_path,description,created_
     (4,'스벅 아아 2잔 5000원',5000,'기타','/img/starbucks.jpg','빠른 입금하실 수 있는 분!',NOW());
 
 INSERT INTO user(user_name, password,rate) VALUES
-                                          ('김민수','1111',0.0),
-                                          ('이지은','2222',0.0),
-                                          ('김지수','3333',0.0),
-                                          ('이지훈','4444',0.0),
-                                          ('','qwe',0.0);
+                                               ('김민수','1111',0.0),
+                                               ('이지은','2222',0.0),
+                                               ('김지수','3333',0.0),
+                                               ('이지훈','4444',0.0),
+                                               ('','qwe',0.0),
+                                               ('admin', 'admin', 0.0);
 
 INSERT INTO comment(user_id, reviewer_name, content, created_at, rating) VALUES
-                                                                   (1,'이지훈','따뜻한 마음 감사해요.',NOW(), 3),
-                                                                   (1,'이지은','감사합니다^^',NOW(), 2),
-                                                                   (2,'김민수','쿨거래 감사합니다',NOW(), 1),
-                                                                   (2,'김지수','다음에 또 재구매 할게요',NOW(), 4),
-                                                                   (3,'이지은','판매자님이 정말 친절해요',NOW(),5);
+                                                                   (1,'이지훈','따뜻한 마음 감사해요.',TIMESTAMP '2024-03-14 10:00:00', 3),
+                                                                   (1,'이지은','감사합니다^^',TIMESTAMP '2024-05-16 07:00:00', 2),
+                                                                   (2,'김민수','쿨거래 감사합니다',TIMESTAMP '2024-01-03 03:00:00', 1),
+                                                                   (2,'김지수','다음에 또 재구매 할게요',TIMESTAMP '2024-02-14 18:00:00', 4),
+                                                                   (3,'이지은','판매자님이 정말 친절해요',TIMESTAMP '2024-05-17 16:00:00',5);
 
 INSERT INTO category(name, created_at) VALUES
                                            ('핸드폰',NOW()),

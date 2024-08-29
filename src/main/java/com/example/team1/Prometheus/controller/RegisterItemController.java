@@ -5,6 +5,7 @@ import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.service.RegisterItemService;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class RegisterItemController {
     private final RegisterItemService registerItemService;
+    private final HttpServletResponse httpServletResponse;
     UserService userService;
 //    private final RegisterMapper mapper;
 
