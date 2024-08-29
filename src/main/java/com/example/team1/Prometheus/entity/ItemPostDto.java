@@ -40,6 +40,7 @@ public class ItemPostDto{
                 .categoryId(categoryId)
                 .category(getItemInfo().getCategory())
                 .imagePath(imagePath)
-                .description(getItemInfo().getDescription()).build();
+                .description(getItemInfo().getDescription())
+                .build();
     }
 }

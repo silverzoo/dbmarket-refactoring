@@ -16,6 +16,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
+import static java.time.LocalDateTime.now;
+
 // TODO AOP 예외처리 or exception 처리
 @Service
 @Slf4j
@@ -90,11 +92,13 @@ public class RegisterItemService {
         Item updatedItem = Item.builder()
                 .userId(existingItem.getUserId())
                 .itemId(existingItem.getItemId())
+                .categoryId(existingItem.getCategoryId())
                 .name(itemPostDto.getItemInfo().getName())
                 .price(itemPostDto.getItemInfo().getPrice())
                 .category(itemPostDto.getItemInfo().getCategory())
                 .imagePath(dbImagePath)
-                .description(itemPostDto.getItemInfo().getDescription()).build();
+                .description(itemPostDto.getItemInfo().getDescription())
+                .build();
 
         try {
             itemPostDto.getItemImage().transferTo(new File(fullPath));

@@ -75,7 +75,7 @@ public class ItemDetailViewController {
         log.info("\n\n상품 삭제 확인: {}\n\n", res);
 
         redirectAttributes.addFlashAttribute("success", "삭제되었습니다.");
-        return "redirect:/items";
+        return "redirect:/categories";
     }
 
 }
