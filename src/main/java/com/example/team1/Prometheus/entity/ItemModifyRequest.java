@@ -13,6 +13,7 @@ public class ItemModifyRequest {
     private Long userId;
     private String name;
     private int price;
+    private Long categoryId;
     private String category;
     private String imagePath;
     private String description;

@@ -46,6 +46,9 @@ public class Item {
     @Column(name = "price", nullable = false)
     private int price;
 
+    @JoinColumn(name = "category_category_id")
+    private Long categoryId;
+
     @NotNull(message = "카테고리를 제대로 등록해주세요.")
     @Column(name = "category", nullable = false)
     private String category;
@@ -59,7 +62,7 @@ public class Item {
     private String description;
 
     @CreatedDate
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

@@ -55,20 +55,19 @@ public class ItemDetailService {
                 .orElseThrow(() -> new NotFoundItemById(id));
 
         // 2. DTO를 엔티티로 변환
-        Item updatedItem = itemMapper.toEntity(request);
+//        Item updatedItem = itemMapper.toEntity(request);
 
         // 3. 빌더 패턴을 사용하여 수정된 엔티티 생성
-        // Q: 빌더 패턴으로 값을 수정할 때 수정데이터가 들어온 것만 업데이트를 하는 방법이 있을까?
         Item finalItem = Item.builder()
                 .itemId(item.getItemId())
                 .userId(item.getUserId())
-                .name(updatedItem.getName())
-                .price(item.getPrice())
-                .category(item.getCategory())
-                // .category(updatedItem.getCategory())
-                .imagePath(item.getImagePath())
-                // .imagePath(updatedItem.getImagePath())
-                .description(updatedItem.getDescription())
+                .name(request.getName())
+                .price(request.getPrice())
+                .categoryId(request.getCategoryId())
+                .category(request.getCategory())
+                .imagePath(request.getImagePath())
+                .imagePath(request.getImagePath())
+                .description(request.getDescription())
                 .createdAt(item.getCreatedAt())
                 .build();
 

@@ -11,19 +11,19 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(NotFoundItemById.class)
     public String handleNotFoundItemById(NotFoundItemById e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());
-        return "redirect:/items";
+        return "redirect:/categories";
     }
 
     @ExceptionHandler(UnauthorizedDeleteByUser.class)
     public String handleUnauthorizedDeleteByUser(UnauthorizedDeleteByUser e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());
-        return "redirect:/items";
+        return "redirect:/categories";
     }
 
     @ExceptionHandler(UnauthorizedModifyByUser.class)
     public String handleUnauthorizedModifyByUser(UnauthorizedModifyByUser e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());
-        return "redirect:/items";
+        return "redirect:/categories";
     }
 
     @ExceptionHandler(UnauthorizedCreateByUser.class)
@@ -35,13 +35,13 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(NotFoundUserbyUserId.class)
     public String handleNotFoundUserbyUserId(NotFoundUserbyUserId e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());
-        return "redirect:/items";
+        return "redirect:/categories";
     }
 
     @ExceptionHandler(NotFoundCommentbyCommentId.class)
     public String handleNotFoundCommentbyCommentId(NotFoundCommentbyCommentId e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());
-        return "redirect:/items";
+        return "redirect:/category/1";
     }
 
 

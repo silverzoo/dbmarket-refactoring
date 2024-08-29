@@ -9,17 +9,18 @@
     <!--    아이템 수정 후 성공 메시지 출력    -->
     <div id="success" th:data-value="${success}"></div>
     <div id="error" th:data-value="${error}"></div>
-    <button type="button" id="create-btn">
-        <a th:href = '@{/items}'
+    <button type="button" id="back-btn">
+        <a th:href = '@{/category/{categoryId}(categoryId=${item.categoryId})}'
            class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
             <i data-feather="arrow-left" class="mr-2"></i> 목록으로 돌아가기
         </a>
     </button>
-    <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+    <div class="max-w-3xl mx-auto mt-10 bg-white shadow-xl rounded-lg overflow-hidden">
         <article class="p-8">
             <input type="hidden" id="item-id" th:value="${item.itemId}">
             <header class="mb-8 pb-8 border-b border-gray-200">
-                <h1 class="text-4xl font-bold mb-8 text-gray-800" th:text="${item.name}"></h1>
+                <h1 class="text-4xl font-bold mb-6 text-gray-800" th:text="${item.name}"></h1>
+                <h1 class="text-4xl font-bold mb-8 text-gray-800" th:text="${item.price} + '원'"></h1>
                 <!-- 수정일이 존재하는 경우, 수정일을 표시 -->
                 <div th:if="${item.updatedAt != null}">
                     <div class="flex items-center text-gray-600">
@@ -39,16 +40,23 @@
                     </div>
                 </div>
                 <!-- 판매자 아이디 표시 -->
-                <div th:if="${username != null}">
+                <div th:if="${username != null}" class="flex justify-between items-center">
                     <div class="flex items-center text-gray-600">
                         <i data-feather="user" class="mr-2 my-2"></i>
                         <span>판매자:&ensp; </span>
                         <span th:text="${username}"></span>
                     </div>
+                    <div>
+                        <a th:href="@{/users/{userid}(userid=${item.userId})}"
+                           class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                            <i data-feather="arrow-right-circle" class="mr-2"></i> 판매자 정보
+                        </a>
+                    </div>
                 </div>
 
             </header>
             <section class="mb-12 prose lg:prose-lg max-w-none">
+                <img th:src="${item.imagePath}" id="image-box" class="mx-auto h-180 w-180 mb-10">
                 <p class="text-lg leading-relaxed text-gray-700" th:text="${item.description}"></p>
             </section>
             <div class="flex justify-between items-center">
@@ -70,14 +78,6 @@
                             </button>
                         </form>
                     </div>
-                </div>
-                <div>
-                    <button type="button" id="profile">
-                        <a th:href="@{/users/{userid}(userid=${item.userId})}"
-                           class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
-                            <i data-feather="user" class="mr-2"></i> 판매자 정보
-                        </a>
-                    </button>
                 </div>
             </div>
         </article>
