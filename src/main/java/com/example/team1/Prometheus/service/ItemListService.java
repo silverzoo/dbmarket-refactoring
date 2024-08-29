@@ -5,6 +5,8 @@ import com.example.team1.Prometheus.entity.ItemListViewResponse;
 import com.example.team1.Prometheus.repository.ItemDetailRepository;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Method;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,20 @@ public class ItemListService {
     public List<ItemListViewResponse> getAllItems(){
         List<Item> items = itemDetailRepository.findAll();
         return items.stream()
+                .map(ItemListViewResponse::new)
+                .collect(Collectors.toList());
+    }
+    public List<ItemListViewResponse> getOrderByDateDesc(){
+        List<Item> items = itemDetailRepository.findAll();
+        return items.stream()
+                .sorted(Comparator.comparing(Item::getCreatedAt))
+                .map(ItemListViewResponse::new)
+                .collect(Collectors.toList());
+    }
+    public List<ItemListViewResponse> getOrderByDateAsc(){
+        List<Item> items = itemDetailRepository.findAll();
+        return items.stream()
+                .sorted(Comparator.comparing(Item::getCreatedAt).reversed())
                 .map(ItemListViewResponse::new)
                 .collect(Collectors.toList());
     }
