@@ -28,6 +28,13 @@ public class User {
     @Column(nullable = false)
     private Double rate;
 
+    @PrePersist
+    public void prePersist() {
+        if (this.rate == null) {
+            this.rate = 0.0;
+        }
+    }
+
 
 }
 
