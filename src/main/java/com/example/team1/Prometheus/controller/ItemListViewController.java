@@ -34,13 +34,13 @@ public class ItemListViewController {
     }
 
     @GetMapping("/sorting/{id}")
-    public String getSortItems(Model model, @PathVariable("id") Long id) {
+    public String getSortItems(Model model, @PathVariable("id") Long id, @RequestParam("sorting-option") int sort) {
         List<ItemListViewResponse> items = itemListService.getAllItems();
         log.info("sortValue={}", 1);
-        if(1 == 1){
+        if(sort == 1){
             items = itemListService.getOrderByDateAsc();
         }
-        if(1 == 2){
+        if(sort == 2){
             items = itemListService.getOrderByDateDesc();
         }
         model.addAttribute("items",items);
