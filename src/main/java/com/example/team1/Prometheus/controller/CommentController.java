@@ -5,6 +5,7 @@ import com.example.team1.Prometheus.service.CommentService;
 import com.example.team1.Prometheus.service.UserFilter;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,8 +26,8 @@ public class CommentController {
 
     // 모든 댓글 조회
     @GetMapping("/{userId}")
-    public String getAllCommentById(@PathVariable long userId, Model model){
-        User reviewer = userFilter.findUserByFilter(model);
+    public String getAllCommentById(@PathVariable long userId, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        User reviewer = userFilter.findUserByFilter(model, httpServletRequest, httpServletResponse);
         List<CommentResponse> comments = commentService.getAllCommentById(userId);
         Double ratingAverage = commentService.ratingAverage(userId);
         int roundedStars = (int) Math.round(ratingAverage);  // 평점을 반올림하여 별의 개수로 변환

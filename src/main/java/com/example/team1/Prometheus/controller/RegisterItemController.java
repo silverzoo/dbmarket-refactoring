@@ -5,6 +5,7 @@ import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.service.RegisterItemService;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,17 +21,18 @@ import java.io.IOException;
 @AllArgsConstructor
 public class RegisterItemController {
     private final RegisterItemService registerItemService;
+    private final HttpServletResponse httpServletResponse;
     UserService userService;
 //    private final RegisterMapper mapper;
 
     @GetMapping
-    public String register(HttpServletRequest httpServletRequest) {
-        User user =userService.getSessionUser(httpServletRequest);
+    public String register(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        User user =userService.getSessionUser(httpServletRequest, httpServletResponse);
         log.info("UserSession={}",user);
         return "item/registeritemform";
     }
     @PostMapping
-    public String saveFormToDb(@ModelAttribute("itemPostDto") @Valid ItemPostDto itemPostDto, HttpServletRequest httpServletRequest) throws IOException {
+    public String saveFormToDb(@ModelAttribute("itemPostDto") @Valid ItemPostDto itemPostDto, HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws IOException {
         //TODO http서블렛 getsession 받아서 service로 넘기기
 
         // form name=itemInfo하니까 인식됨, 객체로 인식
@@ -40,7 +42,7 @@ public class RegisterItemController {
 //        log.info("itemImage={}", itemPostDto.getItemImage().getOriginalFilename());
 
         //DB저장작업
-        User user =userService.getSessionUser(httpServletRequest);
+        User user =userService.getSessionUser(httpServletRequest, httpServletResponse);
         log.info("UserSession={}",user);
 
         registerItemService.uploadItemToDb(itemPostDto, user);

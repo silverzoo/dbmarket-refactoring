@@ -6,18 +6,20 @@ import com.example.team1.Prometheus.repository.UserRepository;
 import com.example.team1.Prometheus.service.UserFilter;
 import com.example.team1.Prometheus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class UserController {
     private final UserService userService;
     private final UserFilter userFilter;
-    private final UserRepository userRepository;
 
     private User userForRedirect;
 
@@ -26,6 +28,7 @@ public class UserController {
     public String welcomeHome(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
+            log.info("로그인 세션 존재 - categories로 이동");
             return "redirect:/categories";
         } else {
            userService.isSessionAvailable(model);
@@ -35,12 +38,14 @@ public class UserController {
 
     @GetMapping("/users/join")
     public String joinForm(Model model) {
+        log.info("회원가입 페이지 요청 접수");
         userService.isSessionAvailable(model);
         return "users/join";
     }
 
     @PostMapping("/users/join")
     public String CreateUser(UserDto form, @RequestParam("password_check") String password_check, HttpServletRequest httpServletRequest, Model model) {
+        log.info("회원가입 요청 접수");
         userService.isSessionAvailable(model);
         return userService.createUser(form, password_check, httpServletRequest);
     }
@@ -84,11 +89,11 @@ public class UserController {
 
     // 마이페이지
     @GetMapping("/users/mypage")
-    public String mypage(Model model) {
-        if(userFilter.findUserByFilter(model) == null) {
+    public String mypage(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        if(userFilter.findUserByFilter(model,httpServletRequest,httpServletResponse) == null) {
             return "redirect:/users/logout";
         }
-        User user = userFilter.findUserByFilter(model);
+        User user = userFilter.findUserByFilter(model,httpServletRequest,httpServletResponse);
         userService.getItemsByUserId(user.getUserId(), model);
 
         return "users/mypage";
@@ -96,30 +101,30 @@ public class UserController {
     }
 
     @DeleteMapping("/users/delete")
-    public String deleteUser(Model model) {
-        User user = userFilter.findUserByFilter(model);
+    public String deleteUser(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        User user = userFilter.findUserByFilter(model, httpServletRequest, httpServletResponse);
         userService.deleteUser(user.getUserId());
 
         return "redirect:/users/logout";
     }
 
     @GetMapping("/users/edit")
-    public String editUser(Model model) {
-        User user = userFilter.findUserByFilter(model);
+    public String editUser(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        User user = userFilter.findUserByFilter(model,httpServletRequest, httpServletResponse);
         model.addAttribute("user", user);
 
         return "users/edit";
     }
 
     @PostMapping("/users/editName")
-    public String editUserName(Model model, @RequestParam("username") String newUserName,HttpServletRequest request) {
-        User user = userFilter.findUserByFilter(model);
+    public String editUserName(Model model, @RequestParam("username") String newUserName,HttpServletRequest request, HttpServletResponse response) {
+        User user = userFilter.findUserByFilter(model, request, response);
         return userService.editUserName(user,newUserName,request);
     }
 
     @PostMapping("/users/editPassword")
-    public String editUserPassword(Model model,@RequestParam("password") String newPassword, @RequestParam("password_check") String newPasswordCheck, HttpServletRequest request) {
-        User user = userFilter.findUserByFilter(model);
+    public String editUserPassword(Model model,@RequestParam("password") String newPassword, @RequestParam("password_check") String newPasswordCheck, HttpServletRequest request, HttpServletResponse response) {
+        User user = userFilter.findUserByFilter(model, request, response);
         return userService.editUserPassword(user, newPassword, newPasswordCheck, request);
     }
 
