@@ -6,7 +6,7 @@ import com.example.team1.Prometheus.entity.User;
 import com.example.team1.Prometheus.exception.ImageUploadException;
 import com.example.team1.Prometheus.property.FileUploadProperties;
 import com.example.team1.Prometheus.repository.ItemPostRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +17,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 // TODO AOP 예외처리 or exception 처리
-
 @Service
 @Slf4j
 //    file.{변수명} 값 주입, 자료 넘길시 사용
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RegisterItemService {
-    private ItemPostRepository itemPostRepository;
-    private FileUploadProperties fileUploadProperties;
+    private final ItemPostRepository itemPostRepository;
+    private final FileUploadProperties fileUploadProperties;
     private String fullPath = "";
     private String dbImagePath = "";
 
@@ -66,8 +65,8 @@ public class RegisterItemService {
 
     public void updateItemToDb(Long itemId, ItemPostDto itemPostDto) throws ImageUploadException {
 
-        String extention = itemPostDto.getItemImage().getOriginalFilename()
-                .substring(itemPostDto.getItemImage().getOriginalFilename().lastIndexOf("."));
+            String extention = itemPostDto.getItemImage().getOriginalFilename()
+                    .substring(itemPostDto.getItemImage().getOriginalFilename().lastIndexOf("."));
         String fileName = UUID.randomUUID() + extention;
 
         if(fileUploadProperties.getEnvName().equals("dev")){
