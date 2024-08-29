@@ -33,18 +33,18 @@ public class ItemListViewController {
         return "item/items";
     }
 
-    @PostMapping("/sorting/")
-    public String getSortItems(Model model, @RequestParam("sorting-option") String sortValue) {
+    @GetMapping("/sorting/{id}")
+    public String getSortItems(Model model, @PathVariable("sorting-option") int sortValue, @PathVariable("id") int id ) {
         List<ItemListViewResponse> items = itemListService.getAllItems();
         log.info("sortValue={}", sortValue);
-        if(sortValue.equals("최신순")){
+        if(sortValue == 1){
             items = itemListService.getOrderByDateAsc();
         }
-        if(sortValue.equals("오래된순")){
+        if(sortValue == 2){
             items = itemListService.getOrderByDateDesc();
         }
         model.addAttribute("items",items);
-        return "item/items";
+        return "redirect:/category/"+id;
     }
 
 }

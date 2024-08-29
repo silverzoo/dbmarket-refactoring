@@ -94,7 +94,7 @@ public class RegisterItemService {
                 .price(itemPostDto.getItemInfo().getPrice())
                 .category(itemPostDto.getItemInfo().getCategory())
                 .imagePath(dbImagePath)
-                .description(itemPostDto.getItemInfo().getImagePath()).build();
+                .description(itemPostDto.getItemInfo().getDescription()).build();
 
         try {
             itemPostDto.getItemImage().transferTo(new File(fullPath));
@@ -106,6 +106,7 @@ public class RegisterItemService {
         itemPostRepository.save(updatedItem);
         fileDelete(existingItem.getImagePath());
     }
+    //TODO 파일삭제 => 파일이 존재하지 않습니다. 경로
     public void fileDelete(String dir){
         File file = new File(dir);
 
