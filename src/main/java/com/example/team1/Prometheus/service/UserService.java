@@ -107,7 +107,7 @@ public class UserService {
     }
 
 
-    public User getSessionUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public User getSessionUser(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         return user;

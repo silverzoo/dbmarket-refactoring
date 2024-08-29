@@ -35,8 +35,8 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryResponse createCategory(CategoryRequest categoryRequest, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        String userName = userService.getSessionUser(httpServletRequest, httpServletResponse).getUserName();
+    public CategoryResponse createCategory(CategoryRequest categoryRequest, HttpServletRequest httpServletRequest) {
+        String userName = userService.getSessionUser(httpServletRequest).getUserName();
 
         if (!userName.equals("admin")) {
             throw new UnauthorizedCreateByUser(userName);

@@ -31,13 +31,13 @@ public class ItemDetailService {
     }
 
     @Transactional
-    public ItemResponse findById(long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public ItemResponse findById(long id, HttpServletRequest httpServletRequest) {
 
         Item item = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundItemById(id));
 
-        Long userId = userService.getSessionUser(httpServletRequest,httpServletResponse).getUserId();
-        String userName = userService.getSessionUser(httpServletRequest,httpServletResponse).getUserName();
+        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
+        String userName = userService.getSessionUser(httpServletRequest).getUserName();
         if(item.getUserId()!=(userId)) {
             throw new UnauthorizedModifyByUser(userName);
         }
@@ -80,13 +80,13 @@ public class ItemDetailService {
     }
 
     @Transactional
-    public ItemDeleteResponse deleteItem(long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public ItemDeleteResponse deleteItem(long id, HttpServletRequest httpServletRequest) {
 
         Item item = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundItemById(id));
 
-        Long userId = userService.getSessionUser(httpServletRequest,httpServletResponse).getUserId();
-        String userName = userService.getSessionUser(httpServletRequest,httpServletResponse).getUserName();
+        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
+        String userName = userService.getSessionUser(httpServletRequest).getUserName();
         if(item.getUserId()!=(userId)) {
             throw new UnauthorizedDeleteByUser(userName);
         }

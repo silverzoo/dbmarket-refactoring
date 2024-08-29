@@ -26,13 +26,13 @@ public class RegisterItemController {
 //    private final RegisterMapper mapper;
 
     @GetMapping
-    public String register(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        User user =userService.getSessionUser(httpServletRequest, httpServletResponse);
+    public String register(HttpServletRequest httpServletRequest) {
+        User user =userService.getSessionUser(httpServletRequest);
         log.info("UserSession={}",user);
         return "item/registeritemform";
     }
     @PostMapping
-    public String saveFormToDb(@ModelAttribute("itemPostDto") @Valid ItemPostDto itemPostDto, HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws IOException {
+    public String saveFormToDb(@ModelAttribute("itemPostDto") @Valid ItemPostDto itemPostDto, HttpServletRequest httpServletRequest) throws IOException {
         //TODO http서블렛 getsession 받아서 service로 넘기기
 
         // form name=itemInfo하니까 인식됨, 객체로 인식
@@ -42,7 +42,7 @@ public class RegisterItemController {
 //        log.info("itemImage={}", itemPostDto.getItemImage().getOriginalFilename());
 
         //DB저장작업
-        User user =userService.getSessionUser(httpServletRequest, httpServletResponse);
+        User user =userService.getSessionUser(httpServletRequest);
         log.info("UserSession={}",user);
 
         registerItemService.uploadItemToDb(itemPostDto, user);

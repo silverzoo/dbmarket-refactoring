@@ -26,12 +26,12 @@ public class ItemDetailViewController {
 
     // NOTE : 상세 페이지로 이동
     @GetMapping("/{id}")
-    public String getItem(@PathVariable("id") Long id, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public String getItem(@PathVariable("id") Long id, Model model, HttpServletRequest httpServletRequest) {
 
         ItemResponse item = itemDetailService.viewItem(id);
         log.info("\n\n아이템 확인: {}\n\n", item);
 
-        Long userId = userService.getSessionUser(httpServletRequest, httpServletResponse).getUserId();
+        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
         log.info("\n\n현재 세션 아이디 확인: {}\n\n", userId);
 
         String username = userService.findUserById(item.getUserId()).getUserName();
@@ -45,9 +45,9 @@ public class ItemDetailViewController {
 
     // NOTE : 수정 페이지로 이동
     @GetMapping("/edit/{id}")
-    public String updateItem(@PathVariable("id") Long id, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public String updateItem(@PathVariable("id") Long id, Model model, HttpServletRequest httpServletRequest) {
 
-        ItemResponse item = itemDetailService.findById(id, httpServletRequest, httpServletResponse);
+        ItemResponse item = itemDetailService.findById(id, httpServletRequest);
         model.addAttribute("item", item);
 
         return "item/edit";
@@ -65,9 +65,9 @@ public class ItemDetailViewController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteItem(@PathVariable("id") Long id, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public String deleteItem(@PathVariable("id") Long id, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
 
-        ItemDeleteResponse res = itemDetailService.deleteItem(id, httpServletRequest, httpServletResponse);
+        ItemDeleteResponse res = itemDetailService.deleteItem(id, httpServletRequest);
         log.info("\n\n상품 삭제 확인: {}\n\n", res);
 
         redirectAttributes.addFlashAttribute("success", "삭제되었습니다.");
