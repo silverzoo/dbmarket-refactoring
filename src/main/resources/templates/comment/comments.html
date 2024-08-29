@@ -18,12 +18,17 @@
 
                     <!-- 반올림 평점-->
                     <div>
-                        <div th:if="${roundedStars == 5}">
-                            <span style="color: gold;">★★★★★</span>
+                        <div th:if="${roundedStars == 0}">
+                            <span th:each="emptyStar : ${#numbers.sequence(1, 5)}" style="color: lightgray;">☆</span>
                         </div>
-                        <div th:unless="${roundedStars == 5}">
-                            <span th:each="star : ${#numbers.sequence(1, roundedStars)}" style="color: gold;">★</span>
-                            <span th:each="emptyStar : ${#numbers.sequence(roundedStars + 1, 5)}" style="color: lightgray;">☆</span>
+                        <div th:unless="${roundedStars == 0}">
+                            <div th:if="${roundedStars == 5}">
+                                <span style="color: gold;">★★★★★</span>
+                            </div>
+                            <div th:unless="${roundedStars == 5}">
+                                <span th:each="star : ${#numbers.sequence(1, roundedStars)}" style="color: gold;">★</span>
+                                <span th:each="emptyStar : ${#numbers.sequence(roundedStars + 1, 5)}" style="color: lightgray;">☆</span>
+                            </div>
                         </div>
                     </div>
                 </div>
