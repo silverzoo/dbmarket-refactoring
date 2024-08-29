@@ -16,31 +16,50 @@ fileDOM.addEventListener('change', () => {
 
 function formValidation(){
 //        if (!document.getElementById('itemImage')){} 안됨
-        if (!document.getElementById('name').value) { // id 라는 id 를 선택하고 해당 input이 공백일 경우
+        if (!document.getElementById('name').value) { 
             alert('공백을 입력하지 말아주세요.');
             return false;
         }
-        if (isNaN(document.getElementById('price').value)) { // id 라는 id 를 선택하고 해당 input이 공백일 경우
+        if (isNaN(document.getElementById('price').value)) {
                     alert('숫자만 입력해주세요');
                     return false;
         }
-        if (!(10 <= document.getElementById('price').value <= 2147483646)) { // id 라는 id 를 선택하고 해당 input이 공백일 경우
-                    alert('가격 범위는 10~2147483646 입니다');
+        if (!(10 <= document.getElementById('price').value <= 2147483646)) { 
                     return false;
         }
-        if (!document.getElementById('description').value) { // id 라는 id 를 선택하고 해당 input이 공백일 경우
+        if (!document.getElementById('description').value) {
                     alert('공백을 입력하지 말아주세요.');
                     return false;
         }
-        if (!document.getElementById('item').value) { // id 라는 id 를 선택하고 해당 input이 공백일 경우
+        if (!document.getElementById('item').value) {
                     alert('공백을 입력하지 말아주세요.');
                     return false;
         }
         // === => 변수 유형 고려
         //TODO 자료값 확인;;; 여기에서 체크가 안되는데?
-        if (document.getElementById('itemImage').files.length == 0) { // id 라는 id 를 선택하고 해당 input이 공백일 경우
+        if (!document.getElementById('image-box').src==="https://i0.wp.com/adventure.co.kr/wp-content/uploads/2020/09/no-image.jpg") {
                 alert('파일을 업로드 해주세요.');
                 return false;
         }
+        // if(!document.getElementById('image-box').src==="https://i0.wp.com/adventure.co.kr/wp-content/uploads/2020/09/no-image.jpg"){
+        //     //
+        //     const fileInput = document.querySelector('#itemImage');
+        //     // Create a new File object
+        //     myFile = convertURLtoFile(fileInput.src);
+        //     // Now let's create a DataTransfer to get a FileList
+        //     const dataTransfer = new DataTransfer();
+        //     dataTransfer.items.add(myFile);
+        //     fileInput.files = dataTransfer.files;
+        //     alert("이미지 전송!");
+        // }
     };
+
+    // export const convertURLtoFile = async (url: string) => {
+    //     const response = await fetch(url);
+    //     const data = await response.blob();
+    //     const ext = url.split(".").pop(); // url 구조에 맞게 수정할 것
+    //     const filename = url.split("/").pop(); // url 구조에 맞게 수정할 것
+    //     const metadata = { type: `image/${ext}` };
+    //     return new File([data], filename!, metadata);
+    // };
 
