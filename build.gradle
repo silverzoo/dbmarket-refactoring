@@ -25,7 +25,6 @@ repositories {
 
 dependencies {
 	//설정추가
-	implementation 'org.springframework.boot:spring-boot-starter-parent'
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
 	implementation 'org.springframework:spring-aop:6.1.12'
 	implementation 'org.springframework:spring-jdbc:6.1.12'
