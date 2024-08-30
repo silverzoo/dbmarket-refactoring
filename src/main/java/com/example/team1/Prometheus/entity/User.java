@@ -2,17 +2,21 @@ package com.example.team1.Prometheus.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+
 @Setter
 @ToString
-
+@Getter
 @Entity
-@Table(name="user")
+@Table
 public class User {
     @Id
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
@@ -21,6 +25,17 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private Double rate;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.rate == null) {
+            this.rate = 0.0;
+        }
+    }
+
 
 }
 

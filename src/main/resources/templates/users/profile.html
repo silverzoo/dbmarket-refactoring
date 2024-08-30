@@ -1,29 +1,55 @@
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: layout(~{::title}, ~{::main})}">
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
 <head>
     <meta charset="UTF-8">
-    <title>블로그 글 목록</title>
+    <title>판매자 프로필</title>
 </head>
 <body>
-<main class="container mx-auto px-4 max-w-5xl">
-    <ul>
-        [[${username}]] 님
-        회원번호 (테스트용) = [[${userid}]]
-    </ul>
-    <ul>
-    판매중인 상품
-    </ul>
-
-    <button type="button" id="profile-btn">
-        <a th:href="@{/comments/{userid}(userid=${userid})}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
-            <i data-feather="plus" class="mr-2"></i> 상세보기
-        </a>
-    </button>
-
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
+<main class="container mx-auto px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center">
+    <div>
+        <h2 class="px-4 py-2 text-2xl font-semibold"> 판매자 </h2>
+        <h3 class="px-4 py-2 text-2xl">[[${username}]] 님 </h3>
     </div>
 </main>
+
+<main class="container mx-auto px-4 max-w-3xl overflow-hidden p-8 flex justify-end items-left">
+    <div class="mx-2">
+        <button type="button" id="review-btn">
+            <a th:href="@{/comments/{userid}(userid=${userid})}"
+               class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                <i data-feather="star" class="mr-2"></i>판매자 리뷰 보러가기
+            </a>
+        </button>
+    </div>
+</main>
+
+<main class="container mx-auto max-w-4xl overflow-hidden p-8 flex justify-left items-left">
+    <h2 class="px-4 py-2 text-2xl font-semibold"> 판매중인 물건 </h2>
+</main>
+<main class="container mx-auto px-4 max-w-4xl overflow-hidden p-8 flex justify-left items-left">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+        <div th:each="item : ${items}" class="relative group">
+            <a th:href="@{/items/{id}(id=${item.itemId})}" class="block">
+                <img th:src="${item.imagePath}" alt="image" class="w-full h-full object-cover rounded-lg transition duration-300 transform group-hover:scale-105">
+            </a>
+
+            <div class="absolute bottom-0 left-0 right-0 p-4 bg-white bg-opacity-80 rounded-b-lg transition duration-300 opacity-0 group-hover:opacity-100">
+                <a th:href="@{/items/{id}(id=${item.itemId})}" class="block">
+                    <h2 class="text-lg font-medium text-center">
+                        <span th:text="${item.name}"></span>
+                    </h2>
+                    <p class="text-gray-700 text-center">
+                        <span th:text="${item.category}"></span>
+                    </p>
+                    <p class="text-gray-700 text-center">
+                        가격: <span th:text="${item.price}"></span>원
+                    </p>
+                </a>  </div>
+        </div>
+    </div>
+</main>
+
+
 </body>
 </html>

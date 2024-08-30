@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>카테고리 생성</title>
+</head>
+<body>
+<main>
+    <div class="container mx-auto my-4 px-4 max-w-3xl">
+
+        <button type="button">
+            <a th:href="@{/categories}"
+               class="my-4 bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                <i data-feather="arrow-left" class="mr-2"></i>  뒤로가기
+            </a>
+        </button>
+    </div>
+
+    <div class="container mx-auto my-4 px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center transform hover:scale-100 transition duration-300">
+        <form method="post" th:action="@{/categories/{id}(id=${category.categoryId})}">
+            <label for="name"></label>
+            <input type="text" name="name" id="name" th:value="${category.name}"
+                                             class="px-4 py-3 text-2xl font-semibold border-b-2 border-purple-100 focus:border-purple-500 transition duration-300 bg-transparent focus:outline-none"
+                                             placeholder="새로운 카테고리를 입력하세요">
+            <br>
+            <div class="container ustify-end items-right">
+                <button type="submit"
+                        onclick="return confirm('수정 하시겠습니까?');"
+                        class="my-2 bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                    <i data-feather="edit-3" class="mr-2"></i>카테고리 수정하기
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

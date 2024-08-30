@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록</title>
+</head>
+<body>
+<main class="container mx-auto px-4 max-w-5xl">
+    <!--    아이템 조회/수정/삭제 후 메시지 출력    -->
+    <div id="success" th:data-value="${success}"></div>
+    <div id="error" th:data-value="${error}"></div>
+<!--    <header class="bg-white shadow-xl rounded-lg overflow-hidden space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6">-->
+<!--        <div class="w-full px-0 py-3 text-2xl font-semibold focus:border-black-500 transition duration-300 bg-transparent focus:outline-none rounded-sm">-->
+<!--            중고거래 인기 매물-->
+<!--        </div>-->
+<!--        <div class="flex items-center justify-between">-->
+<!--            <h2 class="font-semibold text-slate-900">키워드 검색</h2>-->
+<!--&lt;!&ndash;            <a th:href="@{/}" class="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm">&ndash;&gt;-->
+<!--&lt;!&ndash;                <svg width="20" height="20" fill="currentColor" class="mr-2" aria-hidden="true">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <path d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />&ndash;&gt;-->
+<!--&lt;!&ndash;                </svg>&ndash;&gt;-->
+<!--&lt;!&ndash;                New&ndash;&gt;-->
+<!--&lt;!&ndash;            </a>&ndash;&gt;-->
+<!--        </div>-->
+<!--        <form class="group relative">-->
+<!--            <svg width="20" height="20" fill="currentColor" class="absolute left-3 top-1/2 -mt-2.5 text-slate-400 pointer-events-none group-focus-within:text-blue-500" aria-hidden="true">-->
+<!--                <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />-->
+<!--            </svg>-->
+<!--            <input class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 ring-1 ring-slate-200 shadow-sm" type="text" aria-label="Filter items" placeholder="찾으시는 제품을 입력해 주세요.">-->
+<!--        </form>-->
+<!--    </header>-->
+    <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center">
+            <button type="button" id="back-btn">
+                <a th:href = '@{/categories}'
+                   style="margin-top: 50px; margin-right: 15px; margin-bottom: 50px;"
+                   class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                    <i data-feather="arrow-left" class="mr-2"></i> 카테고리로 돌아가기
+                </a>
+            </button>
+            <button type="button" id="create-btn">
+                <a th:href = '@{/registeritem}'
+                   style="margin-top: 50px; margin-bottom: 50px;"
+                   class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                    <i data-feather="plus" class="mr-2"></i> 글 등록
+                </a>
+            </button>
+        </div>
+        <form name="sorting" th:if="${#lists.size(items) > 0}"
+              th:action="@{/category/{id}(id=${items[0].categoryId})}" th:method="GET">
+            <select id="sorting-option" name="sorting-option" onchange="this.form.submit()"
+                    class="text-gray-700 focus:ring-2 focus:ring-blue-500 text-black font-semibold py-2 px-3 rounded-lg ease-in-out flex items-center">
+                <option value="" selected disabled hidden>게시글 정렬 방법</option>
+                <option value="1" >최신순</option>
+                <option value="2" >오래된순</option>
+            </select>
+        </form>
+
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+        <div th:each="item : ${items}" class="relative group">
+            <a th:href="@{/items/{id}(id=${item.itemId})}" class="block">
+                <img th:src="${item.imagePath}" alt="image" class="w-full h-80 object-cover rounded-lg transition duration-300 transform group-hover:scale-105">
+            </a>
+
+            <div class="bg-white shadow-xl rounded-lg overflow-hidden space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6 absolute bottom-0 left-0 right-0 p-4 bg-white bg-opacity-80 rounded-b-lg transition duration-300 opacity-0 group-hover:opacity-100">
+                <a th:href="@{/items/{id}(id=${item.itemId})}" class="block">
+                    <h2 class="text-lg font-medium text-center">
+                        <span th:text="${item.name}"></span>
+                    </h2>
+                    <p class="text-gray-700 text-center">
+                        <span th:text="${item.category}"></span>
+                    </p>
+                    <p class="text-gray-700 text-center">
+                        가격: <span th:text="${item.price}"></span>원
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

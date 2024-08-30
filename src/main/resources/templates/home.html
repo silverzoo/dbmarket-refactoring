@@ -1,26 +1,38 @@
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: layout(~{::title}, ~{::main})}">
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+
+
 <head>
     <meta charset="UTF-8">
-    <title>블로그 글 목록</title>
+    <title>홈페이지</title>
 </head>
 <body>
-<main class="container mx-auto px-4 max-w-5xl">
-    <button type="button" id="create-btn"
-            th:onclick="|location.href='@{/users/join}'|"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
-        <i data-feather="plus" class="mr-2"></i> 회원가입
-    </button>
-    <button type="button" id="login-btn"
-            th:onclick="|location.href='@{/users/login}'|"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out mb-8 flex items-center">
-        <i data-feather="plus" class="mr-2"></i> 로그인
-    </button>
+<main class="container mx-auto px-4 max-w-3xl bg-white  shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center">
+    <div class="mx-10">
 
+            <button type="button" id="login-btn">
+                <a th:href = '@{/users/login}'
+                   class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                    <i data-feather="log-in" class="mr-2"></i> 로그인
+                </a>
+            </button>
+
+    </div>
+
+
+        <div class="mx-10">
+            <button type="button" id="create-btn">
+                <a th:href = '@{/users/join}'
+                   class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                    <i data-feather="user-plus" class="mr-2"></i> 회원가입
+                </a>
+            </button>
+        </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
     </div>
+
 </main>
 </body>
 </html>

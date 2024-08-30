@@ -1,44 +1,84 @@
 package com.example.team1.Prometheus.controller;
 
-import com.example.team1.Prometheus.entity.ItemListViewResponse;
-import com.example.team1.Prometheus.entity.User;
+import com.example.team1.Prometheus.entity.ItemResponse;
 import com.example.team1.Prometheus.service.ItemListService;
-import com.example.team1.Prometheus.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 //아이템 목록 조회/표시
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class ItemListViewController {
     private final ItemListService itemListService;
 
-    @Autowired
-    private final UserService userService;
+    @GetMapping("/category/{categoryId}")
+    public String getCategoryItems(@PathVariable("categoryId") Long categoryId,
+                                   @RequestParam(value = "sorting-option", required = false) Integer sort,
+                                   Model model) {
 
-    @GetMapping("/items")
-    public String getAllItems(Model model, HttpServletRequest httpServletRequest) {
+        log.info("sort 번호: {}", sort);
 
-        // 마이페이지로 넘어가기 위한 메서드 (로그인 세션 필요)
-        User user = userService.getSessionUser(httpServletRequest);
-        model.addAttribute("username", user.getUserName());
-        model.addAttribute("myuserid", user.getUserId());
-        // 로그인 세션이 없다면 마이페이지 버튼을 숨기도록?
+        List<ItemResponse> items = sortItem(categoryId, sort);
 
-        List<ItemListViewResponse> items = itemListService.getAllItems();
-        model.addAttribute("items",items);
-        return "items";
+        model.addAttribute("items", items);
+        model.addAttribute("selectedSort", sort);
+
+        return "item/items";
+    }
+
+    private List<ItemResponse> sortItem(Long categoryId, Integer sort) {
+
+        List<ItemResponse> items;
+
+        if (sort != null) {
+            if (sort == 1) {
+                items = itemListService.getOrderByDateAsc(categoryId);
+            } else if (sort == 2) {
+                items = itemListService.getOrderByDateDesc(categoryId);
+            } else {
+                items = itemListService.getItemsByCategory(categoryId);
+            }
+        } else {
+            items = itemListService.getItemsByCategory(categoryId);
+        }
+        return items;
     }
 
 
+
+
+//    @GetMapping("/category/{categoryId}")
+//    public String getAllItems(@PathVariable("categoryId") Long categoryId, Model model) {
+//        List<ItemResponse> items = itemListService.getItemsByCategory(categoryId);
+//        model.addAttribute("items",items);
+//        return "item/items";
+//    }
+
+//    @GetMapping("/sorting/{categoryId}")
+//    public String getSortItems(Model model, @PathVariable("categoryId") Long categoryId,
+//                               @RequestParam("sorting-option") int sort) {
+//        List<ItemResponse> items = itemListService.getItemsByCategory(categoryId);
+//
+//        log.info("sortValue={}", sort);
+//
+////        if(sort == 1){
+////            items = itemListService.getOrderByDateAsc(categoryId);
+////        }
+////        if(sort == 2){
+////            items = itemListService.getOrderByDateDesc(categoryId);
+////        }
+//
+//        model.addAttribute("items",items);
+//
+//        return "redirect:/category/" + categoryId + "?sorting-option=" + sort;
+//    }
 
 }

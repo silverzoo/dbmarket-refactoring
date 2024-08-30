@@ -2,24 +2,45 @@ package com.example.team1.Prometheus.entity;
 
 
 
+import com.example.team1.Prometheus.service.CategoryMappingService;
+import com.example.team1.Prometheus.validation.ValidFile;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @Setter
 @Getter
 public class ItemPostDto{
-    private String name;
-    private int price;
-    private Long userId;
-    private String category;
-    private String imagePath;
-    private String description;
 
-    public Item toEntity(){
-        return new Item(null,userId,name,price,category,imagePath,description,LocalDateTime.now(),null);
+    private ItemInfo itemInfo;
+    private CategoryMappingService categoryMapper;
+//    @NotNull(message = "notnull 이미지를 넣어주세요") file은 null값 반환 X
+//    @NotBlank(message = "blank 이미지를 넣어주세요") 이미지 작동 X
+//    @NotEmpty(message = "empty 이미지를 넣어주세요") 이미지 작동 X
+
+//    org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public java.lang.String
+    // 리퀘스트 바디의 유효성이 실패했을 경우
+    //BindException은 쿼리 파라미터의 유효성이 실패할경우의 예외에 대한 처리 코드이다.
+
+//  java.io.IOException
+    @ValidFile(message = "이미지 파일은 필수입니다.")
+    private MultipartFile itemImage;
+
+
+    public Item toEntity(Long userId, String imagePath) {
+
+        Long categoryId = CategoryMappingService.getCategoryId(getItemInfo().getCategory());
+
+        return Item.builder()
+                .userId(userId)
+                .name(getItemInfo().getName())
+                .price(getItemInfo().getPrice())
+                .categoryId(categoryId)
+                .category(getItemInfo().getCategory())
+                .imagePath(imagePath)
+                .description(getItemInfo().getDescription())
+                .build();
     }
 }

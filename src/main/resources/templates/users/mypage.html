@@ -1,0 +1,71 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+</head>
+<body>
+<main class="container mx-auto px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex flex-col justify-center items-center">
+    <div>
+        <h2 class="px-4 py-2 text-2xl font-semibold"> 마이페이지 </h2>
+        <h3 class="px-4 py-2 text-2xl"> [[${myusername}]] 님 </h3>
+    </div>
+    <div class="container mx-auto p-3 py-10 pb-0 max-w-3xl overflow-hidden p-8 flex justify-end items-left">
+        <div class="mx-2">
+            <button type="button" id="review-btn">
+                <a th:href="@{/comments/{userid}(userid=${myuserid})}"
+                   class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                <i data-feather="star" class="mr-2"></i>내 리뷰 보러가기
+                </a>
+            </button>
+        </div>
+        <div class="mx-2">
+            <button type="button" id="update-btn">
+                <a th:href="@{/users/edit}"
+                   class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                    <i data-feather="settings" class="mr-2"></i> 회원 정보 수정
+                </a>
+            </button>
+        </div>
+        <div class="mx-2">
+            <form id="delete-form" th:method="delete" th:action="@{/users/delete}">
+                <button type="submit" id="delete-btn" onclick="return confirm('정말 회원 탈퇴를 하시겠습니까? \n\n 탈퇴 시 다음 항목들이 제거됩니다. \n -회원이 작성한 게시글 \n -회원이 작성한 코멘트 \n -회원에게 작성된 코멘트');"
+                        class="bg-gradient-to-r from-red-700 to-pink-400 hover:from-red-800 hover:to-pink-500 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
+                    <i data-feather="frown" class="mr-2"></i> 탈퇴
+                </button>
+            </form>
+        </div>
+    </div>
+</main>
+
+
+
+<main class="container mx-auto max-w-4xl overflow-hidden p-8 flex justify-left items-left">
+    <h2 class="px-8 py-2 text-2xl font-semibold"> 판매중인 물건 </h2>
+</main>
+
+<main class="container mx-auto px-4 max-w-4xl overflow-hidden p-8 flex justify-left items-left">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+        <div th:each="item : ${items}" class="relative group">
+            <a th:href="@{/items/{id}(id=${item.itemId})}" class="block">
+                <img th:src="${item.imagePath}" alt="image" class="w-full h-full object-cover rounded-lg transition duration-300 transform group-hover:scale-105">
+            </a>
+
+            <div class="absolute bottom-0 left-0 right-0 p-4 bg-white bg-opacity-80 rounded-b-lg transition duration-300 opacity-0 group-hover:opacity-100">
+                <a th:href="@{/items/{id}(id=${item.itemId})}" class="block">
+                    <h2 class="text-lg font-medium text-center">
+                        <span th:text="${item.name}"></span>
+                    </h2>
+                    <p class="text-gray-700 text-center">
+                        <span th:text="${item.category}"></span>
+                    </p>
+                    <p class="text-gray-700 text-center">
+                        가격: <span th:text="${item.price}"></span>원
+                    </p>
+                </a>  </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
