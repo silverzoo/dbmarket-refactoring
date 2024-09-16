@@ -9,7 +9,6 @@ fileDOM.addEventListener('change', () => {
     //           imgElement.src = target.result;
     //           preview.appendChild(imgElement);
     preview.src = target.result;
-    alert("이미지 업로드");
     };
     reader.readAsDataURL(fileDOM.files[0]);
 });
