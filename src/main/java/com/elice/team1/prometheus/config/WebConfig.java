@@ -17,20 +17,20 @@ public class WebConfig implements WebMvcConfigurer {
 //    }
 
 
-    //이 부분이 없으면 사진 올렸을때 새로고침 안하면 사진 못불러옴
-    private String dir;
+    //REFACTOR: 파일 업로드 경로 확인 필요
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        dir = fileUploadProperties.getRootPath()+ fileUploadProperties.getDir();
+        String imagePath = fileUploadProperties.getImagePath();
+        String dir = fileUploadProperties.getDir();
 
-        //클라이언트가 파일에 접근하기 위한 url
-        //TODO OS별로 경로가 다른건지 확인해볼 것
-        if(fileUploadProperties.getEnvName().equals("dev")){
-            registry.addResourceHandler(fileUploadProperties.getImagePath()+"**")
-                    .addResourceLocations("file:/"+dir);
-        }else{
-            registry.addResourceHandler(fileUploadProperties.getImagePath()+"**")
-                    .addResourceLocations("file://"+dir);
+        if (fileUploadProperties.getEnvName().equals("dev")) {
+            //macOS에서는 `file:/`을 사용
+            registry.addResourceHandler(STR."\{imagePath}**")
+                    .addResourceLocations(STR."file:\{dir}/");
+        } else {
+            registry.addResourceHandler(STR."\{imagePath}**")
+                    .addResourceLocations(STR."file:\{dir}/");
         }
     }
+
 }

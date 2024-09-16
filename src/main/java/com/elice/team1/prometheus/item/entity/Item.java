@@ -1,5 +1,6 @@
 package com.elice.team1.prometheus.item.entity;
 
+import com.elice.team1.prometheus.user.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -25,13 +26,13 @@ public class Item {
     @Column(name = "item_id", updatable = false)
     private Long itemId;
 
-    //TODO user 와 joincolumn user_id 사용하도록
+    //REFACTOR: userId로 등록한 컬럼 FK로 연결해서 사용
     @Column(name = "user_id" , nullable = false)
     private Long userId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", nullable = false)
-//    User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id2")
+    private User user;
 
     //TODO ConstraintViolationException 처리 => pattrn, notblank 둘 다 처리됨
     @NotBlank(message = "상품 이름은 공백으로 두시면 안됩니다.")
