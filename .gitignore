@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 
 ### mapper files ###
-/src/main/generated/com/example/team1/Prometheus/mapper/*Impl.java
+/src/main/generated/com/elice/team1/prometheus/*/mapper/*Impl.java
 
 
 ### upload img directory ###
