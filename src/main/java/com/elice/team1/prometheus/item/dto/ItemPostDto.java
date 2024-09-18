@@ -39,7 +39,7 @@ public class ItemPostDto{
                 .userId(userId)
                 .name(getItemInfo().getName())
                 .price(getItemInfo().getPrice())
-                .categoryId(categoryId)
+//                .categoryId(categoryId)
                 .category(getItemInfo().getCategory())
                 .imagePath(imagePath)
                 .description(getItemInfo().getDescription())

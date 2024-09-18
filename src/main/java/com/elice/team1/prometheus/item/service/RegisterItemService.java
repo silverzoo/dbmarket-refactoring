@@ -92,7 +92,7 @@ public class RegisterItemService {
         Item updatedItem = Item.builder()
                 .userId(existingItem.getUserId())
                 .itemId(existingItem.getItemId())
-                .categoryId(existingItem.getCategoryId())
+//                .categoryId(existingItem.getCategoryId())
                 .name(itemPostDto.getItemInfo().getName())
                 .price(itemPostDto.getItemInfo().getPrice())
                 .category(itemPostDto.getItemInfo().getCategory())

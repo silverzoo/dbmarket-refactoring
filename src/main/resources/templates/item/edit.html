@@ -28,11 +28,11 @@
                 <div>
                     <select name="itemInfo.category" id="category" required class="mt-4 block w-full rounded-md border-0 px-3.5 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
                         <option value="" th:selected="${item.category == ''}" disabled hidden>카테고리를 선택해주세요</option>
-                        <option value="핸드폰" th:selected="${item.category == '핸드폰'}">핸드폰</option>
-                        <option value="의류" th:selected="${item.category == '의류'}">의류</option>
-                        <option value="반려동물" th:selected="${item.category == '반려동물'}">반려동물</option>
-                        <option value="서적" th:selected="${item.category == '서적'}">서적</option>
-                        <option value="기타" th:selected="${item.category == '기타'}">기타</option>
+                        <option value="핸드폰" th:selected="${item.category == '1'}">핸드폰</option>
+                        <option value="의류" th:selected="${item.category == '2'}">의류</option>
+                        <option value="반려동물" th:selected="${item.category == '3'}">반려동물</option>
+                        <option value="서적" th:selected="${item.category == '4'}">서적</option>
+                        <option value="기타" th:selected="${item.category == '5'}">기타</option>
                     </select>
                 </div>
 

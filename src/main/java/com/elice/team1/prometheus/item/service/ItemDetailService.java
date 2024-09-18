@@ -67,7 +67,7 @@ public class ItemDetailService {
                 .userId(item.getUserId())
                 .name(request.getName())
                 .price(request.getPrice())
-                .categoryId(request.getCategoryId())
+//                .categoryId(request.getCategoryId())
                 .category(request.getCategory())
                 .imagePath(request.getImagePath())
                 .imagePath(request.getImagePath())

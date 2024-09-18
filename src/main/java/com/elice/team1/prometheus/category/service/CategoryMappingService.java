@@ -2,6 +2,8 @@ package com.elice.team1.prometheus.category.service;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.elice.team1.prometheus.category.entity.Category;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,7 +18,7 @@ public class CategoryMappingService {
         CATEGORY_MAP.put("기타", 5L);
     }
 
-    public static Long getCategoryId(String category) {
+    public static Long getCategoryId(Category category) {
         return CATEGORY_MAP.getOrDefault(category, null);
     }
 }

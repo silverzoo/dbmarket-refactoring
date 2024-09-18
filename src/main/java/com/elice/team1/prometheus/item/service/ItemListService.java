@@ -1,5 +1,6 @@
 package com.elice.team1.prometheus.item.service;
 
+import com.elice.team1.prometheus.category.entity.Category;
 import com.elice.team1.prometheus.item.entity.Item;
 import com.elice.team1.prometheus.item.dto.ItemResponse;
 import com.elice.team1.prometheus.item.mapper.ItemMapper;
@@ -20,27 +21,27 @@ public class ItemListService {
         this.itemMapper = itemMapper;
     }
 
-    public List<ItemResponse> getItemsByCategory(Long categoryId) {
-        List<Item> items = itemDetailRepository.findByCategoryId(categoryId);
+    public List<ItemResponse> getItemsByCategory(Category category) {
+        List<Item> items = itemDetailRepository.findByCategory(category);
         return items.stream()
-                .filter(item -> item.getCategoryId().equals(categoryId))
+                .filter(item -> item.getCategory().equals(category))
                 .map(itemMapper::toItemResponse)
                 .collect(Collectors.toList());
     }
 
-    public List<ItemResponse> getOrderByDateDesc(Long categoryId){
-        List<Item> items = itemDetailRepository.findByCategoryId(categoryId);
+    public List<ItemResponse> getOrderByDateDesc(Category category){
+        List<Item> items = itemDetailRepository.findByCategory(category);
         return items.stream()
-                .filter(item -> item.getCategoryId().equals(categoryId))
+                .filter(item -> item.getCategory().equals(category))
                 .sorted(Comparator.comparing(Item::getCreatedAt))
                 .map(itemMapper::toItemResponse)
                 .collect(Collectors.toList());
     }
 
-    public List<ItemResponse> getOrderByDateAsc(Long categoryId) {
-        List<Item> items = itemDetailRepository.findByCategoryId(categoryId);
+    public List<ItemResponse> getOrderByDateAsc(Category category) {
+        List<Item> items = itemDetailRepository.findByCategory(category);
         return items.stream()
-                .filter(item -> item.getCategoryId().equals(categoryId))
+                .filter(item -> item.getCategory().equals(category))
                 .sorted(Comparator.comparing(Item::getCreatedAt).reversed())
                 .map(itemMapper::toItemResponse)
                 .collect(Collectors.toList());

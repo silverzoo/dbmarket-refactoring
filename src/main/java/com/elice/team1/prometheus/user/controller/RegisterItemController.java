@@ -49,6 +49,6 @@ public class RegisterItemController {
         Item item = registerItemService.uploadItemToDb(itemPostDto, user);
 
         //redirection 작업
-        return "redirect:category/" + item.getCategoryId();
+        return "redirect:category/" + item.getCategory();
     }
 }

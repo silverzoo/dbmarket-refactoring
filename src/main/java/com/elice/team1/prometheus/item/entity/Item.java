@@ -1,5 +1,6 @@
 package com.elice.team1.prometheus.item.entity;
 
+import com.elice.team1.prometheus.category.entity.Category;
 import com.elice.team1.prometheus.user.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -47,12 +48,16 @@ public class Item {
     @Column(name = "price", nullable = false)
     private int price;
 
-    @JoinColumn(name = "category_category_id")
-    private Long categoryId;
+//    @JoinColumn(name = "category_category_id")
+//    private Long categoryId;
 
-    @NotNull(message = "카테고리를 제대로 등록해주세요.")
-    @Column(name = "category", nullable = false)
-    private String category;
+//    @NotNull(message = "카테고리를 제대로 등록해주세요.")
+//    @Column(name = "category", nullable = false)
+//    private String category;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     //itemPostDto 에서 validate
     @Column(name = "image_path", nullable = false)
