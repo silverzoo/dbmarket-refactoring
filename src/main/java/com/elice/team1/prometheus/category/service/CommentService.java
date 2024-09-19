@@ -28,7 +28,7 @@ public class CommentService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundUserbyUserId(userId));
 
-        List<Comment> comments = commentRepository.findAllByUser_UserId(userId);
+        List<Comment> comments = commentRepository.findAllByUser(user);
 
         // Comment를 CommentResponse로 변환
         return comments.stream()
@@ -41,7 +41,7 @@ public class CommentService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundUserbyUserId(userId));
 
-        List<Comment> comments = commentRepository.findAllByUser_UserId(userId);
+        List<Comment> comments = commentRepository.findAllByUser(user);
         if (comments.isEmpty()) {
             return 0.0; // 리뷰가 없는 경우
         }
@@ -88,8 +88,8 @@ public class CommentService {
     public CommentResponse createComment(CommentRequest commentRequest, String reviewerName) {
 
         // User 엔티티를 조회
-        User user = userRepository.findById(commentRequest.getUserId())
-                .orElseThrow(() -> new NotFoundUserbyUserId(commentRequest.getUserId()));
+        User user = userRepository.findById(commentRequest.getUser().getUserId())
+                .orElseThrow(() -> new NotFoundUserbyUserId(commentRequest.getUser().getUserId()));
 
         Comment comment = commentMapper.toEntity(commentRequest);
         comment.setUser(user);
@@ -143,7 +143,7 @@ public class CommentService {
     public List<CommentResponse> getAllCommentByIdSorted(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundUserbyUserId(userId));
-        List<Comment> comments = commentRepository.findAllByUser_UserIdOrderByCreatedAtDesc(userId);
+        List<Comment> comments = commentRepository.findAllByUserOrderByCreatedAtDesc(user);
         return comments.stream()
                 .map(commentMapper::toResponse)
                 .collect(Collectors.toList());

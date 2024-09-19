@@ -136,7 +136,7 @@ public class UserService {
         }
 
         // 탈퇴한 회원이 작성한 코멘트 삭제
-        List<Comment> comments = commentRepository.findAllByUser_UserId(user.getUserId());
+        List<Comment> comments = commentRepository.findAllByUser(user);
         for (Comment comment : comments) {
             log.info("\n회원이 작성한 코멘트 : {} 삭제 \n", comment.getContent());
             commentRepository.delete(comment);

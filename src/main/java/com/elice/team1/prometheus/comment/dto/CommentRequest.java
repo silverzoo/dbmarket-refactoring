@@ -1,5 +1,6 @@
 package com.elice.team1.prometheus.comment.dto;
 
+import com.elice.team1.prometheus.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentRequest {
     private Long commentId;
-    private Long userId;
+    private User user;
     private String reviewerName;
     private String content;
     private LocalDateTime createdAt;

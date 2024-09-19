@@ -1,5 +1,6 @@
 package com.elice.team1.prometheus.comment.dto;
 
+import com.elice.team1.prometheus.user.entity.User;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentResponse {
     private Long commentId;
-    private Long userId;
+    private User user;
     private String reviewerName;
     private String content;
     private LocalDateTime createdAt;

@@ -13,6 +13,6 @@ public class UserDto {
     private Double rate;
 
     public User toEntity() {
-        return new User(null,username, password, rate);
+        return new User(username, password, rate);
     }
 }
