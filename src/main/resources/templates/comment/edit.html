@@ -14,9 +14,9 @@
     <div class="bg-white shadow-2xl rounded-lg overflow-hidden p-8 transform hover:scale-105 transition duration-300">
 
         <article>
-            <form id="edit-form" method="post" th:action="@{/comments/edit/{commentId}(commentId=${comment.commentId})}">
-                <input type="hidden" name="commentId" th:value="${comment.commentId}"/>
-                <input type="hidden" name="user" th:value="${comment.user.getUserId()}"/>
+            <form id="edit-form" method="post" th:action="@{/comments/edit/{id}(id=${comment.id})}">
+                <input type="hidden" name="id" th:value="${comment.id}"/>
+                <input type="hidden" name="user" th:value="${comment.user.getId}"/>
                 <div class="mb-6 flex items-center">
                     <i data-feather="star" class="mr-2"></i>
                     <label for="rating" class="block text-gray-700 text-sm mb-2"></label>

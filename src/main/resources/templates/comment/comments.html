@@ -41,33 +41,23 @@
                 </div>
             </div>
         </article>
-
     </div>
-
     <br>
 <!-- 마이페이지인 경우 리뷰를 작성할 수 없음 -->
     <div th:if="${myuserid} != ${userId} ">
 <!-- 이미 리뷰를 작성한 경우 리뷰 추가 작성 불가-->
         <div th:if="${hasCommented} == null ">
-
             <button id="form-btn"
                     class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out  hover:scale-105 ease-in-out">
                 후기 등록
             </button>
-
         </div>
     </div>
-
-
     <br><br>
-
-
-
     <!-- 댓글 작성 폼 -->
     <div id="comment-form" class="mb-6" style="display: none;">
         <form id="create-form" method="post" th:action="@{/comments/create}">
             <input type="hidden" name="user" th:value="${userId}"/>
-            <!--세션에 로그인한 사람 이름..-->
             <input type="hidden" name="reviewerName" th:value="${myusername}"/>
             <div>
 
@@ -139,22 +129,20 @@
             <div class="flex space-x-4">
                 <div th:if="${myusername} == ${comment.reviewerName}">
                     <button type="button" id="modify-btn">
-                        <a th:href="@{/comments/edit/{commentId}(commentId=${comment.commentId})}"
+                        <a th:href="@{/comments/edit/{id}(id=${comment.id})}"
                            class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from:blue-600 hover:to-purple-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
                             <i data-feather="edit-3" class="mr-2"></i> 수정
                         </a>
                     </button>
                 </div>
                 <div th:if="${myusername} == ${comment.reviewerName}">
-                    <form id="delete-form" th:method="delete" th:action="@{/comments/delete/{commentId}(commentId=${comment.commentId})}">
+                    <form id="delete-form" th:method="delete" th:action="@{/comments/delete/{id}(id=${comment.id})}">
                         <button type="submit" id="delete-btn" onclick="return confirm('정말 삭제하시겠습까?');"
                                 class="bg-gradient-to-r from-red-700 to-pink-400 hover:from-red-800 hover:to-pink-500 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
                             <i data-feather="trash-2" class="mr-2"></i> 삭제
                         </button>
                     </form>
-
                 </div>
-
             </div>
         </li>
     </ul>

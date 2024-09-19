@@ -18,7 +18,7 @@
     </div>
 
     <div class="container mx-auto my-4 px-4 max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden p-8 flex justify-center items-center transform hover:scale-100 transition duration-300">
-        <form method="post" th:action="@{/categories/{id}(id=${category.categoryId})}">
+        <form method="post" th:action="@{/categories/{id}(id=${category.id})}">
             <label for="name"></label>
             <input type="text" name="name" id="name" th:value="${category.name}"
                                              class="px-4 py-3 text-2xl font-semibold border-b-2 border-purple-100 focus:border-purple-500 transition duration-300 bg-transparent focus:outline-none"

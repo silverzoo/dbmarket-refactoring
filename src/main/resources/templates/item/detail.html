@@ -10,14 +10,14 @@
     <div id="success" th:data-value="${success}"></div>
     <div id="error" th:data-value="${error}"></div>
     <button type="button" id="back-btn">
-        <a th:href = '@{/category/{categoryId}(categoryId=${item.category.getCategoryId})}'
+        <a th:href = '@{/category/{id}(id=${item.category.getId})}'
            class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
             <i data-feather="arrow-left" class="mr-2"></i> 목록으로 돌아가기
         </a>
     </button>
     <div class="max-w-3xl mx-auto mt-10 bg-white shadow-xl rounded-lg overflow-hidden">
         <article class="p-8">
-            <input type="hidden" id="item-id" th:value="${item.itemId}">
+            <input type="hidden" id="id" th:value="${item.id}">
             <header class="mb-8 pb-8 border-b border-gray-200">
                 <h1 class="text-4xl font-bold mb-6 text-gray-800" th:text="${item.name}"></h1>
                 <h1 class="text-4xl font-bold mb-8 text-gray-800" th:text="${item.price} + '원'"></h1>
@@ -47,7 +47,7 @@
                         <span th:text="${username}"></span>
                     </div>
                     <div>
-                        <a th:href="@{/users/{userid}(userid=${item.user.getUserId()})}"
+                        <a th:href="@{/users/{id}(id=${item.user.getId})}"
                            class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
                             <i data-feather="arrow-right-circle" class="mr-2"></i> 판매자 정보
                         </a>
@@ -61,16 +61,16 @@
             </section>
             <div class="flex justify-between items-center">
                 <div class="flex space-x-4">
-                    <div th:if="${userId == item.user.getUserId()}">
+                    <div th:if="${userId == item.user.getId}">
                         <button type="button" id="modify-btn">
-                            <a th:href="@{/items/edit/{id}(id=${item.itemId})}"
+                            <a th:href="@{/items/edit/{id}(id=${item.id})}"
                                class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
                                 <i data-feather="edit-3" class="mr-2"></i> 수정
                             </a>
                         </button>
                     </div>
-                    <div th:if="${userId == item.user.getUserId()}">
-                        <form id="delete-form" th:method="delete" th:action="@{/items/{id}(id=${item.itemId})}">
+                    <div th:if="${userId == item.user.getId}">
+                        <form id="delete-form" th:method="delete" th:action="@{/items/{id}(id=${item.id})}">
                             <button type="submit" id="delete-btn"
                                     onclick="return confirm('삭제 하시겠습니까?');"
                                     class="bg-gradient-to-r from-red-700 to-pink-400 hover:from-red-800 hover:to-pink-500 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
