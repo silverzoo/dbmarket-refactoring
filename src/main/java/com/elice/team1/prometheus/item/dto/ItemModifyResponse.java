@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @ToString
 @Builder
 public class ItemModifyResponse {
-    private Long itemId;
+    private Long id;
     private User user;
     private String name;
     private int price;

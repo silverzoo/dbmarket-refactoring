@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 public class ItemResponse {
-    private Long itemId;
+    private Long id;
     private User user;
     private String name;
     private int price;

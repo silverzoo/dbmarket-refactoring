@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryRequest {
-    private Long categoryId;
+    private Long id;
     private String name;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

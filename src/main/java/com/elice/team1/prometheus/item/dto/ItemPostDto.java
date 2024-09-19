@@ -34,10 +34,7 @@ public class ItemPostDto{
 
     public Item toEntity(User user, String imagePath) {
 
-        Long categoryId = CategoryMappingService.getCategoryId(getItemInfo().getCategory());
-
         return Item.builder()
-                .user(user)
                 .name(getItemInfo().getName())
                 .price(getItemInfo().getPrice())
                 .category(getItemInfo().getCategory())

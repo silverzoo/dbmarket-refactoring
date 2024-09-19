@@ -8,5 +8,5 @@ import lombok.*;
 @ToString
 @Builder
 public class ItemDeleteResponse {
-    private Long itemId;
+    private Long id;
 }

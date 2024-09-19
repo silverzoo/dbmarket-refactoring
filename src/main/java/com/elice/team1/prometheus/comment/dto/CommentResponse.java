@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class CommentResponse {
-    private Long commentId;
+    private Long id;
     private User user;
     private String reviewerName;
     private String content;

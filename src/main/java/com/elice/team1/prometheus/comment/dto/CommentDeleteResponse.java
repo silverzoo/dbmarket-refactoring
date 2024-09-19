@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class CommentDeleteResponse {
-    private Long commentId;
+    private Long id;
 }
