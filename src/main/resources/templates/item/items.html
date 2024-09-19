@@ -48,7 +48,7 @@
             </button>
         </div>
         <form name="sorting" th:if="${#lists.size(items) > 0}"
-              th:action="@{/category/{id}(id=${items[0].categoryId})}" th:method="GET">
+              th:action="@{/category/{id}(id=${items[0].category.categoryId})}" th:method="GET">
             <select id="sorting-option" name="sorting-option" onchange="this.form.submit()"
                     class="text-gray-700 focus:ring-2 focus:ring-blue-500 text-black font-semibold py-2 px-3 rounded-lg ease-in-out flex items-center">
                 <option value="" selected disabled hidden>게시글 정렬 방법</option>
@@ -71,7 +71,7 @@
                         <span th:text="${item.name}"></span>
                     </h2>
                     <p class="text-gray-700 text-center">
-                        <span th:text="${item.category}"></span>
+                        <span th:text="${item.category.getName()}"></span>
                     </p>
                     <p class="text-gray-700 text-center">
                         가격: <span th:text="${item.price}"></span>원

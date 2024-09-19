@@ -10,7 +10,7 @@
     <div id="success" th:data-value="${success}"></div>
     <div id="error" th:data-value="${error}"></div>
     <button type="button" id="back-btn">
-        <a th:href = '@{/category/{categoryId}(categoryId=${item.categoryId})}'
+        <a th:href = '@{/category/{categoryId}(categoryId=${item.category.getCategoryId})}'
            class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
             <i data-feather="arrow-left" class="mr-2"></i> 목록으로 돌아가기
         </a>
@@ -47,7 +47,7 @@
                         <span th:text="${username}"></span>
                     </div>
                     <div>
-                        <a th:href="@{/users/{userid}(userid=${item.userId})}"
+                        <a th:href="@{/users/{userid}(userid=${item.user.getUserId()})}"
                            class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
                             <i data-feather="arrow-right-circle" class="mr-2"></i> 판매자 정보
                         </a>
@@ -61,7 +61,7 @@
             </section>
             <div class="flex justify-between items-center">
                 <div class="flex space-x-4">
-                    <div th:if="${userId == item.userId}">
+                    <div th:if="${userId == item.user.getUserId()}">
                         <button type="button" id="modify-btn">
                             <a th:href="@{/items/edit/{id}(id=${item.itemId})}"
                                class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 ease-in-out flex items-center shadow-lg">
@@ -69,7 +69,7 @@
                             </a>
                         </button>
                     </div>
-                    <div th:if="${userId == item.userId}">
+                    <div th:if="${userId == item.user.getUserId()}">
                         <form id="delete-form" th:method="delete" th:action="@{/items/{id}(id=${item.itemId})}">
                             <button type="submit" id="delete-btn"
                                     onclick="return confirm('삭제 하시겠습니까?');"
