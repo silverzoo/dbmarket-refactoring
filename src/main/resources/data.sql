@@ -1,3 +1,18 @@
+INSERT INTO category(category_id, name, created_at) VALUES
+                                           (1,'핸드폰',NOW()),
+                                           (2,'의류',NOW()),
+                                           (3,'반려동물',NOW()),
+                                           (4,'서적',NOW()),
+                                           (5,'기타',NOW());
+
+INSERT INTO user(user_name, password,rate) VALUES
+                                               ('김민수','1111',0.0),
+                                               ('이지은','2222',0.0),
+                                               ('김지수','3333',0.0),
+                                               ('이지훈','4444',0.0),
+                                               ('','qwe',0.0),
+                                               ('admin', 'admin', 0.0);
+
 INSERT INTO item(user_id, name, price, category_id, image_path, description, created_at) VALUES
     (1,'아이폰15 블루',990000,1,'/img/iphone.jpg','친구 아이폰 15라 싸게 팔아요. 상태 SS입니다.',NOW()),
     (1,'양털 후리스 후드 2종',15000,2,'/img/hoodie.png','새 옷. 옷 정리 중입니다.',NOW()),
@@ -12,24 +27,9 @@ INSERT INTO item(user_id, name, price, category_id, image_path, description, cre
     (1,'파세코에어컨',70000,5,'/img/airconditioner.jpg','이사갈 집에 시스템에어컨이 설치가 되어있는 집이라 27일 오전에 가져가실 분만 연락 기다립니다.',NOW()),
     (4,'스벅 아아 2잔 5000원',5000,5,'/img/starbucks.jpg','빠른 입금하실 수 있는 분!',NOW());
 
-INSERT INTO user(user_name, password,rate) VALUES
-                                               ('김민수','1111',0.0),
-                                               ('이지은','2222',0.0),
-                                               ('김지수','3333',0.0),
-                                               ('이지훈','4444',0.0),
-                                               ('','qwe',0.0),
-                                               ('admin', 'admin', 0.0);
-
 INSERT INTO comment(user_id, reviewer_name, content, created_at, rating) VALUES
                                                                    (1,'이지훈','따뜻한 마음 감사해요.',TIMESTAMP '2024-03-14 10:00:00', 3),
                                                                    (1,'이지은','감사합니다^^',TIMESTAMP '2024-05-16 07:00:00', 2),
                                                                    (2,'김민수','쿨거래 감사합니다',TIMESTAMP '2024-01-03 03:00:00', 1),
                                                                    (2,'김지수','다음에 또 재구매 할게요',TIMESTAMP '2024-02-14 18:00:00', 4),
                                                                    (3,'이지은','판매자님이 정말 친절해요',TIMESTAMP '2024-05-17 16:00:00',5);
-
-INSERT INTO category(name, created_at) VALUES
-                                           ('핸드폰',NOW()),
-                                           ('의류',NOW()),
-                                           ('반려동물',NOW()),
-                                           ('서적',NOW()),
-                                           ('기타',NOW());
