@@ -66,7 +66,7 @@
     <!-- 댓글 작성 폼 -->
     <div id="comment-form" class="mb-6" style="display: none;">
         <form id="create-form" method="post" th:action="@{/comments/create}">
-            <input type="hidden" name="userId" th:value="${userId}"/>
+            <input type="hidden" name="user" th:value="${userId}"/>
             <!--세션에 로그인한 사람 이름..-->
             <input type="hidden" name="reviewerName" th:value="${myusername}"/>
             <div>

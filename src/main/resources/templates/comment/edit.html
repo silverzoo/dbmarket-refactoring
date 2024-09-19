@@ -16,7 +16,7 @@
         <article>
             <form id="edit-form" method="post" th:action="@{/comments/edit/{commentId}(commentId=${comment.commentId})}">
                 <input type="hidden" name="commentId" th:value="${comment.commentId}"/>
-                <input type="hidden" name="userId" th:value="${comment.userId}"/>
+                <input type="hidden" name="user" th:value="${comment.user.getUserId()}"/>
                 <div class="mb-6 flex items-center">
                     <i data-feather="star" class="mr-2"></i>
                     <label for="rating" class="block text-gray-700 text-sm mb-2"></label>
