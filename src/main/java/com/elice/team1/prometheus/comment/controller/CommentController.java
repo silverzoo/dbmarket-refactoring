@@ -3,7 +3,7 @@ package com.elice.team1.prometheus.comment.controller;
 import com.elice.team1.prometheus.comment.dto.CommentRequest;
 import com.elice.team1.prometheus.comment.dto.CommentResponse;
 import com.elice.team1.prometheus.user.entity.User;
-import com.elice.team1.prometheus.category.service.CommentService;
+import com.elice.team1.prometheus.comment.service.CommentService;
 import com.elice.team1.prometheus.config.UserFilter;
 import com.elice.team1.prometheus.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,7 +43,7 @@ public class CommentController {
         Double percentage = commentService.ratingPercentage(ratingAverage); // 퍼센트 계산
 
         // 댓글 중복검사
-        boolean hasCommented = commentService.userHasCommented(userId,reviewer.getUserName());
+        boolean hasCommented = commentService.userHasCommented(userId,reviewer.getUsername());
         if(hasCommented){
             // 이미 리뷰를 작성한 경우 리뷰작성 버튼 숨기기
             model.addAttribute("hasCommented", "hasCommented");
@@ -51,7 +51,7 @@ public class CommentController {
 
         // 호스트 이름
         User host = userService.findUserById(userId);
-        model.addAttribute("host", host.getUserName());
+        model.addAttribute("host", host.getUsername());
 
         model.addAttribute("comments",comments);
         model.addAttribute("ratingAverage",ratingAverage);
@@ -66,7 +66,7 @@ public class CommentController {
     public String createComment(@ModelAttribute CommentRequest commentRequest,
                                 @RequestParam("reviewerName") String reviewerName) {
         commentService.createComment(commentRequest, reviewerName);
-        return "redirect:/comments/" + commentRequest.getUser().getUserId();
+        return "redirect:/comments/" + commentRequest.getUser().getId();
     }
 
     // 댓글 수정 페이지 이동
@@ -86,7 +86,7 @@ public class CommentController {
         // 댓글 수정 서비스 호출
         commentService.updateComment(commentId, commentRequest);
         // 수정 후 댓글 목록 페이지로 리디렉션
-        return "redirect:/comments/" + commentRequest.getUser().getUserId();
+        return "redirect:/comments/" + commentRequest.getUser().getId();
     }
 
     @DeleteMapping("/delete/{commentId}")

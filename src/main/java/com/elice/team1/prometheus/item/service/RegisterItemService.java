@@ -33,7 +33,7 @@ public class RegisterItemService {
     //TODO 아이템 업로드할때 쓰는 HttpServletRequest 에도 session이 있는가?
     //TODO ItemUploadException 체크
     public Item uploadItemToDb(ItemPostDto itemPostDto, User user) throws ImageUploadException {
-        log.info("uploadItemToDb={}", user.getUserId());
+        log.info("uploadItemToDb={}", user.getId());
 //        편의 메서드
         log.info("size={}", itemPostDto.getItemImage().getSize()); //이미지 크기 체크
         log.info("submittedFileName={}", itemPostDto.getItemImage().getOriginalFilename());
@@ -90,9 +90,6 @@ public class RegisterItemService {
 
         // Update existing with updatedData using Builder pattern
         Item updatedItem = Item.builder()
-                .user(existingItem.getUser())
-                .itemId(existingItem.getItemId())
-//                .categoryId(existingItem.getCategoryId())
                 .name(itemPostDto.getItemInfo().getName())
                 .price(itemPostDto.getItemInfo().getPrice())
                 .category(itemPostDto.getItemInfo().getCategory())

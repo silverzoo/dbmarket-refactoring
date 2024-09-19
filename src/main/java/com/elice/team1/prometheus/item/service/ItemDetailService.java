@@ -40,9 +40,9 @@ public class ItemDetailService {
         Item item = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundItemById(id));
 
-        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
-        if(item.getUser().getUserId() != userId) {
+        Long userId = userService.getSessionUser(httpServletRequest).getId();
+        String userName = userService.getSessionUser(httpServletRequest).getUsername();
+        if(item.getUser().getId() != userId) {
             throw new UnauthorizedModifyByUser(userName);
         }
 
@@ -63,15 +63,13 @@ public class ItemDetailService {
 
         // 3. 빌더 패턴을 사용하여 수정된 엔티티 생성
         Item finalItem = Item.builder()
-                .itemId(item.getItemId())
-                .user(item.getUser())
                 .name(request.getName())
                 .price(request.getPrice())
                 .category(request.getCategory())
                 .imagePath(request.getImagePath())
                 .imagePath(request.getImagePath())
                 .description(request.getDescription())
-                .createdAt(item.getCreatedAt())
+//                .createdAt(item.getCreatedAt())
                 .build();
 
         // 4. 업데이트된 엔티티를 저장
@@ -87,10 +85,10 @@ public class ItemDetailService {
         Item item = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundItemById(id));
 
-        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
-        if(item.getUser().getUserId() != userId) {
-            throw new UnauthorizedDeleteByUser(userName);
+        Long userId = userService.getSessionUser(httpServletRequest).getId();
+        String username = userService.getSessionUser(httpServletRequest).getUsername();
+        if(item.getUser().getId() != userId) {
+            throw new UnauthorizedDeleteByUser(username);
         }
 
         itemDetailRepository.deleteById(id);

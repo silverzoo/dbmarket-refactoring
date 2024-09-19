@@ -34,10 +34,10 @@ public class ItemDetailViewController {
         ItemResponse item = itemDetailService.viewItem(id);
         log.info("\n\n아이템 확인: {}\n\n", item);
 
-        Long userId = userService.getSessionUser(httpServletRequest).getUserId();
+        Long userId = userService.getSessionUser(httpServletRequest).getId();
         log.info("\n\n현재 세션 아이디 확인: {}\n\n", userId);
 
-        String username = userService.findUserById(item.getUser().getUserId()).getUserName();
+        String username = userService.findUsername(item.getUser().getId());
         model.addAttribute("username", username);
 
         model.addAttribute("userId", userId);

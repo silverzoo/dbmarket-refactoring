@@ -49,8 +49,8 @@ public class UserFilter implements Filter {
 
     public User findUserByFilter(Model model, HttpServletRequest request) {
         user = (User) request.getSession().getAttribute("user");
-            model.addAttribute("myusername", user.getUserName());
-            model.addAttribute("myuserid", user.getUserId());
+            model.addAttribute("myusername", user.getUsername());
+            model.addAttribute("myuserid", user.getId());
         return user;
     }
 

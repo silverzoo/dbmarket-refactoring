@@ -77,10 +77,10 @@ public class UserController {
     @GetMapping("/users/profile")
     public String profile(Model model) {
         User user = userForRedirect;
-        model.addAttribute("userid", user.getUserId());
-        model.addAttribute("username", user.getUserName());
+        model.addAttribute("userid", user.getId());
+        model.addAttribute("username", user.getUsername());
 
-        userService.getItemsByUserId(user.getUserId(), model);
+        userService.getItemsByUserId(user.getId(), model);
         userForRedirect = null;
         return "users/profile";
     }
@@ -92,7 +92,7 @@ public class UserController {
             return "redirect:/users/logout";
         }
         User user = userFilter.findUserByFilter(model,httpServletRequest);
-        userService.getItemsByUserId(user.getUserId(), model);
+        userService.getItemsByUserId(user.getId(), model);
 
         return "users/mypage";
 
@@ -101,7 +101,7 @@ public class UserController {
     @DeleteMapping("/users/delete")
     public String deleteUser(Model model, HttpServletRequest httpServletRequest) {
         User user = userFilter.findUserByFilter(model, httpServletRequest);
-        userService.deleteUser(user.getUserId());
+        userService.deleteUser(user.getId());
 
         return "redirect:/users/logout";
     }

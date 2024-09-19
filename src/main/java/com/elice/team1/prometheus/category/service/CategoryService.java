@@ -41,7 +41,7 @@ public class CategoryService {
 
     @Transactional
     public CategoryResponse createCategory(CategoryRequest categoryRequest, HttpServletRequest httpServletRequest) {
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
+        String userName = userService.getSessionUser(httpServletRequest).getUsername();
 
         if (!userName.equals("admin")) {
             throw new UnauthorizedCreateByUser(userName);
@@ -60,7 +60,7 @@ public class CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundCategoryById(id));
 
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
+        String userName = userService.getSessionUser(httpServletRequest).getUsername();
 
         if(!userName.equals("admin")) {
             throw new UnauthorizedModifyByUser(userName);
@@ -75,14 +75,14 @@ public class CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundCategoryById(id));
 
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
+        String userName = userService.getSessionUser(httpServletRequest).getUsername();
 
         if (!userName.equals("admin")) {
             throw new UnauthorizedDeleteByUser(userName);
         }
 
         Category updatedCategory = Category.builder()
-                .categoryId(category.getCategoryId())
+                .id(category.getId())
                 .name(request.getName())
                 .createdAt(category.getCreatedAt())
                 .build();
@@ -98,7 +98,7 @@ public class CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundCategoryById(id));
 
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
+        String userName = userService.getSessionUser(httpServletRequest).getUsername();
 
         if (!userName.equals("admin")) {
             throw new UnauthorizedDeleteByUser(userName);

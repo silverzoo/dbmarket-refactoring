@@ -1,4 +1,4 @@
-package com.elice.team1.prometheus.category.service;
+package com.elice.team1.prometheus.comment.service;
 
 import com.elice.team1.prometheus.comment.entity.Comment;
 import com.elice.team1.prometheus.comment.dto.CommentRequest;
@@ -88,8 +88,8 @@ public class CommentService {
     public CommentResponse createComment(CommentRequest commentRequest, String reviewerName) {
 
         // User 엔티티를 조회
-        User user = userRepository.findById(commentRequest.getUser().getUserId())
-                .orElseThrow(() -> new NotFoundUserbyUserId(commentRequest.getUser().getUserId()));
+        User user = userRepository.findById(commentRequest.getUser().getId())
+                .orElseThrow(() -> new NotFoundUserbyUserId(commentRequest.getUser().getId()));
 
         Comment comment = commentMapper.toEntity(commentRequest);
         comment.setUser(user);
@@ -97,7 +97,7 @@ public class CommentService {
 
         // Comment 엔티티 저장
         Comment savedComment = commentRepository.save(comment);
-        updateUserRating(user.getUserId());
+        updateUserRating(user.getId());
         return commentMapper.toResponse(savedComment);
     }
 
@@ -113,7 +113,7 @@ public class CommentService {
 
         // 업데이트된 엔티티 저장
         Comment updatedComment = commentRepository.save(comment);
-        updateUserRating(comment.getUser().getUserId());
+        updateUserRating(comment.getUser().getId());
 
         return commentMapper.toResponse(updatedComment);
     }
@@ -122,7 +122,7 @@ public class CommentService {
     public Long deleteComment(long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentbyCommentId(commentId));
-        Long userId = comment.getUser().getUserId();
+        Long userId = comment.getUser().getId();
         commentRepository.delete(comment);
         updateUserRating(userId);
         return userId;

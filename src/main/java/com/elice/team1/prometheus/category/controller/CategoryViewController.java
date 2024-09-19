@@ -28,7 +28,7 @@ public class CategoryViewController {
 
         List<CategoryResponse> categories = categoryService.getAll();
 
-        String userName = userService.getSessionUser(httpServletRequest).getUserName();
+        String userName = userService.getSessionUser(httpServletRequest).getUsername();
         log.info("\n\n현재 세션 유저네임 확인: {}\n\n", userName);
 
         model.addAttribute("userName", userName);

@@ -1,6 +1,7 @@
 package com.elice.team1.prometheus.user.service;
 
 import com.elice.team1.prometheus.comment.entity.Comment;
+import com.elice.team1.prometheus.common.exception.NotFoundUserbyUserId;
 import com.elice.team1.prometheus.common.util.Encrypt;
 import com.elice.team1.prometheus.item.dto.ItemListViewResponse;
 import com.elice.team1.prometheus.item.entity.Item;
@@ -30,9 +31,9 @@ public class UserService {
 
     public String createUser(UserDto form, String password_check, HttpServletRequest httpServletRequest) {
         User user = form.toEntity();
-        User name = userRepository.findByUserName(form.getUsername());
+        User name = userRepository.findByUsername(form.getUsername());
 
-        if (user.getUserName().contains(" ") || user.getPassword().contains(" ") || user.getUserName().isEmpty() || user.getPassword().isEmpty()) {
+        if (user.getUsername().contains(" ") || user.getPassword().contains(" ") || user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
             return "users/join";
         }
         String password1 = Encrypt.md5(user.getPassword());
@@ -59,7 +60,7 @@ public class UserService {
     // 로그인 로직
     public String login(String username, String password, HttpServletRequest httpServletRequest) {
         // 입력한 username-password 를 모두 충족하지 못하면 null
-        User user = userRepository.findByUserNameAndPassword(username, password);
+        User user = userRepository.findByUsernameAndPassword(username, password);
 
         // 로그인 검증 로직
         if (user == null) {
@@ -93,18 +94,18 @@ public class UserService {
     }
 
     public User findUserById(Long userId) {
-        User user = userRepository.findByUserId(userId);
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundUserbyUserId(userId));
         return user;
     }
 
 
-    public String findUserName(Long userId) {
+    public String findUsername(Long userId) {
         User user = findUserById(userId);
-        return user.getUserName();
+        return user.getUsername();
     }
 
     public User findUserByUsername(String username) {
-        return userRepository.findByUserName(username);
+        return userRepository.findByUsername(username);
     }
 
 
@@ -116,7 +117,7 @@ public class UserService {
 
 
     public void getItemsByUserId(Long userId, Model model) {
-        User user = userRepository.findByUserId(userId);
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundUserbyUserId(userId));
         List<Item> items = itemDetailRepository.findAllByUser(user);
         model.addAttribute("items", items.stream().map(ItemListViewResponse::new).collect(Collectors.toList()));
     }
@@ -127,7 +128,7 @@ public class UserService {
     }
 
     public void deleteUser(Long userId) {
-        User user = userRepository.findByUserId(userId);
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundUserbyUserId(userId));
         // 작성한 판매글 List 삭제
         List<Item> items = itemDetailRepository.findAllByUser(user);
         for (Item item : items) {
@@ -143,33 +144,33 @@ public class UserService {
         }
 
         // 회원에게 작성된 코멘트 삭제
-        List<Comment> comments1 = commentRepository.findAllByReviewerName(user.getUserName());
+        List<Comment> comments1 = commentRepository.findAllByReviewerName(user.getUsername());
         for (Comment comment : comments1) {
             log.info("\n회원에게 작성된 코멘트 : {} 삭제 \n", comment.getContent());
             commentRepository.delete(comment);
         }
 
         userRepository.delete(user);
-        log.info("\n회원 삭제 : {} 삭제 \n", user.getUserName());
+        log.info("\n회원 삭제 : {} 삭제 \n", user.getUsername());
     }
 
-    public String editUserName(User user, String newUserName, HttpServletRequest httpServletRequest) {
+    public String editUserName(User user, String newUsername, HttpServletRequest httpServletRequest) {
         // 기존 아이디를 재 입력했을 경우
-        if (user.getUserName().equals(newUserName)) {
+        if (user.getUsername().equals(newUsername)) {
             log.info("아이디 수정 실패 : 기존 아이디를 재입력함");
             return "redirect:/users/edit?notNew=error";
         }
         // 이미 존재하는 아이디일 경우
-        User searchUser = userRepository.findByUserName(newUserName);
+        User searchUser = userRepository.findByUsername(newUsername);
         if (searchUser != null) {
             log.info("아이디 수정 실패 : 이미 존재하는 계정");
             return "redirect:/users/edit?alreadyExists=error";
         }
         // 성공할 경우
-        User target = userRepository.findByUserName(user.getUserName());
-        target.setUserName(newUserName);
+        User target = userRepository.findByUsername(user.getUsername());
+        target.setUsername(newUsername);
         userRepository.save(target);
-        log.info("\n회원 아이디 변경 {} -> {} ", user.getUserName(), target.getUserName());
+        log.info("\n회원 아이디 변경 {} -> {} ", user.getUsername(), target.getUsername());
         HttpSession httpSession = httpServletRequest.getSession(true);
         httpSession.setAttribute("user", target);
         return "redirect:/users/edit?Success=Success";
@@ -191,7 +192,7 @@ public class UserService {
             return "redirect:/users/edit?PasswordNotNew=error";
         }
         // 성공
-        User target = userRepository.findByUserName(user.getUserName());
+        User target = userRepository.findByUsername(user.getUsername());
         target.setPassword(newPassword);
         userRepository.save(target);
         log.info("비밀번호 수정 성공");

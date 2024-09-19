@@ -3,7 +3,7 @@ package com.elice.team1.prometheus.comment.controller;
 import com.elice.team1.prometheus.comment.dto.CommentDeleteResponse;
 import com.elice.team1.prometheus.comment.dto.CommentRequest;
 import com.elice.team1.prometheus.comment.dto.CommentResponse;
-import com.elice.team1.prometheus.category.service.CommentService;
+import com.elice.team1.prometheus.comment.service.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
