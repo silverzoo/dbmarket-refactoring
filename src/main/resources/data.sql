@@ -5,7 +5,7 @@ INSERT INTO category(category_id, name, created_at) VALUES
                                            (4,'서적',NOW()),
                                            (5,'기타',NOW());
 
-INSERT INTO user(user_name, password,rate) VALUES
+INSERT INTO user(user_name, password, rate) VALUES
                                                ('김민수','1111',0.0),
                                                ('이지은','2222',0.0),
                                                ('김지수','3333',0.0),
@@ -27,7 +27,7 @@ INSERT INTO item(user_id, name, price, category_id, image_path, description, cre
     (1,'파세코에어컨',70000,5,'/img/airconditioner.jpg','이사갈 집에 시스템에어컨이 설치가 되어있는 집이라 27일 오전에 가져가실 분만 연락 기다립니다.',NOW()),
     (4,'스벅 아아 2잔 5000원',5000,5,'/img/starbucks.jpg','빠른 입금하실 수 있는 분!',NOW());
 
-INSERT INTO comment(user_id, reviewer_name, content, created_at, rating) VALUES
+INSERT INTO comment(seller_id, reviewer_name, content, created_at, rating) VALUES
                                                                    (1,'이지훈','따뜻한 마음 감사해요.',TIMESTAMP '2024-03-14 10:00:00', 3),
                                                                    (1,'이지은','감사합니다^^',TIMESTAMP '2024-05-16 07:00:00', 2),
                                                                    (2,'김민수','쿨거래 감사합니다',TIMESTAMP '2024-01-03 03:00:00', 1),
