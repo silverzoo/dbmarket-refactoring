@@ -21,7 +21,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Item> items;
@@ -30,7 +30,7 @@ public class User {
     private List<Comment> comments;
 
     @Column(nullable = false)
-    private String userName;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -46,8 +46,8 @@ public class User {
     }
 
     @Builder
-    public User(String userName, String password, Double rate) {
-        this.userName = userName;
+    public User(String username, String password, Double rate) {
+        this.username = username;
         this.password = password;
         this.rate = rate;
     }

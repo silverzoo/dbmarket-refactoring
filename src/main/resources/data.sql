@@ -1,11 +1,11 @@
-INSERT INTO category(category_id, name, created_at) VALUES
+INSERT INTO category(id, name, created_at) VALUES
                                            (1,'핸드폰',NOW()),
                                            (2,'의류',NOW()),
                                            (3,'반려동물',NOW()),
                                            (4,'서적',NOW()),
                                            (5,'기타',NOW());
 
-INSERT INTO user(user_name, password, rate) VALUES
+INSERT INTO user(username, password, rate) VALUES
                                                ('김민수','1111',0.0),
                                                ('이지은','2222',0.0),
                                                ('김지수','3333',0.0),

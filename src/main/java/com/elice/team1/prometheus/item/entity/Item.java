@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Table(name="item")
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -23,8 +22,7 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "item_id", updatable = false)
-    private Long itemId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -53,4 +51,13 @@ public class Item {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Builder
+    public Item(Category category, String name, int price, String imagePath, String description) {
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.imagePath = imagePath;
+        this.description = description;
+    }
 }
