@@ -28,11 +28,11 @@ public class Item {
     private Long itemId;
 
     //REFACTOR: userId로 등록한 컬럼 FK로 연결해서 사용
-    @Column(name = "user_id" , nullable = false)
-    private Long userId;
+//    @Column(name = "user_id" , nullable = false)
+//    private Long userId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id2")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     //TODO ConstraintViolationException 처리 => pattrn, notblank 둘 다 처리됨
@@ -48,13 +48,7 @@ public class Item {
     @Column(name = "price", nullable = false)
     private int price;
 
-//    @JoinColumn(name = "category_category_id")
-//    private Long categoryId;
-
-//    @NotNull(message = "카테고리를 제대로 등록해주세요.")
-//    @Column(name = "category", nullable = false)
-//    private String category;
-
+    @NotNull(message = "카테고리를 제대로 등록해주세요.")
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

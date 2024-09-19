@@ -1,6 +1,7 @@
 package com.elice.team1.prometheus.item.dto;
 
 import com.elice.team1.prometheus.category.entity.Category;
+import com.elice.team1.prometheus.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,10 +17,9 @@ import java.time.LocalDateTime;
 @ToString
 public class ItemResponse {
     private Long itemId;
-    private Long userId;
+    private User user;
     private String name;
     private int price;
-    private Long categoryId;
     private Category category;
     private String imagePath;
     private String description;

@@ -6,6 +6,7 @@ import com.elice.team1.prometheus.item.entity.Item;
 import com.elice.team1.prometheus.item.entity.ItemInfo;
 import com.elice.team1.prometheus.category.service.CategoryMappingService;
 import com.elice.team1.prometheus.common.validation.ValidFile;
+import com.elice.team1.prometheus.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
@@ -31,15 +32,14 @@ public class ItemPostDto{
     private MultipartFile itemImage;
 
 
-    public Item toEntity(Long userId, String imagePath) {
+    public Item toEntity(User user, String imagePath) {
 
         Long categoryId = CategoryMappingService.getCategoryId(getItemInfo().getCategory());
 
         return Item.builder()
-                .userId(userId)
+                .user(user)
                 .name(getItemInfo().getName())
                 .price(getItemInfo().getPrice())
-//                .categoryId(categoryId)
                 .category(getItemInfo().getCategory())
                 .imagePath(imagePath)
                 .description(getItemInfo().getDescription())

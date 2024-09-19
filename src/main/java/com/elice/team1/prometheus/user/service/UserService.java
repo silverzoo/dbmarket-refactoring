@@ -117,7 +117,7 @@ public class UserService {
 
     public void getItemsByUserId(Long userId, Model model) {
         User user = userRepository.findByUserId(userId);
-        List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
+        List<Item> items = itemDetailRepository.findAllByUser(user);
         model.addAttribute("items", items.stream().map(ItemListViewResponse::new).collect(Collectors.toList()));
     }
 
@@ -129,7 +129,7 @@ public class UserService {
     public void deleteUser(Long userId) {
         User user = userRepository.findByUserId(userId);
         // 작성한 판매글 List 삭제
-        List<Item> items = itemDetailRepository.findAllByUserId(user.getUserId());
+        List<Item> items = itemDetailRepository.findAllByUser(user);
         for (Item item : items) {
             log.info("\n회원이 작성한 게시글 : {} 삭제 \n", item.getName());
             itemDetailRepository.delete(item);

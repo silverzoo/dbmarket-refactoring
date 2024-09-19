@@ -1,6 +1,7 @@
 package com.elice.team1.prometheus.item.dto;
 
 import com.elice.team1.prometheus.category.entity.Category;
+import com.elice.team1.prometheus.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemModifyRequest {
-    private Long userId;
+    private User user;
     private String name;
     private int price;
-    private Long categoryId;
     private Category category;
     private String imagePath;
     private String description;

@@ -61,7 +61,7 @@ public class RegisterItemService {
         } catch (IOException e) {
             throw new ImageUploadException(e.getMessage());
         }
-        return itemPostRepository.save(itemPostDto.toEntity(user.getUserId(), dbImagePath));
+        return itemPostRepository.save(itemPostDto.toEntity(user, dbImagePath));
     }
 
 
@@ -90,7 +90,7 @@ public class RegisterItemService {
 
         // Update existing with updatedData using Builder pattern
         Item updatedItem = Item.builder()
-                .userId(existingItem.getUserId())
+                .user(existingItem.getUser())
                 .itemId(existingItem.getItemId())
 //                .categoryId(existingItem.getCategoryId())
                 .name(itemPostDto.getItemInfo().getName())

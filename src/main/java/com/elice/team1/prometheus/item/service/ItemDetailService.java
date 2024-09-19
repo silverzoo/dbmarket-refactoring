@@ -42,7 +42,7 @@ public class ItemDetailService {
 
         Long userId = userService.getSessionUser(httpServletRequest).getUserId();
         String userName = userService.getSessionUser(httpServletRequest).getUserName();
-        if(item.getUserId()!=(userId)) {
+        if(item.getUser().getUserId() != userId) {
             throw new UnauthorizedModifyByUser(userName);
         }
 
@@ -64,10 +64,9 @@ public class ItemDetailService {
         // 3. 빌더 패턴을 사용하여 수정된 엔티티 생성
         Item finalItem = Item.builder()
                 .itemId(item.getItemId())
-                .userId(item.getUserId())
+                .user(item.getUser())
                 .name(request.getName())
                 .price(request.getPrice())
-//                .categoryId(request.getCategoryId())
                 .category(request.getCategory())
                 .imagePath(request.getImagePath())
                 .imagePath(request.getImagePath())
@@ -90,7 +89,7 @@ public class ItemDetailService {
 
         Long userId = userService.getSessionUser(httpServletRequest).getUserId();
         String userName = userService.getSessionUser(httpServletRequest).getUserName();
-        if(item.getUserId()!=(userId)) {
+        if(item.getUser().getUserId() != userId) {
             throw new UnauthorizedDeleteByUser(userName);
         }
 
