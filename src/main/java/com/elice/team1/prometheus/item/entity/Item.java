@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Valid
 @EntityListeners(AuditingEntityListener.class)
 public class Item {
 
@@ -27,37 +26,23 @@ public class Item {
     @Column(name = "item_id", updatable = false)
     private Long itemId;
 
-    //REFACTOR: userId로 등록한 컬럼 FK로 연결해서 사용
-//    @Column(name = "user_id" , nullable = false)
-//    private Long userId;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    //TODO ConstraintViolationException 처리 => pattrn, notblank 둘 다 처리됨
-    @NotBlank(message = "상품 이름은 공백으로 두시면 안됩니다.")
-    @Pattern(regexp = "^[가-힣a-zA-Z0-9]+[가-힣a-zA-Z0-9\\s]*$",message = "상품 이름을 제대로 등록해주세요.")
-    @Column(name = "name", nullable = false)
-    private String name;
-
-//    @NotBlank(message = "가격을 제대로 입력해주세요.") integer에선 적용 X
-    // ConstraintViolationException:
-    @Max(value = 2147483646,message = "가격은 2147483646원을 넘을 수 없습니다.")
-    @Min(value = 10 , message = "가격은 10원부터 시작합니다.")
-    @Column(name = "price", nullable = false)
-    private int price;
-
-    @NotNull(message = "카테고리를 제대로 등록해주세요.")
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    //itemPostDto 에서 validate
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "price", nullable = false)
+    private int price;
+
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
-    @NotBlank(message = "내용을 입력해주세요.")
     @Column(name = "description")
     private String description;
 

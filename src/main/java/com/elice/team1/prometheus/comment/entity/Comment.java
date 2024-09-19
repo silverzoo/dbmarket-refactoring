@@ -21,7 +21,7 @@ public class Comment {
     private Long commentId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "seller_id")
     User user;
 
     private String reviewerName;

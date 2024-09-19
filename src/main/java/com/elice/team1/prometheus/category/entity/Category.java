@@ -24,7 +24,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Item> items;
 
     private String name;
