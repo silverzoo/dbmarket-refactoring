@@ -1,11 +1,10 @@
 package com.elice.team1.dbmarket.item.controller;
 
 import com.elice.team1.dbmarket.item.dto.ItemDeleteResponse;
-import com.elice.team1.dbmarket.item.dto.ItemPostDto;
+import com.elice.team1.dbmarket.item.dto.ItemModifyRequest;
 import com.elice.team1.dbmarket.item.dto.ItemResponse;
 import com.elice.team1.dbmarket.common.exception.ImageUploadException;
 import com.elice.team1.dbmarket.item.service.ItemDetailService;
-import com.elice.team1.dbmarket.item.service.RegisterItemService;
 import com.elice.team1.dbmarket.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -25,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ItemDetailViewController {
     private final ItemDetailService itemDetailService;
     private final UserService userService;
-    private final RegisterItemService registerItemService;
+//    private final RegisterItemService registerItemService;
 
     // NOTE : 상세 페이지로 이동
     @GetMapping("/{id}")
@@ -37,7 +36,7 @@ public class ItemDetailViewController {
         Long userId = userService.getSessionUser(httpServletRequest).getId();
         log.info("\n\n현재 세션 아이디 확인: {}\n\n", userId);
 
-        String username = userService.findUsername(item.getUser().getId());
+        String username = userService.findUsername(userId);
         model.addAttribute("username", username);
 
         model.addAttribute("userId", userId);
@@ -60,9 +59,10 @@ public class ItemDetailViewController {
     @PostMapping("/{id}")
     public String updateItem(@PathVariable("id") Long id,
                              RedirectAttributes redirectAttributes,
-                             @ModelAttribute("itemPostDto") @Valid ItemPostDto itemPostDto) throws ImageUploadException {
+                             ItemModifyRequest request) throws ImageUploadException {
 
-        registerItemService.updateItemToDb(id, itemPostDto);
+//        registerItemService.updateItemToDb(id, itemPostDto);
+        itemDetailService.updateItem(id, request);
 
         redirectAttributes.addFlashAttribute("success", "수정되었습니다.");
         return "redirect:/items/" + id;

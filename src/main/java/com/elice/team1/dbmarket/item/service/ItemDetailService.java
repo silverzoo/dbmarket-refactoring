@@ -1,5 +1,7 @@
 package com.elice.team1.dbmarket.item.service;
 
+import com.elice.team1.dbmarket.category.entity.Category;
+import com.elice.team1.dbmarket.category.repository.CategoryRepository;
 import com.elice.team1.dbmarket.item.dto.ItemDeleteResponse;
 import com.elice.team1.dbmarket.item.dto.ItemModifyRequest;
 import com.elice.team1.dbmarket.item.dto.ItemModifyResponse;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemDetailService {
     private final ItemDetailRepository itemDetailRepository;
+    private final CategoryRepository categoryRepository;
     private final UserService userService;
     private final ItemMapper itemMapper;
 
@@ -55,21 +58,23 @@ public class ItemDetailService {
     public ItemModifyResponse updateItem(long id, ItemModifyRequest request) {
 
         // 1. 엔티티를 데이터베이스에서 조회
-        Item item = itemDetailRepository.findById(id)
+        itemDetailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundItemById(id));
 
         // 2. DTO를 엔티티로 변환
 //        Item updatedItem = itemMapper.toEntity(request);
 
+        log.info("\n\n수정 아이템 정보: {}\n\n", request.toString());
+        log.info("\n\n수정 아이템의 카테고리정보: {}\n\n", request.getCategory());
+
         // 3. 빌더 패턴을 사용하여 수정된 엔티티 생성
         Item finalItem = Item.builder()
+                .id(id)
+                .category.getId(request.getCategory())
                 .name(request.getName())
                 .price(request.getPrice())
-                .category(request.getCategory())
-                .imagePath(request.getImagePath())
                 .imagePath(request.getImagePath())
                 .description(request.getDescription())
-//                .createdAt(item.getCreatedAt())
                 .build();
 
         // 4. 업데이트된 엔티티를 저장

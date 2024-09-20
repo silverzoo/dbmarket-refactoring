@@ -23,35 +23,34 @@ public class Item {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "price", nullable = false)
+    @Column(nullable = false)
     private int price;
 
-    @Column(name = "image_path", nullable = false)
+    @Column(nullable = false)
     private String imagePath;
 
-    @Column(name = "description")
     private String description;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Builder
-    public Item(Category category, String name, int price, String imagePath, String description) {
+    @Builder(access = AccessLevel.PUBLIC)
+    public Item(Long id, Category category, String name, int price, String imagePath, String description) {
+        this.id = id;
         this.category = category;
         this.name = name;
         this.price = price;
