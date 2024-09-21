@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name="item")
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -30,13 +31,13 @@ public class Item {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private int price;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String imagePath;
 
     private String description;
@@ -47,14 +48,4 @@ public class Item {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    @Builder(access = AccessLevel.PUBLIC)
-    public Item(Long id, Category category, String name, int price, String imagePath, String description) {
-        this.id = id;
-        this.category = category;
-        this.name = name;
-        this.price = price;
-        this.imagePath = imagePath;
-        this.description = description;
-    }
 }

@@ -11,10 +11,10 @@ import lombok.*;
 @Builder
 public class ItemModifyResponse {
     private Long id;
-    private User user;
+    private Long userId;
     private String name;
     private int price;
-    private Category category;
+    private Long categoryId;
     private String imagePath;
     private String description;
 }

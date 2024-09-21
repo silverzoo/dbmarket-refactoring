@@ -12,8 +12,7 @@ import lombok.*;
 public class ItemModifyRequest {
     private String name;
     private int price;
-    // Fixme: 엔티티에서는 객체타입인 필드가 DTO에서는 Long? 객체타입?
-    private Long category;
+    private Long categoryId;
     private String imagePath;
     private String description;
 }

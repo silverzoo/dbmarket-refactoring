@@ -2,6 +2,7 @@ package com.elice.team1.dbmarket.item.service;
 
 import com.elice.team1.dbmarket.category.entity.Category;
 import com.elice.team1.dbmarket.category.repository.CategoryRepository;
+import com.elice.team1.dbmarket.common.exception.NotFoundCategoryById;
 import com.elice.team1.dbmarket.item.dto.ItemDeleteResponse;
 import com.elice.team1.dbmarket.item.dto.ItemModifyRequest;
 import com.elice.team1.dbmarket.item.dto.ItemModifyResponse;
@@ -58,19 +59,21 @@ public class ItemDetailService {
     public ItemModifyResponse updateItem(long id, ItemModifyRequest request) {
 
         // 1. 엔티티를 데이터베이스에서 조회
-        itemDetailRepository.findById(id)
+        Item existingItem = itemDetailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundItemById(id));
 
-        // 2. DTO를 엔티티로 변환
-//        Item updatedItem = itemMapper.toEntity(request);
-
         log.info("\n\n수정 아이템 정보: {}\n\n", request.toString());
-        log.info("\n\n수정 아이템의 카테고리정보: {}\n\n", request.getCategory());
+        log.info("\n\n수정 아이템의 카테고리정보: {}\n\n", request.getCategoryId());
+
+        // 2. 카테고리 정보 가져오기
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new NotFoundCategoryById(request.getCategoryId()));
 
         // 3. 빌더 패턴을 사용하여 수정된 엔티티 생성
         Item finalItem = Item.builder()
-                .id(id)
-                .category.getId(request.getCategory())
+                .id(existingItem.getId())
+                .user(existingItem.getUser())
+                .category(category)
                 .name(request.getName())
                 .price(request.getPrice())
                 .imagePath(request.getImagePath())
