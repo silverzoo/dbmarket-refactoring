@@ -1,6 +1,5 @@
 package com.elice.team1.dbmarket.comment.dto;
 
-import com.elice.team1.dbmarket.user.entity.User;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -9,11 +8,12 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentResponse {
     private Long id;
-    private User user;
+    private Long userId;
     private String reviewerName;
     private String content;
-    private LocalDateTime createdAt;
     private long rating;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 
 }

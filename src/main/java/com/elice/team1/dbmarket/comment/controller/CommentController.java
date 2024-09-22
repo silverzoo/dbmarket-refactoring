@@ -66,7 +66,7 @@ public class CommentController {
     public String createComment(@ModelAttribute CommentRequest commentRequest,
                                 @RequestParam("reviewerName") String reviewerName) {
         commentService.createComment(commentRequest, reviewerName);
-        return "redirect:/comments/" + commentRequest.getUser().getId();
+        return "redirect:/comments/" + commentRequest.getUserId();
     }
 
     // 댓글 수정 페이지 이동
@@ -86,7 +86,7 @@ public class CommentController {
         // 댓글 수정 서비스 호출
         commentService.updateComment(commentId, commentRequest);
         // 수정 후 댓글 목록 페이지로 리디렉션
-        return "redirect:/comments/" + commentRequest.getUser().getId();
+        return "redirect:/comments/" + commentRequest.getUserId();
     }
 
     @DeleteMapping("/delete/{commentId}")
