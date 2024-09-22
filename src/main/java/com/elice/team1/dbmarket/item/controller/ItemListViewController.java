@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-//아이템 목록 조회/표시
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -52,34 +51,5 @@ public class ItemListViewController {
         }
         return items;
     }
-
-
-
-
-//    @GetMapping("/category/{categoryId}")
-//    public String getAllItems(@PathVariable("categoryId") Long categoryId, Model model) {
-//        List<ItemResponse> items = itemListService.getItemsByCategory(categoryId);
-//        model.addAttribute("items",items);
-//        return "item/items";
-//    }
-
-//    @GetMapping("/sorting/{categoryId}")
-//    public String getSortItems(Model model, @PathVariable("categoryId") Long categoryId,
-//                               @RequestParam("sorting-option") int sort) {
-//        List<ItemResponse> items = itemListService.getItemsByCategory(categoryId);
-//
-//        log.info("sortValue={}", sort);
-//
-////        if(sort == 1){
-////            items = itemListService.getOrderByDateAsc(categoryId);
-////        }
-////        if(sort == 2){
-////            items = itemListService.getOrderByDateDesc(categoryId);
-////        }
-//
-//        model.addAttribute("items",items);
-//
-//        return "redirect:/category/" + categoryId + "?sorting-option=" + sort;
-//    }
 
 }
