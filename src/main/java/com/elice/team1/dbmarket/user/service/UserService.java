@@ -3,8 +3,8 @@ package com.elice.team1.dbmarket.user.service;
 import com.elice.team1.dbmarket.comment.entity.Comment;
 import com.elice.team1.dbmarket.common.exception.NotFoundUserbyUserId;
 import com.elice.team1.dbmarket.common.util.Encrypt;
-import com.elice.team1.dbmarket.item.dto.ItemListViewResponse;
 import com.elice.team1.dbmarket.item.entity.Item;
+import com.elice.team1.dbmarket.item.mapper.ItemMapper;
 import com.elice.team1.dbmarket.user.dto.UserDto;
 import com.elice.team1.dbmarket.user.entity.User;
 import com.elice.team1.dbmarket.comment.repository.CommentRepository;
@@ -12,7 +12,6 @@ import com.elice.team1.dbmarket.item.repository.ItemDetailRepository;
 import com.elice.team1.dbmarket.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -22,12 +21,20 @@ import java.util.stream.Collectors;
 
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final ItemDetailRepository itemDetailRepository;
     private final CommentRepository commentRepository;
+    private final ItemMapper itemMapper;
+
+    public UserService(UserRepository userRepository, ItemDetailRepository itemDetailRepository,
+                       CommentRepository commentRepository, ItemMapper itemMapper) {
+        this.userRepository = userRepository;
+        this.itemDetailRepository = itemDetailRepository;
+        this.commentRepository = commentRepository;
+        this.itemMapper = itemMapper;
+    }
 
     public String createUser(UserDto form, String password_check, HttpServletRequest httpServletRequest) {
         User user = form.toEntity();
@@ -119,7 +126,7 @@ public class UserService {
     public void getItemsByUserId(Long userId, Model model) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundUserbyUserId(userId));
         List<Item> items = itemDetailRepository.findAllByUser(user);
-        model.addAttribute("items", items.stream().map(ItemListViewResponse::new).collect(Collectors.toList()));
+        model.addAttribute("items", items.stream().map(itemMapper::toItemResponse).collect(Collectors.toList()));
     }
 
     // 헤더에 마이페이지, 로그아웃 안보이게 하는 로직
