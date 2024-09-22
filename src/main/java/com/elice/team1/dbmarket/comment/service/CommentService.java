@@ -88,12 +88,15 @@ public class CommentService {
     public CommentResponse createComment(CommentRequest commentRequest, String reviewerName) {
 
         // User 엔티티를 조회
-        User user = userRepository.findById(commentRequest.getUser().getId())
-                .orElseThrow(() -> new NotFoundUserbyUserId(commentRequest.getUser().getId()));
+        User user = userRepository.findById(commentRequest.getUserId())
+                .orElseThrow(() -> new NotFoundUserbyUserId(commentRequest.getUserId()));
 
-        Comment comment = commentMapper.toEntity(commentRequest);
-        comment.setUser(user);
-        comment.setReviewerName(reviewerName);
+        // Comment comment = commentMapper.toEntity(commentRequest);
+
+        Comment comment = Comment.builder()
+                .user(user)
+                .reviewerName(reviewerName)
+                .build();
 
         // Comment 엔티티 저장
         Comment savedComment = commentRepository.save(comment);
@@ -105,11 +108,13 @@ public class CommentService {
     @Transactional
     public CommentResponse updateComment(Long commentId, CommentRequest commentRequest) {
         // 조회
-        Comment comment = commentRepository.findById(commentId)
+        Comment existingComment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentbyCommentId(commentId));
 
-        comment.setContent(commentRequest.getContent());
-        comment.setRating(commentRequest.getRating());
+        Comment comment = Comment.builder()
+                .content(commentRequest.getContent())
+                .rating(commentRequest.getRating())
+                .build();
 
         // 업데이트된 엔티티 저장
         Comment updatedComment = commentRepository.save(comment);
