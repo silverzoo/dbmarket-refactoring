@@ -15,6 +15,17 @@ public interface ItemMapper {
 
     ItemDeleteResponse toDeleteResponse(Item item);
 
-    ItemResponse toItemResponse(Item item);
-
+    default ItemResponse toItemResponse(Item item) {
+        return ItemResponse.builder()
+                .id(item.getId())
+                .userId(item.getUser().getId())
+                .categoryId(item.getCategory().getId())
+                .name(item.getName())
+                .price(item.getPrice())
+                .imagePath(item.getImagePath())
+                .description(item.getDescription())
+                .createdAt(item.getCreatedAt())
+                .updatedAt(item.getUpdatedAt())
+                .build();
+    }
 }
