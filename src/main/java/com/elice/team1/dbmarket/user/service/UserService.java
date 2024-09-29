@@ -8,7 +8,7 @@ import com.elice.team1.dbmarket.item.mapper.ItemMapper;
 import com.elice.team1.dbmarket.user.dto.UserDto;
 import com.elice.team1.dbmarket.user.entity.User;
 import com.elice.team1.dbmarket.comment.repository.CommentRepository;
-import com.elice.team1.dbmarket.item.repository.ItemDetailRepository;
+import com.elice.team1.dbmarket.item.repository.ItemRepository;
 import com.elice.team1.dbmarket.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -24,14 +24,14 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final ItemDetailRepository itemDetailRepository;
+    private final ItemRepository itemRepository;
     private final CommentRepository commentRepository;
     private final ItemMapper itemMapper;
 
-    public UserService(UserRepository userRepository, ItemDetailRepository itemDetailRepository,
+    public UserService(UserRepository userRepository, ItemRepository itemRepository,
                        CommentRepository commentRepository, ItemMapper itemMapper) {
         this.userRepository = userRepository;
-        this.itemDetailRepository = itemDetailRepository;
+        this.itemRepository = itemRepository;
         this.commentRepository = commentRepository;
         this.itemMapper = itemMapper;
     }
@@ -125,7 +125,7 @@ public class UserService {
 
     public void getItemsByUserId(Long userId, Model model) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundUserbyUserId(userId));
-        List<Item> items = itemDetailRepository.findAllByUser(user);
+        List<Item> items = itemRepository.findAllByUser(user);
         model.addAttribute("items", items.stream().map(itemMapper::toItemResponse).collect(Collectors.toList()));
     }
 
@@ -137,10 +137,10 @@ public class UserService {
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundUserbyUserId(userId));
         // 작성한 판매글 List 삭제
-        List<Item> items = itemDetailRepository.findAllByUser(user);
+        List<Item> items = itemRepository.findAllByUser(user);
         for (Item item : items) {
             log.info("\n회원이 작성한 게시글 : {} 삭제 \n", item.getName());
-            itemDetailRepository.delete(item);
+            itemRepository.delete(item);
         }
 
         // 탈퇴한 회원이 작성한 코멘트 삭제
